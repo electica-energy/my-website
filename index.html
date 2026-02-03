@@ -205,23 +205,133 @@
                     </div>
                 </div>
                 <div class="solution-visual">
-                    <div class="ai-flow">
-                        <div class="flow-node flow-input">
-                            <span class="node-icon">📊</span>
-                            <span class="node-label">Telemetry</span>
-                        </div>
-                        <div class="flow-arrow"></div>
-                        <div class="flow-node flow-ai">
-                            <span class="node-icon">🧠</span>
-                            <span class="node-label">AI Models</span>
-                            <div class="ai-pulse"></div>
-                        </div>
-                        <div class="flow-arrow"></div>
-                        <div class="flow-node flow-output">
-                            <span class="node-icon">⚡</span>
-                            <span class="node-label">Control</span>
+                    <!-- Animated SVG Neural Network & Battery Visualization -->
+                    <div class="animated-visual-container">
+                        <svg class="solution-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background Glow -->
+                            <defs>
+                                <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="rgba(99, 102, 241, 0.3)" />
+                                    <stop offset="100%" stop-color="transparent" />
+                                </radialGradient>
+                                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#6366f1" />
+                                    <stop offset="50%" stop-color="#a855f7" />
+                                    <stop offset="100%" stop-color="#ec4899" />
+                                </linearGradient>
+                                <linearGradient id="batteryGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+                                    <stop offset="0%" stop-color="#00ff9f" />
+                                    <stop offset="100%" stop-color="#00d4ff" />
+                                </linearGradient>
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+
+                            <!-- Central Glow -->
+                            <circle cx="200" cy="200" r="150" fill="url(#glowGradient)" class="pulse-glow" />
+
+                            <!-- Neural Network Nodes -->
+                            <g class="neural-network" filter="url(#glow)">
+                                <!-- Input Layer -->
+                                <circle cx="80" cy="120" r="12" fill="#00d4ff" class="nn-node nn-node-1" />
+                                <circle cx="80" cy="200" r="12" fill="#00d4ff" class="nn-node nn-node-2" />
+                                <circle cx="80" cy="280" r="12" fill="#00d4ff" class="nn-node nn-node-3" />
+
+                                <!-- Hidden Layer 1 -->
+                                <circle cx="160" cy="140" r="10" fill="#6366f1" class="nn-node nn-node-4" />
+                                <circle cx="160" cy="200" r="10" fill="#6366f1" class="nn-node nn-node-5" />
+                                <circle cx="160" cy="260" r="10" fill="#6366f1" class="nn-node nn-node-6" />
+
+                                <!-- Hidden Layer 2 -->
+                                <circle cx="240" cy="160" r="10" fill="#a855f7" class="nn-node nn-node-7" />
+                                <circle cx="240" cy="240" r="10" fill="#a855f7" class="nn-node nn-node-8" />
+
+                                <!-- Output -->
+                                <circle cx="320" cy="200" r="14" fill="#ec4899" class="nn-node nn-node-9" />
+                            </g>
+
+                            <!-- Animated Connection Lines -->
+                            <g class="nn-connections" stroke="url(#lineGradient)" stroke-width="1.5" fill="none"
+                                opacity="0.6">
+                                <!-- Input to Hidden 1 -->
+                                <path d="M92 120 L148 140" class="nn-line nn-line-1" />
+                                <path d="M92 120 L148 200" class="nn-line nn-line-2" />
+                                <path d="M92 200 L148 140" class="nn-line nn-line-3" />
+                                <path d="M92 200 L148 200" class="nn-line nn-line-4" />
+                                <path d="M92 200 L148 260" class="nn-line nn-line-5" />
+                                <path d="M92 280 L148 200" class="nn-line nn-line-6" />
+                                <path d="M92 280 L148 260" class="nn-line nn-line-7" />
+
+                                <!-- Hidden 1 to Hidden 2 -->
+                                <path d="M170 140 L228 160" class="nn-line nn-line-8" />
+                                <path d="M170 140 L228 240" class="nn-line nn-line-9" />
+                                <path d="M170 200 L228 160" class="nn-line nn-line-10" />
+                                <path d="M170 200 L228 240" class="nn-line nn-line-11" />
+                                <path d="M170 260 L228 160" class="nn-line nn-line-12" />
+                                <path d="M170 260 L228 240" class="nn-line nn-line-13" />
+
+                                <!-- Hidden 2 to Output -->
+                                <path d="M252 160 L306 200" class="nn-line nn-line-14" />
+                                <path d="M252 240 L306 200" class="nn-line nn-line-15" />
+                            </g>
+
+                            <!-- Data Particles -->
+                            <g class="data-particles">
+                                <circle r="4" fill="#00ff9f" class="particle particle-1">
+                                    <animateMotion dur="2s" repeatCount="indefinite"
+                                        path="M80,120 L160,140 L240,160 L320,200" />
+                                </circle>
+                                <circle r="3" fill="#00d4ff" class="particle particle-2">
+                                    <animateMotion dur="2.5s" repeatCount="indefinite"
+                                        path="M80,200 L160,200 L240,240 L320,200" begin="0.5s" />
+                                </circle>
+                                <circle r="4" fill="#a855f7" class="particle particle-3">
+                                    <animateMotion dur="2.2s" repeatCount="indefinite"
+                                        path="M80,280 L160,260 L240,240 L320,200" begin="1s" />
+                                </circle>
+                            </g>
+
+                            <!-- Battery Icon (Right side) -->
+                            <g class="battery-icon" transform="translate(330, 280)">
+                                <rect x="0" y="10" width="40" height="70" rx="5" fill="none" stroke="#6366f1"
+                                    stroke-width="2" />
+                                <rect x="12" y="0" width="16" height="10" rx="3" fill="#6366f1" />
+                                <rect x="5" y="55" width="30" height="20" rx="2" fill="url(#batteryGradient)"
+                                    class="battery-level" />
+                                <rect x="5" y="35" width="30" height="20" rx="2" fill="url(#batteryGradient)"
+                                    class="battery-level battery-level-2" />
+                                <rect x="5" y="15" width="30" height="20" rx="2" fill="url(#batteryGradient)"
+                                    class="battery-level battery-level-3" />
+                            </g>
+
+                            <!-- Circular Orbit -->
+                            <circle cx="200" cy="200" r="170" fill="none" stroke="rgba(99, 102, 241, 0.2)"
+                                stroke-width="1" stroke-dasharray="5 5" class="orbit-ring" />
+
+                            <!-- Orbiting Particles -->
+                            <circle r="6" fill="#6366f1" class="orbit-particle">
+                                <animateMotion dur="8s" repeatCount="indefinite"
+                                    path="M200,30 A170,170 0 1,1 199,30 A170,170 0 1,1 200,30" />
+                            </circle>
+                            <circle r="4" fill="#ec4899" class="orbit-particle">
+                                <animateMotion dur="8s" repeatCount="indefinite"
+                                    path="M200,30 A170,170 0 1,1 199,30 A170,170 0 1,1 200,30" begin="-4s" />
+                            </circle>
+                        </svg>
+
+                        <!-- Labels -->
+                        <div class="visual-labels">
+                            <span class="label label-input">Telemetry</span>
+                            <span class="label label-ai">AI Engine</span>
+                            <span class="label label-output">Control</span>
                         </div>
                     </div>
+
                     <div class="flow-loop">
                         <span>Continuous Learning Loop</span>
                     </div>
