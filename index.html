@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="description"
+        content="Eneractiq Labs - The AI-Native Battery Operating System. Autonomous, real-time charging control that prevents battery degradation and extends lifespan by 30-40%.">
+    <meta name="keywords"
+        content="battery AI, autonomous charging, battery degradation, EV batteries, drone batteries, energy storage, BMS, battery management, Eneractiq Labs">
+    <title>Eneractiq Labs | AI-Native Battery Operating System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <span class="logo-text">Eneractiq Labs</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#problem">Problem</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#technology">Technology</a></li>
+                <li><a href="#traction">Traction</a></li>
+                <li><a href="#team">Team</a></li>
+            </ul>
+            <a href="#contact" class="btn btn-primary nav-cta">Get in Touch</a>
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="hero-gradient"></div>
+            <div class="hero-grid"></div>
+            <div class="floating-orb orb-1"></div>
+            <div class="floating-orb orb-2"></div>
+            <div class="floating-orb orb-3"></div>
+        </div>
+        <div class="container hero-content">
+            <div class="hero-badge animate-fade-up">
+                <span class="badge-dot"></span>
+                AI-Native Battery Intelligence
+            </div>
+            <h1 class="hero-title animate-fade-up delay-1">
+                The Operating System<br>
+                <span class="gradient-text">for Batteries</span>
+            </h1>
+            <p class="hero-subtitle animate-fade-up delay-2">
+                Autonomous, real-time charging control that learns and adapts.<br>
+                Prevent degradation. Extend lifespan. No hardware changes.
+            </p>
+            <div class="hero-cta animate-fade-up delay-3">
+                <a href="#contact" class="btn btn-primary btn-lg">
+                    <span>Talk to Us</span>
+                    <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="#technology" class="btn btn-secondary btn-lg">
+                    <span>See How It Works</span>
+                </a>
+            </div>
+            <div class="hero-stats animate-fade-up delay-4">
+                <div class="stat">
+                    <span class="stat-value">30-40%</span>
+                    <span class="stat-label">Longer Battery Life</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">Production</span>
+                    <span class="stat-label">Live Deployments</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">99.99%</span>
+                    <span class="stat-label">System Uptime</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="battery-visual">
+                <div class="battery-body">
+                    <div class="battery-level"></div>
+                    <div class="battery-pulse"></div>
+                </div>
+                <div class="ai-signals">
+                    <div class="signal signal-1"></div>
+                    <div class="signal signal-2"></div>
+                    <div class="signal signal-3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="section section-dark">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">The Problem</span>
+                <h2 class="section-title">
+                    Battery Degradation Is a<br>
+                    <span class="gradient-text">Control Failure</span>
+                </h2>
+                <p class="section-subtitle">
+                    Not a chemistry problem. Batteries degrade early because charging logic is static and blind to
+                    real-world conditions.
+                </p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card card-glow">
+                    <div class="problem-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <h3>Static Charging Logic</h3>
+                    <p>Fixed rules ignore battery age, temperature, and duty cycles. Every battery charged the same way,
+                        regardless of state.</p>
+                </div>
+                <div class="problem-card card-glow">
+                    <div class="problem-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </div>
+                    <h3>Analytics Can't Act</h3>
+                    <p>Traditional monitoring observes failures after they happen. By the time you see degradation, the
+                        damage is done.</p>
+                </div>
+                <div class="problem-card card-glow">
+                    <div class="problem-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                    </div>
+                    <h3>Passive Hardware</h3>
+                    <p>Batteries are treated as dumb storage. But they're dynamic electrochemical systems that respond
+                        to every charge decision.</p>
+                </div>
+            </div>
+            <div class="problem-impact">
+                <div class="impact-stat">
+                    <span class="impact-number">$1.2T</span>
+                    <span class="impact-text">annual battery market facing premature degradation</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="section">
+        <div class="container">
+            <div class="solution-layout">
+                <div class="solution-content">
+                    <span class="section-label">The Solution</span>
+                    <h2 class="section-title">
+                        Eneractiq LabsOS:<br>
+                        <span class="gradient-text">Predict. Decide. Act.</span>
+                    </h2>
+                    <p class="solution-description">
+                        A closed-loop AI system that doesn't just monitor—it <strong>controls</strong>.
+                        Learning-based charging decisions generated in real-time, adapting as batteries age and usage
+                        patterns change.
+                    </p>
+                    <ul class="solution-list">
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Ingests live telemetry: voltage, current, temperature</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Models learn degradation trajectories continuously</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Charging decisions generated by trained models, not fixed rules</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>AI decisions injected directly into OEM BMS and fleet systems</span>
+                        </li>
+                    </ul>
+                    <div class="solution-quote">
+                        <blockquote>
+                            "Charging decisions are generated by trained models, not fixed rules, and evolve as the
+                            battery ages and usage patterns change."
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="solution-visual">
+                    <!-- Animated SVG Neural Network & Battery Visualization -->
+                    <div class="animated-visual-container">
+                        <svg class="solution-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background Glow -->
+                            <defs>
+                                <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="rgba(99, 102, 241, 0.3)" />
+                                    <stop offset="100%" stop-color="transparent" />
+                                </radialGradient>
+                                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#6366f1" />
+                                    <stop offset="50%" stop-color="#a855f7" />
+                                    <stop offset="100%" stop-color="#ec4899" />
+                                </linearGradient>
+                                <linearGradient id="batteryGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+                                    <stop offset="0%" stop-color="#00ff9f" />
+                                    <stop offset="100%" stop-color="#00d4ff" />
+                                </linearGradient>
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+
+                            <!-- Central Glow -->
+                            <circle cx="200" cy="200" r="150" fill="url(#glowGradient)" class="pulse-glow" />
+
+                            <!-- Neural Network Nodes -->
+                            <g class="neural-network" filter="url(#glow)">
+                                <!-- Input Layer -->
+                                <circle cx="80" cy="120" r="12" fill="#00d4ff" class="nn-node nn-node-1" />
+                                <circle cx="80" cy="200" r="12" fill="#00d4ff" class="nn-node nn-node-2" />
+                                <circle cx="80" cy="280" r="12" fill="#00d4ff" class="nn-node nn-node-3" />
+
+                                <!-- Hidden Layer 1 -->
+                                <circle cx="160" cy="140" r="10" fill="#6366f1" class="nn-node nn-node-4" />
+                                <circle cx="160" cy="200" r="10" fill="#6366f1" class="nn-node nn-node-5" />
+                                <circle cx="160" cy="260" r="10" fill="#6366f1" class="nn-node nn-node-6" />
+
+                                <!-- Hidden Layer 2 -->
+                                <circle cx="240" cy="160" r="10" fill="#a855f7" class="nn-node nn-node-7" />
+                                <circle cx="240" cy="240" r="10" fill="#a855f7" class="nn-node nn-node-8" />
+
+                                <!-- Output -->
+                                <circle cx="320" cy="200" r="14" fill="#ec4899" class="nn-node nn-node-9" />
+                            </g>
+
+                            <!-- Animated Connection Lines -->
+                            <g class="nn-connections" stroke="url(#lineGradient)" stroke-width="1.5" fill="none"
+                                opacity="0.6">
+                                <!-- Input to Hidden 1 -->
+                                <path d="M92 120 L148 140" class="nn-line nn-line-1" />
+                                <path d="M92 120 L148 200" class="nn-line nn-line-2" />
+                                <path d="M92 200 L148 140" class="nn-line nn-line-3" />
+                                <path d="M92 200 L148 200" class="nn-line nn-line-4" />
+                                <path d="M92 200 L148 260" class="nn-line nn-line-5" />
+                                <path d="M92 280 L148 200" class="nn-line nn-line-6" />
+                                <path d="M92 280 L148 260" class="nn-line nn-line-7" />
+
+                                <!-- Hidden 1 to Hidden 2 -->
+                                <path d="M170 140 L228 160" class="nn-line nn-line-8" />
+                                <path d="M170 140 L228 240" class="nn-line nn-line-9" />
+                                <path d="M170 200 L228 160" class="nn-line nn-line-10" />
+                                <path d="M170 200 L228 240" class="nn-line nn-line-11" />
+                                <path d="M170 260 L228 160" class="nn-line nn-line-12" />
+                                <path d="M170 260 L228 240" class="nn-line nn-line-13" />
+
+                                <!-- Hidden 2 to Output -->
+                                <path d="M252 160 L306 200" class="nn-line nn-line-14" />
+                                <path d="M252 240 L306 200" class="nn-line nn-line-15" />
+                            </g>
+
+                            <!-- Data Particles -->
+                            <g class="data-particles">
+                                <circle r="4" fill="#00ff9f" class="particle particle-1">
+                                    <animateMotion dur="2s" repeatCount="indefinite"
+                                        path="M80,120 L160,140 L240,160 L320,200" />
+                                </circle>
+                                <circle r="3" fill="#00d4ff" class="particle particle-2">
+                                    <animateMotion dur="2.5s" repeatCount="indefinite"
+                                        path="M80,200 L160,200 L240,240 L320,200" begin="0.5s" />
+                                </circle>
+                                <circle r="4" fill="#a855f7" class="particle particle-3">
+                                    <animateMotion dur="2.2s" repeatCount="indefinite"
+                                        path="M80,280 L160,260 L240,240 L320,200" begin="1s" />
+                                </circle>
+                            </g>
+
+                            <!-- Battery Icon (Right side) -->
+                            <g class="battery-icon" transform="translate(330, 280)">
+                                <rect x="0" y="10" width="40" height="70" rx="5" fill="none" stroke="#6366f1"
+                                    stroke-width="2" />
+                                <rect x="12" y="0" width="16" height="10" rx="3" fill="#6366f1" />
+                                <rect x="5" y="55" width="30" height="20" rx="2" fill="url(#batteryGradient)"
+                                    class="battery-level" />
+                                <rect x="5" y="35" width="30" height="20" rx="2" fill="url(#batteryGradient)"
+                                    class="battery-level battery-level-2" />
+                                <rect x="5" y="15" width="30" height="20" rx="2" fill="url(#batteryGradient)"
+                                    class="battery-level battery-level-3" />
+                            </g>
+
+                            <!-- Circular Orbit -->
+                            <circle cx="200" cy="200" r="170" fill="none" stroke="rgba(99, 102, 241, 0.2)"
+                                stroke-width="1" stroke-dasharray="5 5" class="orbit-ring" />
+
+                            <!-- Orbiting Particles -->
+                            <circle r="6" fill="#6366f1" class="orbit-particle">
+                                <animateMotion dur="8s" repeatCount="indefinite"
+                                    path="M200,30 A170,170 0 1,1 199,30 A170,170 0 1,1 200,30" />
+                            </circle>
+                            <circle r="4" fill="#ec4899" class="orbit-particle">
+                                <animateMotion dur="8s" repeatCount="indefinite"
+                                    path="M200,30 A170,170 0 1,1 199,30 A170,170 0 1,1 200,30" begin="-4s" />
+                            </circle>
+                        </svg>
+
+                        <!-- Labels -->
+                        <div class="visual-labels">
+                            <span class="label label-input">Telemetry</span>
+                            <span class="label label-ai">AI Engine</span>
+                            <span class="label label-output">Control</span>
+                        </div>
+                    </div>
+
+                    <div class="flow-loop">
+                        <span>Continuous Learning Loop</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Deep Dive -->
+    <section id="technology" class="section section-dark">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">The Technology</span>
+                <h2 class="section-title">
+                    AI That Learns From<br>
+                    <span class="gradient-text">Intervention Outcomes</span>
+                </h2>
+                <p class="section-subtitle">
+                    Our models don't just observe—they learn from how batteries respond to active charging
+                    interventions.
+                    This creates a compounding data advantage OEMs cannot simulate.
+                </p>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-number">01</div>
+                    <h3>Learning, Not Rules</h3>
+                    <p>Model-driven charging policies that rewrite behavior in real-time based on battery state and
+                        history.</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-number">02</div>
+                    <h3>Degradation Trajectories</h3>
+                    <p>Longitudinal data on how batteries age under different conditions, building predictive accuracy
+                        over time.</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-number">03</div>
+                    <h3>Intervention Data</h3>
+                    <p>We learn from what happens after a charging decision—not just passive telemetry, but active
+                        outcomes.</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-number">04</div>
+                    <h3>Granted Patent</h3>
+                    <p>Protected IP on core charging technology strengthens our defensibility against replication.</p>
+                </div>
+            </div>
+            <div class="defensibility-banner">
+                <div class="banner-content">
+                    <div class="banner-icon">🛡️</div>
+                    <div class="banner-text">
+                        <h4>Why OEMs Can't Copy This</h4>
+                        <p>Our models learn from intervention outcomes, not just passive telemetry—creating a data
+                            advantage OEMs cannot simulate.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Section -->
+    <section id="market" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Market Scale</span>
+                <h2 class="section-title">
+                    A Platform Across<br>
+                    <span class="gradient-text">All Battery-Powered Assets</span>
+                </h2>
+            </div>
+            <div class="market-showcase">
+                <div class="market-item">
+                    <div class="market-icon">🚁</div>
+                    <h4>Drones & eVTOL</h4>
+                </div>
+                <div class="market-item">
+                    <div class="market-icon">🚌</div>
+                    <h4>EV Fleets & Buses</h4>
+                </div>
+                <div class="market-item">
+                    <div class="market-icon">🚕</div>
+                    <h4>E-Cabs & Rickshaws</h4>
+                </div>
+                <div class="market-item">
+                    <div class="market-icon">🔋</div>
+                    <h4>Grid-Scale BESS</h4>
+                </div>
+            </div>
+            <div class="scale-banner">
+                <div class="scale-content">
+                    <div class="scale-stat">
+                        <span class="scale-range">2 kWh → 1 MWh</span>
+                        <span class="scale-label">Same learning system, any scale</span>
+                    </div>
+                    <p class="scale-description">
+                        Generalizes across chemistries, voltages, and asset classes without retraining from scratch.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Traction Section -->
+    <section id="traction" class="section section-dark">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Traction</span>
+                <h2 class="section-title">
+                    Deployed in Production<br>
+                    <span class="gradient-text">With Paying Customers</span>
+                </h2>
+            </div>
+            <div class="traction-grid">
+                <div class="traction-card highlight">
+                    <div class="traction-icon">🚀</div>
+                    <div class="traction-value">Paying</div>
+                    <div class="traction-label">OEM Customer</div>
+                    <div class="traction-detail">Defense drone manufacturer</div>
+                </div>
+                <div class="traction-card">
+                    <div class="traction-icon">🔧</div>
+                    <div class="traction-value">Live</div>
+                    <div class="traction-label">Firmware Deployed</div>
+                    <div class="traction-detail">Production customer assets</div>
+                </div>
+                <div class="traction-card">
+                    <div class="traction-icon">🚛</div>
+                    <div class="traction-value">Volvo Eicher</div>
+                    <div class="traction-label">Active Pilot</div>
+                    <div class="traction-detail">Commercial vehicle fleet</div>
+                </div>
+                <div class="traction-card">
+                    <div class="traction-icon">⬆️</div>
+                    <div class="traction-value">99.99%</div>
+                    <div class="traction-label">System Uptime</div>
+                    <div class="traction-detail">Production-grade reliability</div>
+                </div>
+            </div>
+            <div class="customer-logos">
+                <span class="logos-label">Trusted by industry leaders</span>
+                <div class="logos-row">
+                    <div class="logo-placeholder">Defense OEM</div>
+                    <div class="logo-placeholder">Volvo Eicher</div>
+                    <div class="logo-placeholder">EV Fleet Partners</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">The Team</span>
+                <h2 class="section-title">
+                    Built by Engineers Operating<br>
+                    <span class="gradient-text">Real-Time AI on Live Infrastructure</span>
+                </h2>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <div class="avatar-placeholder">A</div>
+                    </div>
+                    <h4>Avinash</h4>
+                    <span class="team-role">Co-founder & CEO</span>
+                    <p>Deep expertise in batteries, charging systems, and energy infrastructure deployment.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <div class="avatar-placeholder">A</div>
+                    </div>
+                    <h4>Arpit</h4>
+                    <span class="team-role">Co-founder & CTO</span>
+                    <p>Experience deploying and operating learning systems in production. Core system architecture
+                        design.</p>
+                </div>
+            </div>
+            <div class="team-credentials">
+                <div class="credential">
+                    <span class="credential-icon">🎓</span>
+                    <span>IIT Mandi</span>
+                </div>
+                <div class="credential">
+                    <span class="credential-icon">🏭</span>
+                    <span>Real-time AI in production</span>
+                </div>
+                <div class="credential">
+                    <span class="credential-icon">🔌</span>
+                    <span>Safety-critical energy systems</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="section section-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">
+                    If the next decade belongs to AI + Energy,<br>
+                    <span class="gradient-text">Eneractiq Labs is building the OS to power it.</span>
+                </h2>
+                <p class="cta-subtitle">
+                    Ready to extend your battery life by 30-40%?
+                </p>
+                <div class="cta-buttons">
+                    <a href="mailto:hello@eneractiqlabs.com" class="btn btn-primary btn-lg">
+                        <span>Contact Us</span>
+                        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content footer-split">
+                <!-- Contact Details - Left -->
+                <div class="footer-contact">
+                    <h5>Get in Touch</h5>
+                    <div class="contact-item">
+                        <span class="contact-icon">📧</span>
+                        <a href="mailto:avinash@electica.in">avinash@electica.in</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📧</span>
+                        <a href="mailto:arpit@electica.in">arpit@electica.in</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <a href="tel:+918817771103">+91-881-777-1103</a>
+                    </div>
+                </div>
+                <!-- Links - Right -->
+                <div class="footer-links-row">
+                    <div class="footer-col">
+                        <h5>Product</h5>
+                        <a href="#problem">Problem</a>
+                        <a href="#solution">Solution</a>
+                        <a href="#technology">Technology</a>
+                    </div>
+                    <div class="footer-col">
+                        <h5>Company</h5>
+                        <a href="#traction">Traction</a>
+                        <a href="#team">Team</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                    <div class="footer-col">
+                        <h5>Legal</h5>
+                        <a href="terms.html">Terms & Conditions</a>
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="refund.html">Refund Policy</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Giant Animated Brand Name -->
+            <div class="footer-giant-brand">
+                <div class="giant-text-wrapper">
+                    <span class="giant-letter" style="--delay: 0">E</span>
+                    <span class="giant-letter" style="--delay: 1">N</span>
+                    <span class="giant-letter" style="--delay: 2">E</span>
+                    <span class="giant-letter" style="--delay: 3">R</span>
+                    <span class="giant-letter" style="--delay: 4">A</span>
+                    <span class="giant-letter" style="--delay: 5">C</span>
+                    <span class="giant-letter" style="--delay: 6">T</span>
+                    <span class="giant-letter" style="--delay: 7">I</span>
+                    <span class="giant-letter" style="--delay: 8">Q</span>
+                </div>
+                <div class="giant-text-wrapper giant-text-labs">
+                    <span class="giant-letter-sm" style="--delay: 9">L</span>
+                    <span class="giant-letter-sm" style="--delay: 10">A</span>
+                    <span class="giant-letter-sm" style="--delay: 11">B</span>
+                    <span class="giant-letter-sm" style="--delay: 12">S</span>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>The AI-Native Battery Operating System</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
