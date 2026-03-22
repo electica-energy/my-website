@@ -159,7 +159,7 @@
         }
 
         .nav-logo img {
-            height: 32px;
+            height: 48px;
             width: auto;
         }
 
@@ -343,7 +343,8 @@
         .problem-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(255, 68, 85, 0.1); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 24px; }
         .problem-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
         .problem-card p { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
-        .problem-stat { margin-top: 20px; font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--red); }
+        .problem-stat { margin-top: 20px; font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--text); }
+        .problem-stat .unit { color: var(--accent); }
         .problem-stat span { font-size: 13px; color: var(--text-tertiary); font-family: var(--font); font-weight: 400; display: block; margin-top: 2px; }
 
         /* ─── SOLUTION ─── */
@@ -498,11 +499,8 @@
         }
         .benchmark-card { background: var(--bg-card); padding: 48px 32px; text-align: center; transition: all 0.3s ease; }
         .benchmark-card:hover { background: var(--bg-card-hover); }
-        .benchmark-value { font-size: 56px; font-weight: 800; letter-spacing: -3px; font-family: var(--mono); line-height: 1; margin-bottom: 4px; }
-        .benchmark-value.green { color: var(--green); }
-        .benchmark-value.accent { color: var(--accent); }
-        .benchmark-value.blue { color: var(--blue); }
-        .benchmark-unit { font-size: 24px; font-weight: 400; opacity: 0.7; }
+        .benchmark-value { font-size: 56px; font-weight: 800; letter-spacing: -3px; font-family: var(--mono); line-height: 1; margin-bottom: 4px; color: var(--text); }
+        .benchmark-unit { font-size: 24px; font-weight: 400; color: var(--accent); }
         .benchmark-label { font-size: 14px; color: var(--text-secondary); margin-top: 8px; }
         .benchmark-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; font-family: var(--mono); }
 
@@ -546,10 +544,8 @@
         .vertical-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
         .vertical-card p { color: var(--text-secondary); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
         .vertical-metric { display: flex; align-items: baseline; gap: 8px; padding-top: 20px; border-top: 1px solid var(--border); }
-        .vertical-metric .value { font-family: var(--mono); font-size: 28px; font-weight: 700; }
-        .vertical-card:nth-child(1) .value { color: var(--accent); }
-        .vertical-card:nth-child(2) .value { color: var(--green); }
-        .vertical-card:nth-child(3) .value { color: var(--blue); }
+        .vertical-metric .value { font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--text); }
+        .vertical-metric .value .unit { color: var(--accent); }
         .vertical-metric .desc { font-size: 13px; color: var(--text-tertiary); }
 
         /* ─── ROI ─── */
@@ -569,7 +565,7 @@
         .roi-result h3 { font-size: 14px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 32px; }
         .roi-metric { padding: 20px 0; border-bottom: 1px solid var(--border); }
         .roi-metric:last-child { border-bottom: none; }
-        .roi-metric .roi-value { font-family: var(--mono); font-size: 36px; font-weight: 700; color: var(--green); letter-spacing: -2px; }
+        .roi-metric .roi-value { font-family: var(--mono); font-size: 36px; font-weight: 700; color: var(--text); letter-spacing: -2px; }
         .roi-metric .roi-label { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
 
         /* ─── VISION ─── */
@@ -830,13 +826,13 @@
                 <div class="problem-icon">&#9889;</div>
                 <h3>Premature Degradation</h3>
                 <p>Improper charging patterns destroy battery cells from the inside out, forcing costly replacements far before end-of-life.</p>
-                <div class="problem-stat">~40%<span>capacity lost prematurely</span></div>
+                <div class="problem-stat">~40<span class="unit">%</span><span>capacity lost prematurely</span></div>
             </div>
             <div class="problem-card">
                 <div class="problem-icon">&#128176;</div>
                 <h3>Crippling Replacement Costs</h3>
                 <p>Battery packs represent roughly half of an EV's total cost. Every premature replacement is a financial catastrophe for fleet operators.</p>
-                <div class="problem-stat">~50%<span>of total EV cost is the battery</span></div>
+                <div class="problem-stat">~50<span class="unit">%</span><span>of total EV cost is the battery</span></div>
             </div>
             <div class="problem-card">
                 <div class="problem-icon">&#128268;</div>
@@ -926,17 +922,17 @@
         </div>
         <div class="benchmark-cards reveal">
             <div class="benchmark-card">
-                <div class="benchmark-value green">67.2<span class="benchmark-unit">%</span></div>
+                <div class="benchmark-value">67.2<span class="benchmark-unit">%</span></div>
                 <div class="benchmark-label">Capacity retained after 3,000 cycles</div>
                 <div class="benchmark-sub">vs. 45% with standard CC-CV</div>
             </div>
             <div class="benchmark-card">
-                <div class="benchmark-value accent">1,650</div>
+                <div class="benchmark-value">1,650</div>
                 <div class="benchmark-label">Total cycle life achieved</div>
                 <div class="benchmark-sub">vs. 1,200 standard cycles</div>
             </div>
             <div class="benchmark-card">
-                <div class="benchmark-value blue">37.5<span class="benchmark-unit">%</span></div>
+                <div class="benchmark-value">37.5<span class="benchmark-unit">%</span></div>
                 <div class="benchmark-label">Increase in total cycle life</div>
                 <div class="benchmark-sub">Peer-reviewed improvement</div>
             </div>
@@ -1034,7 +1030,7 @@
                 <h3>Drones &amp; UAVs</h3>
                 <p>Active licensing partnership for drone battery optimization. Extending mission-critical flight time and eliminating premature pack failures.</p>
                 <div class="vertical-metric">
-                    <div class="value">$10K+</div>
+                    <div class="value"><span class="unit">$</span>10K<span class="unit">+</span></div>
                     <div class="desc">savings per battery pack</div>
                 </div>
             </div>
@@ -1043,7 +1039,7 @@
                 <h3>Electric Vehicles</h3>
                 <p>Adaptive charging intelligence for passenger EVs, fleets, and commercial vehicles. Lifetime battery cost reduction at scale.</p>
                 <div class="vertical-metric">
-                    <div class="value">$3,375</div>
+                    <div class="value"><span class="unit">$</span>3,375</div>
                     <div class="desc">lifetime savings per vehicle</div>
                 </div>
             </div>
@@ -1052,7 +1048,7 @@
                 <h3>Grid Storage</h3>
                 <p>Battery intelligence SaaS for utility-scale energy storage. Optimize charge-discharge cycles, predict failures, and maximize asset ROI.</p>
                 <div class="vertical-metric">
-                    <div class="value">$46.2M</div>
+                    <div class="value"><span class="unit">$</span>46.2<span class="unit">M</span></div>
                     <div class="desc">annual SaaS revenue potential</div>
                 </div>
             </div>
