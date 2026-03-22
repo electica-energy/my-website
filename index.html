@@ -1224,45 +1224,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Block 3: Adaptive Control (text left, visual right) -->
-        <div class="showcase-block reveal">
-            <div class="showcase-text">
-                <h3>Push adaptive charging profiles</h3>
-                <p>SetChargingProfile commands are pushed back to the charger via OCPP. Dynamic power limits adjust per SoC band - from constant power at 0-20% to pulse taper at 80-95%.</p>
-                <div class="try-btns">
-                    <a href="#contact" class="try-btn">
-                        <span>REQUEST A DEMO</span>
-                        <div class="shortcut"><span class="key">R</span> then <span class="key">D</span></div>
-                    </a>
-                </div>
-            </div>
-            <div class="showcase-visual">
-                <div class="api-mock" id="apiMock3">
-                    <div class="api-step">
-                        <div class="api-step-title">
-                            <div class="api-step-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-                            <span>SetChargingProfile &#8594; CP-V51</span>
-                            <span class="api-step-badge">&#10003;</span>
-                        </div>
-                    </div>
-                    <div class="api-step">
-                        <div class="api-step-label">CHARGE SCHEDULE</div>
-                        <div class="api-result"><span class="api-check">&#9632;</span><span class="api-num"></span><span style="color:var(--text-secondary);font-size:12px;">0-20% &nbsp;<span style="color:var(--accent)">132kW</span> &nbsp;constant_power</span></div>
-                        <div class="api-result"><span class="api-check">&#9632;</span><span class="api-num"></span><span style="color:var(--text-secondary);font-size:12px;">20-40% <span style="color:var(--accent)">150kW</span> &nbsp;MSCC_max</span></div>
-                        <div class="api-result"><span class="api-check">&#9632;</span><span class="api-num"></span><span style="color:var(--text-secondary);font-size:12px;">40-60% <span style="color:var(--accent)">142kW</span> &nbsp;MSCC_step2</span></div>
-                        <div class="api-result"><span class="api-check">&#9632;</span><span class="api-num"></span><span style="color:var(--text-secondary);font-size:12px;">60-80% <span style="color:var(--accent)">127kW</span> &nbsp;MSCC_step3</span></div>
-                        <div class="api-result"><span class="api-check">&#9632;</span><span class="api-num"></span><span style="color:var(--text-secondary);font-size:12px;">80-95% <span style="color:var(--accent)">&nbsp;82kW</span> &nbsp;pulse_taper</span></div>
-                    </div>
-                    <div class="api-step">
-                        <div class="api-step-title">
-                            <div class="api-step-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-                            <span>Life extended: <span style="color:var(--accent)">+37.5%</span></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 
