@@ -1086,7 +1086,6 @@
                     <label>Avg. Daily Charge Cycles</label>
                     <input type="number" id="dailyCycles" value="1" min="0.25" max="10" step="0.25" placeholder="Cycles per day">
                 </div>
-                <button class="btn-primary" onclick="calculateROI()" style="margin-top:8px;">Calculate Savings &#8594;</button>
             </div>
             <div class="roi-result glow-card" id="roiResult">
                 <h3>Your Estimated Savings</h3>
@@ -1101,10 +1100,6 @@
                 <div class="roi-metric">
                     <div class="roi-value" id="roiReplacementSaving">-</div>
                     <div class="roi-label">Total savings from avoided replacements</div>
-                </div>
-                <div class="roi-metric">
-                    <div class="roi-value" id="roiTotalValue" style="color: var(--accent);">-</div>
-                    <div class="roi-label">Total economic value over 10-year horizon</div>
                 </div>
             </div>
         </div>
