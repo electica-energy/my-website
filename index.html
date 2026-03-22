@@ -28,10 +28,11 @@
             --accent: #ff5500;
             --accent-glow: rgba(255, 85, 0, 0.15);
             --accent-2: #ff7733;
-            --green: #00cc88;
-            --green-glow: rgba(0, 204, 136, 0.12);
-            --blue: #3388ff;
-            --red: #ff4455;
+            --coral: #ff6b47;
+            --green: #cc6633;
+            --green-glow: rgba(255, 85, 0, 0.08);
+            --blue: #999;
+            --red: #cc4444;
             --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             --mono: 'JetBrains Mono', monospace;
         }
@@ -96,13 +97,13 @@
         }
         .mesh-blob-2 {
             width: 400px; height: 400px;
-            background: rgba(51, 136, 255, 0.06);
+            background: rgba(255, 85, 0, 0.04);
             bottom: -100px; left: -100px;
             animation: blobFloat 18s ease-in-out infinite reverse;
         }
         .mesh-blob-3 {
             width: 350px; height: 350px;
-            background: rgba(0, 204, 136, 0.05);
+            background: rgba(255, 119, 51, 0.04);
             top: 40%; left: 60%;
             animation: blobFloat 20s ease-in-out infinite 3s;
         }
@@ -149,7 +150,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 96px;
+            height: 60px;
         }
 
         .nav-logo {
@@ -204,8 +205,8 @@
             width: 1000px; height: 1000px;
             background:
                 radial-gradient(ellipse at 30% 20%, rgba(255, 85, 0, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 60%, rgba(51, 136, 255, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(0, 204, 136, 0.06) 0%, transparent 50%);
+                radial-gradient(ellipse at 70% 60%, rgba(255, 85, 0, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(255, 119, 51, 0.04) 0%, transparent 50%);
             pointer-events: none;
             animation: heroMesh 12s ease-in-out infinite;
         }
@@ -226,7 +227,7 @@
 
         .hero-badge .dot {
             width: 6px; height: 6px;
-            background: var(--green); border-radius: 50%;
+            background: var(--accent); border-radius: 50%;
             animation: pulse-dot 2s ease infinite;
         }
 
@@ -353,9 +354,9 @@
         .solution-header .section-desc { margin: 0 auto; }
         .os-name {
             display: inline-flex; align-items: center; gap: 12px;
-            font-family: var(--mono); font-size: 16px; color: var(--green);
+            font-family: var(--mono); font-size: 16px; color: var(--accent);
             background: var(--green-glow); padding: 8px 20px; border-radius: 8px;
-            border: 1px solid rgba(0, 204, 136, 0.2); margin-bottom: 24px;
+            border: 1px solid rgba(255, 85, 0, 0.2); margin-bottom: 24px;
         }
         .solution-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); border-radius: 16px; overflow: hidden; }
         .solution-card { background: var(--bg-card); padding: 48px 40px; position: relative; transition: all 0.3s ease; }
@@ -366,8 +367,8 @@
         .solution-card .card-tag { display: inline-flex; margin-top: 20px; padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: var(--mono); }
         .tag-ai { background: rgba(255, 85, 0, 0.1); color: var(--accent); border: 1px solid rgba(255, 85, 0, 0.2); }
 
-        .tag-saas { background: rgba(51, 136, 255, 0.1); color: var(--blue); border: 1px solid rgba(51, 136, 255, 0.2); }
-        .tag-oem { background: rgba(255, 170, 85, 0.1); color: #ffaa55; border: 1px solid rgba(255, 170, 85, 0.2); }
+        .tag-saas { background: rgba(150, 150, 150, 0.1); color: var(--blue); border: 1px solid rgba(150, 150, 150, 0.2); }
+        .tag-oem { background: rgba(150, 150, 150, 0.1); color: #aaa; border: 1px solid rgba(150, 150, 150, 0.2); }
 
         /* ─── TRY BATTERY CONTROL ─── */
         .try-section { border-bottom: 1px solid var(--border); }
@@ -440,13 +441,13 @@
             white-space: nowrap;
         }
         .terminal-line .ts { color: var(--text-tertiary); }
-        .terminal-line .arrow-in { color: var(--green); }
+        .terminal-line .arrow-in { color: #00cc88; }
         .terminal-line .arrow-out { color: var(--accent); }
-        .terminal-line .msg-type { color: var(--blue); font-weight: 600; }
+        .terminal-line .msg-type { color: #3388ff; font-weight: 600; }
         .terminal-line .val { color: var(--text-secondary); }
         .terminal-line .val-accent { color: var(--accent); font-weight: 600; }
-        .terminal-line .val-green { color: var(--green); font-weight: 600; }
-        .terminal-line .status-ok { color: var(--green); }
+        .terminal-line .val-green { color: #00cc88; font-weight: 600; }
+        .terminal-line .status-ok { color: #00cc88; }
         .terminal-line .status-warn { color: #ffaa00; }
         .terminal-line .dim { color: #333; }
 
@@ -474,11 +475,11 @@
         .terminal-live {
             position: absolute; top: 16px; right: 24px;
             display: flex; align-items: center; gap: 6px;
-            font-family: var(--mono); font-size: 11px; color: var(--green);
+            font-family: var(--mono); font-size: 11px; color: #00cc88;
             letter-spacing: 1px; text-transform: uppercase;
         }
         .terminal-live .live-dot {
-            width: 6px; height: 6px; background: var(--green);
+            width: 6px; height: 6px; background: #00cc88;
             border-radius: 50%; animation: pulse-dot 1.5s ease infinite;
         }
 
@@ -488,8 +489,8 @@
         .proof-header .section-desc { margin: 0 auto; }
         .proof-badge {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 6px 16px; border: 1px solid rgba(51, 136, 255, 0.3);
-            background: rgba(51, 136, 255, 0.08); border-radius: 100px;
+            padding: 6px 16px; border: 1px solid rgba(150, 150, 150, 0.3);
+            background: rgba(255, 85, 0, 0.06); border-radius: 100px;
             font-size: 13px; font-weight: 500; color: var(--blue); margin-bottom: 24px;
         }
         .benchmark-cards {
@@ -511,10 +512,10 @@
         .comparison-table tbody tr:last-child td { border-bottom: none; }
         .comparison-table tbody tr:hover { background: var(--bg-card-hover); }
         .comparison-table .metric-name { color: var(--text-secondary); font-weight: 500; }
-        .comparison-table .electica-val { color: var(--green); font-weight: 700; font-family: var(--mono); }
+        .comparison-table .electica-val { color: var(--accent); font-weight: 700; font-family: var(--mono); }
         .comparison-table .standard-val { color: var(--text-tertiary); font-family: var(--mono); }
         .comparison-table .improvement { font-family: var(--mono); font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
-        .improvement.positive { background: rgba(0, 204, 136, 0.1); color: var(--green); }
+        .improvement.positive { background: rgba(255, 85, 0, 0.1); color: var(--accent); }
 
         /* ─── LIFE BARS ─── */
         .life-comparison { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 48px; }
@@ -538,8 +539,8 @@
         .vertical-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
         .vertical-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
         .vertical-card:nth-child(1)::after { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
-        .vertical-card:nth-child(2)::after { background: linear-gradient(90deg, var(--green), #00eebb); }
-        .vertical-card:nth-child(3)::after { background: linear-gradient(90deg, var(--blue), #66aaff); }
+        .vertical-card:nth-child(2)::after { background: linear-gradient(90deg, var(--accent-2), #ffaa55); }
+        .vertical-card:nth-child(3)::after { background: linear-gradient(90deg, #888, #bbb); }
         .vertical-icon { font-size: 32px; margin-bottom: 20px; }
         .vertical-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
         .vertical-card p { color: var(--text-secondary); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
@@ -722,7 +723,7 @@
             .nav-links { display: none; }
             .nav-links.active {
                 display: flex; flex-direction: column;
-                position: absolute; top: 96px; left: 0; right: 0;
+                position: absolute; top: 60px; left: 0; right: 0;
                 background: var(--bg); border-bottom: 1px solid var(--border);
                 padding: 24px; gap: 16px;
             }
@@ -912,8 +913,8 @@
 
 <!-- BENCHMARKS -->
 <section class="proof-section" id="proof">
-    <div class="mesh-blob" style="width:400px;height:400px;background:rgba(0,204,136,0.06);top:-100px;right:-50px;"></div>
-    <div class="mesh-blob" style="width:300px;height:300px;background:rgba(51,136,255,0.05);bottom:0;left:-80px;"></div>
+    <div class="mesh-blob" style="width:400px;height:400px;background:rgba(255,85,0,0.05);top:-100px;right:-50px;"></div>
+    <div class="mesh-blob" style="width:300px;height:300px;background:rgba(255,119,51,0.04);bottom:0;left:-80px;"></div>
     <div class="container">
         <div class="proof-header">
             <div class="proof-badge reveal">&#9670; IEEE Validated</div>
