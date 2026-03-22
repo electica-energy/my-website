@@ -344,8 +344,8 @@
         .problem-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
         .problem-card p { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
         .problem-stat { margin-top: 20px; font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--text); }
-        .problem-stat .unit { color: var(--accent); }
-        .problem-stat span { font-size: 13px; color: var(--text-tertiary); font-family: var(--font); font-weight: 400; display: block; margin-top: 2px; }
+        .problem-stat .unit { color: var(--accent); font-size: 20px; }
+        .problem-stat .desc { font-size: 13px; color: var(--text-tertiary); font-family: var(--font); font-weight: 400; display: block; margin-top: 2px; }
 
         /* ─── SOLUTION ─── */
         .solution-section { background: var(--bg-subtle); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -826,19 +826,19 @@
                 <div class="problem-icon">&#9889;</div>
                 <h3>Premature Degradation</h3>
                 <p>Improper charging patterns destroy battery cells from the inside out, forcing costly replacements far before end-of-life.</p>
-                <div class="problem-stat">~40<span class="unit">%</span><span>capacity lost prematurely</span></div>
+                <div class="problem-stat">~40<span class="unit">%</span><span class="desc">capacity lost prematurely</span></div>
             </div>
             <div class="problem-card">
                 <div class="problem-icon">&#128176;</div>
                 <h3>Crippling Replacement Costs</h3>
                 <p>Battery packs represent roughly half of an EV's total cost. Every premature replacement is a financial catastrophe for fleet operators.</p>
-                <div class="problem-stat">~50<span class="unit">%</span><span>of total EV cost is the battery</span></div>
+                <div class="problem-stat">~50<span class="unit">%</span><span class="desc">of total EV cost is the battery</span></div>
             </div>
             <div class="problem-card">
                 <div class="problem-icon">&#128268;</div>
                 <h3>Grid Instability</h3>
                 <p>Unmanaged EV charging creates severe load imbalances, stressing grid infrastructure and increasing carbon intensity during peak hours.</p>
-                <div class="problem-stat">Peak<span>load imbalances from unmanaged charging</span></div>
+                <div class="problem-stat">Peak<span class="desc">load imbalances from unmanaged charging</span></div>
             </div>
         </div>
     </div>
@@ -1082,6 +1082,7 @@
                     <label>Avg. Daily Charge Cycles</label>
                     <input type="number" id="dailyCycles" value="1" min="0.25" max="10" step="0.25" placeholder="Cycles per day">
                 </div>
+                <button class="btn-primary" onclick="calculateROI()" style="margin-top:8px; width:100%; justify-content:center;">Calculate Savings &#8594;</button>
             </div>
             <div class="roi-result glow-card" id="roiResult">
                 <h3>Your Estimated Savings</h3>
