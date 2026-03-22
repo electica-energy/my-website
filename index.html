@@ -903,45 +903,97 @@
             text-transform: uppercase;
         }
 
-        /* ─── SCROLL PROGRESS + BACK TO TOP ─── */
-        .scroll-progress {
-            position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important;
-            height: 4px !important; z-index: 99999 !important;
-            background: rgba(255,255,255,0.05);
-        }
-        .scroll-progress-bar {
-            height: 100%; width: 0%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-2), #ffaa55);
-            transition: width 0.15s linear;
-            border-radius: 0 2px 2px 0;
-            box-shadow: 0 0 16px rgba(255,85,0,0.5), 0 0 4px rgba(255,85,0,0.8);
-        }
-        .back-to-top {
-            position: fixed !important; bottom: 32px !important; right: 32px !important;
-            width: 52px !important; height: 52px !important;
-            background: var(--accent) !important; border: none !important; cursor: pointer !important;
-            z-index: 99999 !important;
-            border-radius: 50% !important;
-            opacity: 0; transform: translateY(20px);
-            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        /* ─── SCROLL TO TOP ─── */
+        .scroll-top-wrap {
+            position: fixed;
+            bottom: 36px;
+            right: 36px;
+            z-index: 99999;
+            opacity: 0;
+            transform: translateY(30px) rotate(180deg);
+            transition: opacity 0.5s cubic-bezier(0.34,1.56,0.64,1), transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
             pointer-events: none;
+        }
+        .scroll-top-wrap.show {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+            pointer-events: auto;
+        }
+        .scroll-top-btn {
+            width: 56px;
+            height: 56px;
+            border: none;
+            cursor: pointer;
+            background: transparent;
             padding: 0;
-            box-shadow: 0 4px 24px rgba(255,85,0,0.4);
-            display: flex !important; align-items: center !important; justify-content: center !important;
+            position: relative;
+            display: block;
         }
-        .back-to-top.visible {
-            opacity: 1 !important; transform: translateY(0) !important; pointer-events: auto !important;
+        .scroll-top-btn svg.ring-svg {
+            position: absolute;
+            inset: 0;
+            width: 56px;
+            height: 56px;
         }
-        .back-to-top.visible:hover { background: var(--accent-2) !important; transform: translateY(-3px) !important; box-shadow: 0 8px 32px rgba(255,85,0,0.5); }
-        .btt-ring { display: none; }
-        .btt-arrow {
-            display: flex; align-items: center; justify-content: center;
+        .scroll-top-btn .ring-bg {
+            fill: none;
+            stroke: rgba(255,255,255,0.08);
+            stroke-width: 3;
         }
-        .btt-arrow svg {
-            width: 20px; height: 20px;
-            stroke: #fff; fill: none;
-            stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+        .scroll-top-btn .ring-progress {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-dasharray: 153.94;
+            stroke-dashoffset: 153.94;
+            transform: rotate(-90deg);
+            transform-origin: center;
+            transition: stroke-dashoffset 0.2s ease;
+            filter: drop-shadow(0 0 8px rgba(255,85,0,0.6));
         }
+        .scroll-top-btn .inner-circle {
+            position: absolute;
+            inset: 6px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.25s, border-color 0.25s;
+        }
+        .scroll-top-btn:hover .inner-circle {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .scroll-top-btn .inner-circle svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.25s, transform 0.25s;
+        }
+        .scroll-top-btn:hover .inner-circle svg {
+            stroke: #fff;
+            transform: translateY(-2px);
+        }
+        .scroll-pct {
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--text-tertiary);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            transition: color 0.2s;
+        }
+        .scroll-top-wrap.show .scroll-pct { color: var(--accent); }
 
         /* ─── FOOTER ─── */
         footer { border-top: 1px solid var(--border); padding: 60px 0 40px; }
@@ -1001,8 +1053,6 @@
 </head>
 <body>
 
-<!-- SCROLL PROGRESS BAR -->
-<div class="scroll-progress"><div class="scroll-progress-bar" id="scrollBar"></div></div>
 
 <!-- NAV -->
 <nav>
@@ -1690,16 +1740,19 @@
     <div class="brand-sub reveal">Battery Intelligence, Redefined</div>
 </div>
 
-<!-- BACK TO TOP -->
-<button class="back-to-top" id="backToTop" aria-label="Back to top">
-    <svg class="btt-ring" viewBox="0 0 48 48">
-        <circle class="track" cx="24" cy="24" r="21"/>
-        <circle class="progress" id="bttProgress" cx="24" cy="24" r="21" stroke-dasharray="131.95" stroke-dashoffset="131.95"/>
-    </svg>
-    <div class="btt-arrow">
-        <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
-    </div>
-</button>
+<!-- SCROLL TO TOP -->
+<div class="scroll-top-wrap" id="scrollTopWrap">
+    <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">
+        <svg class="ring-svg" viewBox="0 0 56 56">
+            <circle class="ring-bg" cx="28" cy="28" r="24.5"/>
+            <circle class="ring-progress" id="ringProgress" cx="28" cy="28" r="24.5"/>
+        </svg>
+        <div class="inner-circle">
+            <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+        </div>
+    </button>
+    <div class="scroll-pct" id="scrollPct">0%</div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -2033,31 +2086,41 @@
         glowActive = false;
     });
 
-    // ─── Scroll Progress + Back to Top ───
-    const btt = document.getElementById('backToTop');
-    const bttProgress = document.getElementById('bttProgress');
-    const scrollBar = document.getElementById('scrollBar');
-    const circumference = 2 * Math.PI * 21; // 131.95
+    // ─── Scroll to Top ───
+    (function() {
+        var wrap = document.getElementById('scrollTopWrap');
+        var btn = document.getElementById('scrollTopBtn');
+        var ring = document.getElementById('ringProgress');
+        var pct = document.getElementById('scrollPct');
+        var circ = 2 * Math.PI * 24.5; // ~153.94
 
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = Math.min(scrollTop / docHeight, 1);
+        function onScroll() {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            var docHeight = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+            var percent = Math.min(scrollTop / docHeight, 1);
 
-        // Progress bar at top
-        scrollBar.style.width = (scrollPercent * 100) + '%';
+            // Show/hide
+            if (scrollTop > 300) {
+                wrap.classList.add('show');
+            } else {
+                wrap.classList.remove('show');
+            }
 
-        // Show/hide button
-        btt.classList.toggle('visible', scrollTop > 300);
+            // Ring fill
+            var offset = circ - (percent * circ);
+            ring.style.strokeDashoffset = offset;
 
-        // Ring progress
-        const offset = circumference - (scrollPercent * circumference);
-        bttProgress.style.strokeDashoffset = offset;
-    });
+            // Percentage text
+            pct.textContent = Math.round(percent * 100) + '%';
+        }
 
-    btt.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        btn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    })();
 
     // ─── Keyboard Shortcuts ───
     document.addEventListener('keydown', function(e) {
