@@ -901,21 +901,59 @@
             text-transform: uppercase;
         }
 
-        /* ─── BACK TO TOP ─── */
+        /* ─── SCROLL PROGRESS + BACK TO TOP ─── */
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: 3px; z-index: 1001;
+            background: transparent;
+        }
+        .scroll-progress-bar {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2), #ffaa55);
+            transition: width 0.1s linear;
+            border-radius: 0 2px 2px 0;
+            box-shadow: 0 0 12px rgba(255,85,0,0.4);
+        }
         .back-to-top {
             position: fixed; bottom: 32px; right: 32px;
-            width: 44px; height: 44px; border-radius: 50%;
-            background: var(--accent); color: #fff;
-            border: none; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px; z-index: 999;
-            opacity: 0; transform: translateY(16px);
-            transition: opacity 0.3s, transform 0.3s;
+            width: 48px; height: 48px;
+            background: transparent; border: none; cursor: pointer;
+            z-index: 999;
+            opacity: 0; transform: translateY(20px) scale(0.8);
+            transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1);
             pointer-events: none;
-            box-shadow: 0 4px 20px rgba(255,85,0,0.3);
+            padding: 0;
         }
-        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-        .back-to-top:hover { background: var(--accent-2); transform: translateY(-2px); }
+        .back-to-top.visible {
+            opacity: 1; transform: translateY(0) scale(1); pointer-events: auto;
+        }
+        .back-to-top:hover { transform: translateY(-3px) scale(1.08); }
+        .back-to-top:active { transform: translateY(0) scale(0.95); }
+        .btt-ring {
+            position: absolute; inset: 0;
+        }
+        .btt-ring circle.track {
+            fill: none; stroke: var(--border); stroke-width: 2.5;
+        }
+        .btt-ring circle.progress {
+            fill: none; stroke: var(--accent); stroke-width: 2.5;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: center;
+            transition: stroke-dashoffset 0.15s linear;
+            filter: drop-shadow(0 0 6px rgba(255,85,0,0.4));
+        }
+        .btt-arrow {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .btt-arrow svg {
+            width: 16px; height: 16px;
+            stroke: var(--text); fill: none;
+            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+            transition: stroke 0.2s;
+        }
+        .back-to-top:hover .btt-arrow svg { stroke: var(--accent); }
 
         /* ─── FOOTER ─── */
         footer { border-top: 1px solid var(--border); padding: 60px 0 40px; }
@@ -1661,8 +1699,19 @@
     <div class="brand-sub reveal">Battery Intelligence, Redefined</div>
 </div>
 
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress"><div class="scroll-progress-bar" id="scrollBar"></div></div>
+
 <!-- BACK TO TOP -->
-<button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg class="btt-ring" viewBox="0 0 48 48">
+        <circle class="track" cx="24" cy="24" r="21"/>
+        <circle class="progress" id="bttProgress" cx="24" cy="24" r="21" stroke-dasharray="131.95" stroke-dashoffset="131.95"/>
+    </svg>
+    <div class="btt-arrow">
+        <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+    </div>
+</button>
 
 <!-- FOOTER -->
 <footer>
@@ -1997,11 +2046,28 @@
         glowActive = false;
     });
 
-    // ─── Back to Top ───
+    // ─── Scroll Progress + Back to Top ───
     const btt = document.getElementById('backToTop');
+    const bttProgress = document.getElementById('bttProgress');
+    const scrollBar = document.getElementById('scrollBar');
+    const circumference = 2 * Math.PI * 21; // 131.95
+
     window.addEventListener('scroll', () => {
-        btt.classList.toggle('visible', window.scrollY > 400);
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = Math.min(scrollTop / docHeight, 1);
+
+        // Progress bar at top
+        scrollBar.style.width = (scrollPercent * 100) + '%';
+
+        // Show/hide button
+        btt.classList.toggle('visible', scrollTop > 300);
+
+        // Ring progress
+        const offset = circumference - (scrollPercent * circumference);
+        bttProgress.style.strokeDashoffset = offset;
     });
+
     btt.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
