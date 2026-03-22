@@ -186,6 +186,23 @@
             transition: all 0.2s !important;
         }
         .nav-cta:hover { background: var(--accent) !important; color: #fff !important; transform: translateY(-1px); }
+        .nav-login {
+            background: var(--accent) !important;
+            color: #fff !important;
+            padding: 8px 20px !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+            transition: all 0.2s !important;
+        }
+        .nav-login:hover { background: var(--accent-2) !important; transform: translateY(-1px); }
+        .nav-key {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 18px; height: 18px; border-radius: 3px;
+            background: rgba(255,255,255,0.15); font-size: 10px; font-family: var(--mono);
+            margin-left: 6px; line-height: 1;
+        }
+        .nav-cta .nav-key { background: rgba(0,0,0,0.15); }
 
         .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 24px; cursor: pointer; }
 
@@ -291,6 +308,102 @@
         .hero-stat .label { font-size: 13px; color: var(--text-tertiary); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
 
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ─── ROTATING TEXT ─── */
+        .hero h1 .rotating-wrapper {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            vertical-align: bottom;
+            height: 1.1em;
+            min-width: 280px;
+        }
+        .rotating-word {
+            display: block;
+            position: absolute;
+            left: 0;
+            width: 100%;
+            animation: rotateWord 18s ease-in-out infinite;
+            opacity: 0;
+            transform: translateY(100%);
+        }
+        .rotating-word:nth-child(1) { animation-delay: 0s; }
+        .rotating-word:nth-child(2) { animation-delay: 3s; }
+        .rotating-word:nth-child(3) { animation-delay: 6s; }
+        .rotating-word:nth-child(4) { animation-delay: 9s; }
+        .rotating-word:nth-child(5) { animation-delay: 12s; }
+        .rotating-word:nth-child(6) { animation-delay: 15s; }
+        @keyframes rotateWord {
+            0% { opacity: 0; transform: translateY(100%); }
+            2% { opacity: 1; transform: translateY(0); }
+            14% { opacity: 1; transform: translateY(0); }
+            16% { opacity: 0; transform: translateY(-100%); }
+            100% { opacity: 0; transform: translateY(-100%); }
+        }
+
+        /* ─── COMPETITOR COMPARISON ─── */
+        .compare-section { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-subtle); }
+        .compare-table-wrap { margin-top: 64px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+        .compare-table { width: 100%; border-collapse: collapse; }
+        .compare-table thead th {
+            padding: 20px 24px; font-size: 13px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; border-bottom: 1px solid var(--border); background: var(--bg-card);
+            color: var(--text-tertiary); text-align: left;
+        }
+        .compare-table thead th:first-child { color: var(--text-secondary); }
+        .compare-table thead th.highlight-col { color: var(--accent); background: rgba(255,85,0,0.04); }
+        .compare-table tbody td {
+            padding: 18px 24px; font-size: 14px; border-bottom: 1px solid var(--border);
+            background: var(--bg-card); color: var(--text-secondary);
+        }
+        .compare-table tbody tr:last-child td { border-bottom: none; }
+        .compare-table tbody tr:hover td { background: var(--bg-card-hover); }
+        .compare-table tbody td:first-child { font-weight: 600; color: var(--text); }
+        .compare-table tbody td.highlight-col { background: rgba(255,85,0,0.03); }
+        .compare-table tbody tr:hover td.highlight-col { background: rgba(255,85,0,0.06); }
+        .check { color: var(--accent); font-weight: 700; font-size: 16px; }
+        .partial { color: var(--text-tertiary); }
+        .none { color: #333; }
+
+        /* ─── DATA FLOW VISUAL ─── */
+        .dataflow-section { padding: 120px 0; }
+        .dataflow-header { text-align: center; margin-bottom: 80px; }
+        .dataflow-header .section-desc { margin: 0 auto; }
+        .dataflow-pipeline {
+            display: flex; align-items: center; justify-content: center;
+            gap: 0; position: relative;
+        }
+        .dataflow-node {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+            padding: 32px 28px; text-align: center; width: 220px;
+            position: relative; transition: all 0.3s;
+        }
+        .dataflow-node:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+        .dataflow-node-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+        .dataflow-node-icon svg { width: 32px; height: 32px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+        .dataflow-node h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+        .dataflow-node p { font-size: 12px; color: var(--text-tertiary); line-height: 1.4; }
+        .dataflow-arrow {
+            width: 60px; height: 2px; background: var(--border); position: relative;
+            flex-shrink: 0;
+        }
+        .dataflow-arrow::after {
+            content: ''; position: absolute; right: -1px; top: -4px;
+            border: 5px solid transparent; border-left: 6px solid var(--accent);
+        }
+        .dataflow-pulse {
+            position: absolute; top: -2px; left: 0; width: 12px; height: 6px;
+            background: var(--accent); border-radius: 3px;
+            animation: flowPulse 2s ease-in-out infinite;
+        }
+        @keyframes flowPulse {
+            0% { left: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: calc(100% - 12px); opacity: 0; }
+        }
+        .dataflow-arrow:nth-of-type(2) .dataflow-pulse { animation-delay: 0.7s; }
+        .dataflow-arrow:nth-of-type(3) .dataflow-pulse { animation-delay: 1.4s; }
 
         /* ─── SECTION HEADERS ─── */
         .section-label {
@@ -718,6 +831,11 @@
             .try-right { min-height: 400px; }
             .faq-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
+            .dataflow-pipeline { flex-direction: column; }
+            .dataflow-arrow { width: 2px; height: 40px; }
+            .dataflow-arrow::after { right: auto; top: auto; bottom: -1px; left: -4px; border: 5px solid transparent; border-top: 6px solid var(--accent); border-left: 5px solid transparent; }
+            .dataflow-pulse { animation: none; }
+            .compare-table-wrap { overflow-x: auto; }
         }
 
         @media (max-width: 768px) {
@@ -755,7 +873,8 @@
             <li><a href="#proof">Validation</a></li>
             <li><a href="#verticals">Applications</a></li>
             <li><a href="#faq">FAQ</a></li>
-            <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+            <li><a href="#contact" class="nav-cta">CONTACT <span class="nav-key">C</span></a></li>
+            <li><a href="https://control.electica.in" class="nav-login">LOG IN <span class="nav-key">L</span></a></li>
         </ul>
         <button class="mobile-menu-btn" id="menuBtn" aria-label="Toggle menu">&#9776;</button>
     </div>
@@ -771,10 +890,18 @@
     <div class="mesh-blob mesh-blob-3"></div>
     <div class="container">
         <h1>
-            The <span class="gradient-text">Operating System</span> for Battery Intelligence
+            Battery Intelligence for<br>
+            <span class="rotating-wrapper">
+                <span class="rotating-word gradient-text">Electric Buses</span>
+                <span class="rotating-word gradient-text">Corporate Cabs</span>
+                <span class="rotating-word gradient-text">eVTOLs</span>
+                <span class="rotating-word gradient-text">Drones</span>
+                <span class="rotating-word gradient-text">Grid Storage</span>
+                <span class="rotating-word gradient-text">Every Battery</span>
+            </span>
         </h1>
         <p class="hero-sub">
-            AI-powered battery intelligence that extends battery life by 40% and eliminates costly degradation across every vehicle class.
+            AI-powered battery control that extends battery life by 40% and eliminates costly degradation. From cell-level telemetry to adaptive charging interventions.
         </p>
         <div class="hero-actions">
             <a href="#contact" class="btn-primary">Request a Demo &#8594;</a>
@@ -909,6 +1036,122 @@
                 </div>
                 <div class="terminal-body" id="terminalBody"></div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- DATA FLOW PIPELINE -->
+<section class="dataflow-section reveal">
+    <div class="container">
+        <div class="dataflow-header">
+            <div class="section-label">How It Works</div>
+            <h2 class="section-title">From telemetry to intervention</h2>
+            <p class="section-desc">ElecticaOS collects battery data via OCPP, processes it through cloud-based AI, and pushes adaptive charging profiles back to the charger in real-time.</p>
+        </div>
+        <div class="dataflow-pipeline">
+            <div class="dataflow-node glow-card">
+                <div class="dataflow-node-icon"><svg viewBox="0 0 24 24"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/><path d="M6 10v4M10 10v4M14 10v4"/></svg></div>
+                <h4>Battery Telemetry</h4>
+                <p>Voltage, current, temperature, SoC streamed via OCPP MeterValues</p>
+            </div>
+            <div class="dataflow-arrow"><div class="dataflow-pulse"></div></div>
+            <div class="dataflow-node glow-card">
+                <div class="dataflow-node-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2" stroke="#080808" fill="none" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="none"/></svg></div>
+                <h4>ElecticaOS Cloud</h4>
+                <p>AI engine computes SoH, RUL, degradation models, selects optimal profile</p>
+            </div>
+            <div class="dataflow-arrow"><div class="dataflow-pulse"></div></div>
+            <div class="dataflow-node glow-card">
+                <div class="dataflow-node-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                <h4>Adaptive Control</h4>
+                <p>SetChargingProfile pushed to charger: dynamic power limits per SoC band</p>
+            </div>
+            <div class="dataflow-arrow"><div class="dataflow-pulse"></div></div>
+            <div class="dataflow-node glow-card">
+                <div class="dataflow-node-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                <h4>Extended Life</h4>
+                <p>37.5% more cycles, 40% longer battery life, verified by IEEE</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COMPETITOR COMPARISON -->
+<section class="compare-section" id="compare">
+    <div class="container">
+        <div class="section-label reveal">Why Electica</div>
+        <h2 class="section-title reveal">How we compare</h2>
+        <p class="section-desc reveal">Most battery analytics platforms provide visibility. Only ElecticaOS closes the loop with real-time charging control.</p>
+        <div class="compare-table-wrap reveal">
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Capability</th>
+                        <th class="highlight-col">Electica</th>
+                        <th>TWAICE</th>
+                        <th>ACCURE</th>
+                        <th>Qnovo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>SoH Estimation</td>
+                        <td class="highlight-col"><span class="check">&#10003;</span> Cell-level PINN</td>
+                        <td><span class="check">&#10003;</span> Pack-level</td>
+                        <td><span class="check">&#10003;</span> Pack-level</td>
+                        <td><span class="partial">~</span> Limited</td>
+                    </tr>
+                    <tr>
+                        <td>SoC Prediction</td>
+                        <td class="highlight-col"><span class="check">&#10003;</span> Real-time</td>
+                        <td><span class="check">&#10003;</span> Real-time</td>
+                        <td><span class="check">&#10003;</span> Real-time</td>
+                        <td><span class="check">&#10003;</span> Real-time</td>
+                    </tr>
+                    <tr>
+                        <td>RUL Forecasting</td>
+                        <td class="highlight-col"><span class="check">&#10003;</span> Cycle-accurate</td>
+                        <td><span class="check">&#10003;</span> Trend-based</td>
+                        <td><span class="partial">~</span> Basic</td>
+                        <td><span class="none">&#10005;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Degradation Root Cause</td>
+                        <td class="highlight-col"><span class="check">&#10003;</span> Warburg + EIS</td>
+                        <td><span class="partial">~</span> Aging model</td>
+                        <td><span class="check">&#10003;</span> Anomaly detect</td>
+                        <td><span class="none">&#10005;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Adaptive Charging Control</td>
+                        <td class="highlight-col"><span class="check">&#10003;</span> OCPP profiles</td>
+                        <td><span class="none">&#10005;</span> Read-only</td>
+                        <td><span class="none">&#10005;</span> Read-only</td>
+                        <td><span class="check">&#10003;</span> Embedded only</td>
+                    </tr>
+                    <tr>
+                        <td>OCPP Integration</td>
+                        <td class="highlight-col"><span class="check">&#10003;</span> Native</td>
+                        <td><span class="none">&#10005;</span></td>
+                        <td><span class="none">&#10005;</span></td>
+                        <td><span class="none">&#10005;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Cell-level Topology</td>
+                        <td class="highlight-col"><span class="check">&#10003;</span> 160S2P aware</td>
+                        <td><span class="partial">~</span> Module-level</td>
+                        <td><span class="none">&#10005;</span></td>
+                        <td><span class="partial">~</span> IC-level</td>
+                    </tr>
+                    <tr>
+                        <td>Thermal-aware Throttling</td>
+                        <td class="highlight-col"><span class="check">&#10003;</span> Dynamic</td>
+                        <td><span class="partial">~</span> Alerts only</td>
+                        <td><span class="partial">~</span> Alerts only</td>
+                        <td><span class="check">&#10003;</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </section>
@@ -1547,6 +1790,17 @@
     document.addEventListener('mouseleave', () => {
         glow.classList.remove('active');
         glowActive = false;
+    });
+
+    // ─── Keyboard Shortcuts ───
+    document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+        if (e.key === 'c' || e.key === 'C') {
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+        if (e.key === 'l' || e.key === 'L') {
+            window.open('https://control.electica.in', '_blank');
+        }
     });
 
     // ─── Smooth Scroll ───
