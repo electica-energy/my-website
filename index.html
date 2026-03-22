@@ -390,45 +390,93 @@
         .compare-info-side p { font-size: 16px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 32px; }
         .compare-info-side .try-btns { display: flex; flex-direction: column; gap: 12px; }
 
-        /* ─── DATA FLOW VISUAL ─── */
-        .dataflow-section { padding: 120px 0; }
-        .dataflow-header { text-align: center; margin-bottom: 80px; }
-        .dataflow-header .section-desc { margin: 0 auto; }
-        .dataflow-pipeline {
+        /* ─── SHOWCASE BLOCKS (parallel.ai style) ─── */
+        .showcase-block {
+            display: grid; grid-template-columns: 1fr 1.5fr;
+            gap: 48px; padding: 80px 0;
+            align-items: center;
+        }
+        .showcase-block.reversed { direction: rtl; }
+        .showcase-block.reversed > * { direction: ltr; }
+        .showcase-block + .showcase-block { border-top: 1px solid var(--border); }
+
+        .showcase-text { }
+        .showcase-text h3 { font-size: 28px; font-weight: 800; letter-spacing: -1px; line-height: 1.2; margin-bottom: 12px; }
+        .showcase-text p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 28px; }
+        .showcase-text .try-btns { display: flex; flex-direction: column; gap: 10px; }
+
+        .showcase-visual {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            min-height: 320px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* API Mock Visual */
+        .api-mock {
+            padding: 24px;
+            font-family: var(--mono);
+            font-size: 12px;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .api-step {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            display: flex; flex-direction: column; gap: 8px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: all 0.4s ease;
+        }
+        .api-step.visible { opacity: 1; transform: translateY(0); }
+        .api-step-title {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 12px; color: var(--text-secondary);
+        }
+        .api-step-icon {
+            width: 20px; height: 20px; border-radius: 50%;
+            background: rgba(255,85,0,0.1);
             display: flex; align-items: center; justify-content: center;
-            gap: 0; position: relative;
-        }
-        .dataflow-node {
-            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
-            padding: 32px 28px; text-align: center; width: 220px;
-            position: relative; transition: all 0.3s;
-        }
-        .dataflow-node:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
-        .dataflow-node-icon { font-size: 28px; margin-bottom: 12px; display: block; }
-        .dataflow-node-icon svg { width: 32px; height: 32px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-        .dataflow-node h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-        .dataflow-node p { font-size: 12px; color: var(--text-tertiary); line-height: 1.4; }
-        .dataflow-arrow {
-            width: 60px; height: 2px; background: var(--border); position: relative;
             flex-shrink: 0;
         }
-        .dataflow-arrow::after {
-            content: ''; position: absolute; right: -1px; top: -4px;
-            border: 5px solid transparent; border-left: 6px solid var(--accent);
+        .api-step-icon svg { width: 10px; height: 10px; stroke: var(--accent); fill: none; stroke-width: 2; }
+        .api-step-label { text-transform: uppercase; letter-spacing: 1px; font-size: 11px; color: var(--text-tertiary); }
+        .api-step-badge { font-size: 11px; color: var(--accent); font-weight: 600; margin-left: auto; }
+
+        /* Progress bars */
+        .api-bars {
+            display: flex; gap: 2px; height: 24px; align-items: flex-end;
         }
-        .dataflow-pulse {
-            position: absolute; top: -2px; left: 0; width: 12px; height: 6px;
-            background: var(--accent); border-radius: 3px;
-            animation: flowPulse 2s ease-in-out infinite;
+        .api-bar {
+            width: 3px; border-radius: 2px;
+            background: var(--accent);
+            transition: height 0.6s ease;
         }
-        @keyframes flowPulse {
-            0% { left: 0; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { left: calc(100% - 12px); opacity: 0; }
+        .api-bar.dim { background: var(--border); }
+
+        /* Result rows */
+        .api-result {
+            display: flex; align-items: center; gap: 10px;
+            padding: 6px 0;
         }
-        .dataflow-arrow:nth-of-type(2) .dataflow-pulse { animation-delay: 0.7s; }
-        .dataflow-arrow:nth-of-type(3) .dataflow-pulse { animation-delay: 1.4s; }
+        .api-result .api-check { color: var(--accent); font-size: 12px; }
+        .api-result .api-num { color: var(--text-tertiary); font-size: 12px; width: 16px; }
+        .api-result .api-data {
+            height: 10px; border-radius: 3px;
+            background: var(--border);
+        }
+        .api-result .api-data.filled { background: rgba(255,85,0,0.2); }
+
+        /* Skeleton shimmer */
+        .skeleton-bar {
+            height: 10px; border-radius: 3px;
+            background: linear-gradient(90deg, var(--border) 25%, rgba(255,255,255,0.05) 50%, var(--border) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s linear infinite;
+        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
         /* ─── SECTION HEADERS ─── */
         .section-label {
@@ -856,10 +904,7 @@
             .try-right { min-height: 400px; }
             .faq-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
-            .dataflow-pipeline { flex-direction: column; }
-            .dataflow-arrow { width: 2px; height: 40px; }
-            .dataflow-arrow::after { right: auto; top: auto; bottom: -1px; left: -4px; border: 5px solid transparent; border-top: 6px solid var(--accent); border-left: 5px solid transparent; }
-            .dataflow-pulse { animation: none; }
+            .showcase-block, .showcase-block.reversed { grid-template-columns: 1fr; direction: ltr; }
             .compare-split { grid-template-columns: 1fr; }
             .compare-grid-side { border-right: none; border-bottom: 1px solid var(--border); overflow-x: auto; }
             .compare-info-side { padding: 40px 32px; }
@@ -1067,37 +1112,124 @@
     </div>
 </section>
 
-<!-- DATA FLOW PIPELINE -->
-<section class="dataflow-section reveal">
+<!-- HOW IT WORKS - SHOWCASE BLOCKS -->
+<section id="howitworks">
     <div class="container">
-        <div class="dataflow-header">
-            <div class="section-label">How It Works</div>
-            <h2 class="section-title">From telemetry to intervention</h2>
-            <p class="section-desc">ElecticaOS collects battery data via OCPP, processes it through cloud-based AI, and pushes adaptive charging profiles back to the charger in real-time.</p>
+        <div class="section-label reveal" style="text-align:center;">How It Works</div>
+        <h2 class="section-title reveal" style="text-align:center;">From telemetry to intervention</h2>
+
+        <!-- Block 1: Data Fetch (text left, visual right) -->
+        <div class="showcase-block reveal">
+            <div class="showcase-text">
+                <h3>Collect battery telemetry via API</h3>
+                <p>ElecticaOS connects to any charger via OCPP. MeterValues stream in real-time: voltage, current, temperature, SoC - every 30 seconds per connector.</p>
+                <div class="try-btns">
+                    <a href="#try" class="try-btn">
+                        <span>SEE LIVE TERMINAL</span>
+                        <div class="shortcut"><span class="key">T</span></div>
+                    </a>
+                </div>
+            </div>
+            <div class="showcase-visual">
+                <div class="api-mock" id="apiMock1">
+                    <div class="api-step">
+                        <div class="api-step-title">
+                            <div class="api-step-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+                            <span>Calling OCPP: MeterValues</span>
+                            <span class="api-step-badge">&#10003;</span>
+                        </div>
+                        <div class="api-bars" id="apiBars1"></div>
+                    </div>
+                    <div class="api-step">
+                        <div class="api-step-label">STREAMING</div>
+                        <div class="api-result"><span class="api-check">&#10003;</span><span class="api-num">1</span><div class="api-data filled" style="width:65%"></div><div class="api-data" style="width:25%"></div></div>
+                        <div class="api-result"><span class="api-check">&#10003;</span><span class="api-num">2</span><div class="api-data filled" style="width:80%"></div><div class="api-data" style="width:15%"></div></div>
+                        <div class="api-result"><span class="api-check">&#10003;</span><span class="api-num">3</span><div class="api-data filled" style="width:50%"></div></div>
+                    </div>
+                    <div class="api-step">
+                        <div class="api-step-title">
+                            <div class="api-step-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+                            <span>Processing telemetry...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="dataflow-pipeline">
-            <div class="dataflow-node glow-card">
-                <div class="dataflow-node-icon"><svg viewBox="0 0 24 24"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/><path d="M6 10v4M10 10v4M14 10v4"/></svg></div>
-                <h4>Battery Telemetry</h4>
-                <p>Voltage, current, temperature, SoC streamed via OCPP MeterValues</p>
+
+        <!-- Block 2: Cloud AI (visual left, text right) -->
+        <div class="showcase-block reversed reveal">
+            <div class="showcase-text">
+                <h3>AI engine in the cloud</h3>
+                <p>Cell-level PINN models compute SoH, predict RUL, decompose degradation via Warburg impedance, and select the optimal charging profile from 6 ML-driven variants.</p>
+                <div class="try-btns">
+                    <a href="#proof" class="try-btn">
+                        <span>IEEE VALIDATION</span>
+                        <div class="shortcut"><span class="key">V</span></div>
+                    </a>
+                </div>
             </div>
-            <div class="dataflow-arrow"><div class="dataflow-pulse"></div></div>
-            <div class="dataflow-node glow-card">
-                <div class="dataflow-node-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2" stroke="#080808" fill="none" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="none"/></svg></div>
-                <h4>ElecticaOS Cloud</h4>
-                <p>AI engine computes SoH, RUL, degradation models, selects optimal profile</p>
+            <div class="showcase-visual">
+                <div class="api-mock" id="apiMock2">
+                    <div class="api-step">
+                        <div class="api-step-title">
+                            <div class="api-step-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                            <span>SoH Analysis complete</span>
+                            <span class="api-step-badge">92.4%</span>
+                        </div>
+                    </div>
+                    <div class="api-step">
+                        <div class="api-step-label">COMPUTING</div>
+                        <div class="api-result"><span class="api-check">&#10003;</span><span class="api-num">&#9671;</span><span style="color:var(--text-secondary);font-size:12px;">RUL: 1,240 cycles remaining</span></div>
+                        <div class="api-result"><span class="api-check">&#10003;</span><span class="api-num">&#9671;</span><span style="color:var(--text-secondary);font-size:12px;">Degradation: 0.012%/cycle</span></div>
+                        <div class="api-result"><span class="api-check">&#10003;</span><span class="api-num">&#9671;</span><span style="color:var(--text-secondary);font-size:12px;">Thermal risk: low (28&#176;C)</span></div>
+                    </div>
+                    <div class="api-step">
+                        <div class="api-step-title">
+                            <div class="api-step-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                            <span>Profile selected: <span style="color:var(--accent)">balanced</span></span>
+                        </div>
+                        <div class="api-bars" id="apiBars2"></div>
+                    </div>
+                </div>
             </div>
-            <div class="dataflow-arrow"><div class="dataflow-pulse"></div></div>
-            <div class="dataflow-node glow-card">
-                <div class="dataflow-node-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-                <h4>Adaptive Control</h4>
-                <p>SetChargingProfile pushed to charger: dynamic power limits per SoC band</p>
+        </div>
+
+        <!-- Block 3: Adaptive Control (text left, visual right) -->
+        <div class="showcase-block reveal">
+            <div class="showcase-text">
+                <h3>Push adaptive charging profiles</h3>
+                <p>SetChargingProfile commands are pushed back to the charger via OCPP. Dynamic power limits adjust per SoC band - from constant power at 0-20% to pulse taper at 80-95%.</p>
+                <div class="try-btns">
+                    <a href="#contact" class="try-btn">
+                        <span>REQUEST A DEMO</span>
+                        <div class="shortcut"><span class="key">R</span> then <span class="key">D</span></div>
+                    </a>
+                </div>
             </div>
-            <div class="dataflow-arrow"><div class="dataflow-pulse"></div></div>
-            <div class="dataflow-node glow-card">
-                <div class="dataflow-node-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-                <h4>Extended Life</h4>
-                <p>37.5% more cycles, 40% longer battery life, verified by IEEE</p>
+            <div class="showcase-visual">
+                <div class="api-mock" id="apiMock3">
+                    <div class="api-step">
+                        <div class="api-step-title">
+                            <div class="api-step-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                            <span>SetChargingProfile &#8594; CP-V51</span>
+                            <span class="api-step-badge">&#10003;</span>
+                        </div>
+                    </div>
+                    <div class="api-step">
+                        <div class="api-step-label">CHARGE SCHEDULE</div>
+                        <div class="api-result"><span class="api-check">&#9632;</span><span class="api-num"></span><span style="color:var(--text-secondary);font-size:12px;">0-20% &nbsp;<span style="color:var(--accent)">132kW</span> &nbsp;constant_power</span></div>
+                        <div class="api-result"><span class="api-check">&#9632;</span><span class="api-num"></span><span style="color:var(--text-secondary);font-size:12px;">20-40% <span style="color:var(--accent)">150kW</span> &nbsp;MSCC_max</span></div>
+                        <div class="api-result"><span class="api-check">&#9632;</span><span class="api-num"></span><span style="color:var(--text-secondary);font-size:12px;">40-60% <span style="color:var(--accent)">142kW</span> &nbsp;MSCC_step2</span></div>
+                        <div class="api-result"><span class="api-check">&#9632;</span><span class="api-num"></span><span style="color:var(--text-secondary);font-size:12px;">60-80% <span style="color:var(--accent)">127kW</span> &nbsp;MSCC_step3</span></div>
+                        <div class="api-result"><span class="api-check">&#9632;</span><span class="api-num"></span><span style="color:var(--text-secondary);font-size:12px;">80-95% <span style="color:var(--accent)">&nbsp;82kW</span> &nbsp;pulse_taper</span></div>
+                    </div>
+                    <div class="api-step">
+                        <div class="api-step-title">
+                            <div class="api-step-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                            <span>Life extended: <span style="color:var(--accent)">+37.5%</span></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1730,6 +1862,44 @@
         });
     }, { threshold: 0.3 });
     termObserver.observe(termBody);
+
+    // ─── Showcase API Bars ───
+    function generateBars(containerId, count) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        for (let i = 0; i < count; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'api-bar' + (Math.random() > 0.4 ? '' : ' dim');
+            bar.style.height = '0px';
+            container.appendChild(bar);
+        }
+    }
+    generateBars('apiBars1', 50);
+    generateBars('apiBars2', 50);
+
+    // Animate showcase steps on scroll
+    const showcaseObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.shown) {
+                entry.target.dataset.shown = 'true';
+                const steps = entry.target.querySelectorAll('.api-step');
+                steps.forEach((step, i) => {
+                    setTimeout(() => {
+                        step.classList.add('visible');
+                        // Animate bars inside
+                        step.querySelectorAll('.api-bar').forEach(bar => {
+                            const h = bar.classList.contains('dim')
+                                ? (3 + Math.random() * 8)
+                                : (8 + Math.random() * 16);
+                            setTimeout(() => { bar.style.height = h + 'px'; }, Math.random() * 400);
+                        });
+                    }, i * 400);
+                });
+            }
+        });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.api-mock').forEach(el => showcaseObserver.observe(el));
 
     // ─── FAQ Accordion ───
     document.querySelectorAll('.faq-item').forEach(item => {
