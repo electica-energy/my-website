@@ -1,1044 +1,1567 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electica Energy - Powering the Future of Energy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="favicon_inverted.ico" type="image/x-icon">
+    <title>Electica - The Operating System for Battery Intelligence</title>
+    <meta name="description" content="AI-powered battery intelligence platform. Extend battery life by 40% and eliminate costly degradation.">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-inverted-32x32.png">
     <link rel="icon" type="image/png" sizes="192x192" href="favicon-inverted-192x192.png">
     <link rel="apple-touch-icon" href="apple-touch-icon-inverted.png">
+    <link rel="shortcut icon" href="favicon_inverted.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #050505;
+            --bg-subtle: #0a0a0a;
+            --bg-card: #0f0f0f;
+            --bg-card-hover: #141414;
+            --border: #1a1a1a;
+            --border-hover: #2a2a2a;
+            --text: #f0f0f0;
+            --text-secondary: #888;
+            --text-tertiary: #555;
+            --accent: #ff5500;
+            --accent-glow: rgba(255, 85, 0, 0.15);
+            --accent-2: #ff7733;
+            --green: #00cc88;
+            --green-glow: rgba(0, 204, 136, 0.12);
+            --blue: #3388ff;
+            --red: #ff4455;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #000000;
-            color: #E0E0E0;
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
-        #vanta-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        .content-wrapper {
-            position: relative;
-            z-index: 1;
-            background-color: transparent;
-        }
-        .feature-card {
-            background: rgba(10, 10, 20, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .feature-card:hover {
-            box-shadow: 0 0 25px rgba(0, 224, 255, 0.2);
-            border-color: rgba(0, 224, 255, 0.3);
-        }
-        .feature-card:hover p, .feature-card:hover .text-gray-500 {
-             color: #FFFFFF;
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #0AFF96, #00E0FF);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .section-header::after {
+
+        body::before {
             content: '';
-            display: block;
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, #0AFF96, #00E0FF);
-            margin: 1rem auto 0;
-            border-radius: 2px;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
         }
-        /* Chart animation styles */
-        .line-path {
-            transition: stroke-width 0.2s ease;
-            cursor: pointer;
-        }
-        .line-path:hover {
-            stroke-width: 5;
-        }
-        .line-path.animated {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: draw-line 1.5s ease-out forwards;
-        }
-        @keyframes draw-line { to { stroke-dashoffset: 0; } }
-        .data-point, .data-label {
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+        ::selection { background: var(--accent); color: #fff; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        section { padding: 120px 0; position: relative; }
+
+        /* ─── CURSOR GLOW (Polygon-inspired) ─── */
+        .cursor-glow {
+            position: fixed;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,85,0,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            transition: left 0.3s ease, top 0.3s ease, opacity 0.4s ease;
             opacity: 0;
+        }
+        .cursor-glow.active { opacity: 1; }
+
+        /* ─── MESH GRADIENT BLOBS (Polygon-inspired) ─── */
+        .mesh-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .mesh-blob-1 {
+            width: 500px; height: 500px;
+            background: rgba(255, 85, 0, 0.08);
+            top: -150px; right: -100px;
+            animation: blobFloat 15s ease-in-out infinite;
+        }
+        .mesh-blob-2 {
+            width: 400px; height: 400px;
+            background: rgba(51, 136, 255, 0.06);
+            bottom: -100px; left: -100px;
+            animation: blobFloat 18s ease-in-out infinite reverse;
+        }
+        .mesh-blob-3 {
+            width: 350px; height: 350px;
+            background: rgba(0, 204, 136, 0.05);
+            top: 40%; left: 60%;
+            animation: blobFloat 20s ease-in-out infinite 3s;
+        }
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -40px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* ─── GLOW CARD BORDERS (Polygon-inspired) ─── */
+        .glow-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .glow-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent 40%, rgba(255,85,0,0.3) 50%, transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
             pointer-events: none;
         }
-        .data-point.visible, .data-label.visible {
-            opacity: 1;
-            animation: fade-in 0.5s ease forwards;
-        }
-        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-        
-        /* Polygon-style block animation */
-        .energy-block {
-            offset-path: var(--path);
-            animation: move 4s linear infinite;
-            position: absolute; 
-        }
-        @keyframes move {
-            0% { offset-distance: 0%; opacity: 0; transform: scale(0.5); }
-            10% { opacity: 1; transform: scale(1); }
-            90% { opacity: 1; transform: scale(1); }
-            100% { offset-distance: 100%; opacity: 0; transform: scale(0.5); }
-        }
+        .glow-card:hover::after { opacity: 1; }
 
-        /* Life extension bars */
-        .life-bar-bg {
-            background-color: #333;
-            border-radius: 8px;
-            padding: 4px;
-        }
-        .life-bar {
-            position: relative;
-            height: 20px;
-            background-color: #555;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        .life-bar-flow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, rgba(10, 255, 150, 0.7), rgba(0, 224, 255, 0.9));
-            animation: fill-bar 1.5s ease-out forwards;
-        }
-        @keyframes fill-bar {
-            to { width: var(--fill-width, 0%); }
-        }
-        .life-bar-flow::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: scan 2s linear infinite;
-        }
-        @keyframes scan {
-            from { transform: translateX(-100%); }
-            to { transform: translateX(100%); }
-        }
-
-        /* Chatbot Styles */
-        #chatbot-toggle {
+        /* ─── NAV ─── */
+        nav {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 100;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #0AFF96, #00E0FF);
-            border-radius: 50%;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(5, 5, 5, 0.8);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        nav .container {
             display: flex;
             align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(10, 255, 150, 0.4);
-            transition: transform 0.3s ease;
+            justify-content: space-between;
+            height: 64px;
         }
-        #chatbot-toggle:hover {
-            transform: scale(1.1);
-        }
-        #chatbot-modal {
-            position: fixed;
-            bottom: 7rem;
-            right: 2rem;
-            z-index: 100;
-            width: 90vw;
-            max-width: 400px;
-            height: 70vh;
-            max-height: 600px;
-            background: #000010;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
+
+        .nav-logo {
+            text-decoration: none;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-cta {
+            background: var(--text) !important;
+            color: var(--bg) !important;
+            padding: 8px 20px !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+            transition: all 0.2s !important;
+        }
+        .nav-cta:hover { background: var(--accent) !important; color: #fff !important; transform: translateY(-1px); }
+
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 24px; cursor: pointer; }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            padding-top: 64px;
+            position: relative; overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -300px; left: 50%; transform: translateX(-50%);
+            width: 1000px; height: 1000px;
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(255, 85, 0, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(51, 136, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(0, 204, 136, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            animation: heroMesh 12s ease-in-out infinite;
+        }
+        @keyframes heroMesh {
+            0%, 100% { transform: translateX(-50%) scale(1) rotate(0deg); }
+            50% { transform: translateX(-50%) scale(1.1) rotate(3deg); }
+        }
+
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 16px;
+            border: 1px solid var(--border); border-radius: 100px;
+            font-size: 13px; color: var(--text-secondary);
+            margin-bottom: 32px;
+            background: var(--bg-card);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .hero-badge .dot {
+            width: 6px; height: 6px;
+            background: var(--green); border-radius: 50%;
+            animation: pulse-dot 2s ease infinite;
+        }
+
+        @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        .hero h1 {
+            font-size: clamp(48px, 7vw, 88px);
+            font-weight: 800; line-height: 1.05; letter-spacing: -3px;
+            max-width: 900px; margin: 0 auto 24px;
+            animation: fadeInUp 0.8s ease 0.1s forwards; opacity: 0;
+        }
+
+        .hero h1 .gradient-text,
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2), #ffaa55);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-secondary);
+            max-width: 600px; margin: 0 auto 48px;
+            line-height: 1.6; font-weight: 400;
+            animation: fadeInUp 0.8s ease 0.2s forwards; opacity: 0;
+        }
+
+        .hero-actions {
+            display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.3s forwards; opacity: 0;
+        }
+
+        .btn-primary {
+            background: var(--accent); color: #fff;
+            padding: 14px 32px; border-radius: 10px;
+            font-size: 15px; font-weight: 600;
+            text-decoration: none; border: none; cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: var(--font);
+        }
+        .btn-primary:hover { background: var(--accent-2); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 85, 0, 0.3); }
+
+        .btn-secondary {
+            background: transparent; color: var(--text);
+            padding: 14px 32px; border-radius: 10px;
+            font-size: 15px; font-weight: 600;
+            text-decoration: none; border: 1px solid var(--border);
+            cursor: pointer; transition: all 0.25s ease;
+        }
+        .btn-secondary:hover { border-color: var(--text-secondary); background: var(--bg-card); transform: translateY(-2px); }
+
+        .hero-stats {
+            display: flex; justify-content: center; gap: 64px;
+            margin-top: 80px;
+            animation: fadeInUp 0.8s ease 0.5s forwards; opacity: 0;
+        }
+
+        .hero-stat { text-align: center; }
+        .hero-stat .number { font-size: 42px; font-weight: 800; letter-spacing: -2px; font-family: var(--mono); }
+        .hero-stat .number .unit { font-size: 24px; color: var(--accent); }
+        .hero-stat .label { font-size: 13px; color: var(--text-tertiary); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ─── SECTION HEADERS ─── */
+        .section-label {
+            font-size: 12px; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--accent);
+            margin-bottom: 16px; font-family: var(--mono);
+        }
+        .section-title {
+            font-size: clamp(32px, 4vw, 52px);
+            font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 16px;
+        }
+        .section-desc { font-size: 18px; color: var(--text-secondary); max-width: 600px; line-height: 1.6; }
+
+        /* ─── MARQUEE LOGOS ─── */
+        .marquee-section {
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
-            transform-origin: bottom right;
-            transition: transform 0.3s ease, opacity 0.3s ease;
         }
-        #chatbot-modal.hidden {
-            transform: scale(0);
+        .marquee-label {
+            text-align: center;
+            font-size: 12px; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--text-tertiary);
+            margin-bottom: 32px; font-family: var(--mono);
+        }
+        .marquee-track {
+            display: flex; gap: 64px;
+            animation: marquee 25s linear infinite;
+            width: max-content;
+        }
+        .marquee-track:hover { animation-play-state: paused; }
+        .marquee-item {
+            font-size: 18px; font-weight: 700; color: var(--text-tertiary);
+            white-space: nowrap; transition: color 0.3s;
+            flex-shrink: 0;
+        }
+        .marquee-item:hover { color: var(--text-secondary); }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* ─── PROBLEM ─── */
+        .problem-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 2px; margin-top: 64px;
+            background: var(--border); border-radius: 16px; overflow: hidden;
+        }
+        .problem-card { background: var(--bg-card); padding: 48px 36px; transition: all 0.3s ease; position: relative; }
+        .problem-card:hover { background: var(--bg-card-hover); }
+        .problem-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--red); opacity: 0; transition: opacity 0.3s; }
+        .problem-card:hover::before { opacity: 1; }
+        .problem-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(255, 68, 85, 0.1); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 24px; }
+        .problem-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .problem-card p { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
+        .problem-stat { margin-top: 20px; font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--red); }
+        .problem-stat span { font-size: 13px; color: var(--text-tertiary); font-family: var(--font); font-weight: 400; display: block; margin-top: 2px; }
+
+        /* ─── SOLUTION ─── */
+        .solution-section { background: var(--bg-subtle); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .solution-header { text-align: center; margin-bottom: 80px; }
+        .solution-header .section-desc { margin: 0 auto; }
+        .os-name {
+            display: inline-flex; align-items: center; gap: 12px;
+            font-family: var(--mono); font-size: 16px; color: var(--green);
+            background: var(--green-glow); padding: 8px 20px; border-radius: 8px;
+            border: 1px solid rgba(0, 204, 136, 0.2); margin-bottom: 24px;
+        }
+        .solution-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); border-radius: 16px; overflow: hidden; }
+        .solution-card { background: var(--bg-card); padding: 48px 40px; position: relative; transition: all 0.3s ease; }
+        .solution-card:hover { background: var(--bg-card-hover); }
+        .solution-card .card-number { font-family: var(--mono); font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px; }
+        .solution-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .solution-card p { color: var(--text-secondary); font-size: 15px; line-height: 1.7; }
+        .solution-card .card-tag { display: inline-flex; margin-top: 20px; padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: var(--mono); }
+        .tag-ai { background: rgba(255, 85, 0, 0.1); color: var(--accent); border: 1px solid rgba(255, 85, 0, 0.2); }
+
+        .tag-saas { background: rgba(51, 136, 255, 0.1); color: var(--blue); border: 1px solid rgba(51, 136, 255, 0.2); }
+        .tag-oem { background: rgba(255, 170, 85, 0.1); color: #ffaa55; border: 1px solid rgba(255, 170, 85, 0.2); }
+
+        /* ─── TRY BATTERY CONTROL ─── */
+        .try-section { border-bottom: 1px solid var(--border); }
+
+        /* Split hero block (parallel.ai style) */
+        .try-hero {
+            display: grid; grid-template-columns: 420px 1fr;
+            gap: 0; min-height: 560px;
+            border: 1px solid var(--border); border-radius: 20px;
+            overflow: hidden; background: var(--bg-card);
+            margin-top: 64px;
+        }
+        .try-left {
+            padding: 56px 48px;
+            display: flex; flex-direction: column; justify-content: center;
+            border-right: 1px solid var(--border);
+        }
+        .try-left h2 {
+            font-size: 32px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.15; margin-bottom: 16px;
+        }
+        .try-left p { font-size: 16px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 32px; }
+        .try-left .try-btns { display: flex; flex-direction: column; gap: 12px; }
+        .try-btn {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 20px;
+            border: 1px solid var(--border); border-radius: 10px;
+            background: transparent;
+            color: var(--text); font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; text-decoration: none;
+            font-family: var(--font);
+        }
+        .try-btn:hover { border-color: var(--accent); background: rgba(255,85,0,0.05); }
+        .try-btn .shortcut {
+            display: flex; gap: 4px;
+        }
+        .try-btn .key {
+            padding: 2px 8px; border: 1px solid var(--border); border-radius: 4px;
+            font-size: 11px; font-family: var(--mono); color: var(--text-tertiary);
+            background: var(--bg-subtle);
+        }
+
+        /* OCPP Terminal Visual */
+        .try-right {
+            background: #080808;
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+        .terminal-header {
+            display: flex; align-items: center; gap: 8px;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255,255,255,0.02);
+        }
+        .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .terminal-dot.red { background: #ff5f57; }
+        .terminal-dot.yellow { background: #febc2e; }
+        .terminal-dot.green { background: #28c840; }
+        .terminal-title {
+            margin-left: 12px; font-family: var(--mono); font-size: 12px;
+            color: var(--text-tertiary); letter-spacing: 0.5px;
+        }
+        .terminal-body {
+            flex: 1; padding: 20px 24px;
+            font-family: var(--mono); font-size: 12px; line-height: 2;
+            overflow: hidden; position: relative;
+        }
+        .terminal-line {
             opacity: 0;
+            animation: termFadeIn 0.3s ease forwards;
+            white-space: nowrap;
         }
-        #chat-messages {
-            flex-grow: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .terminal-line .ts { color: var(--text-tertiary); }
+        .terminal-line .arrow-in { color: var(--green); }
+        .terminal-line .arrow-out { color: var(--accent); }
+        .terminal-line .msg-type { color: var(--blue); font-weight: 600; }
+        .terminal-line .val { color: var(--text-secondary); }
+        .terminal-line .val-accent { color: var(--accent); font-weight: 600; }
+        .terminal-line .val-green { color: var(--green); font-weight: 600; }
+        .terminal-line .status-ok { color: var(--green); }
+        .terminal-line .status-warn { color: #ffaa00; }
+        .terminal-line .dim { color: #333; }
+
+        @keyframes termFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .chat-bubble {
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            max-width: 80%;
-            word-wrap: break-word;
+
+        /* Glow overlay */
+        .try-right::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+            background: linear-gradient(transparent, #080808);
+            pointer-events: none;
         }
-        .user-bubble {
-            background-color: #1A1A2E;
-            align-self: flex-end;
-            color: white;
+        .try-right::before {
+            content: '';
+            position: absolute; top: 0; right: 0;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(255,85,0,0.06) 0%, transparent 70%);
+            pointer-events: none;
         }
-        .ai-bubble {
-            background: linear-gradient(90deg, #0AFF96, #00E0FF);
-            align-self: flex-start;
-            color: #000010;
+
+        /* Live indicator */
+        .terminal-live {
+            position: absolute; top: 16px; right: 24px;
+            display: flex; align-items: center; gap: 6px;
+            font-family: var(--mono); font-size: 11px; color: var(--green);
+            letter-spacing: 1px; text-transform: uppercase;
         }
-        .legal-section details {
-            background: rgba(26, 26, 46, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            margin-bottom: 1rem;
+        .terminal-live .live-dot {
+            width: 6px; height: 6px; background: var(--green);
+            border-radius: 50%; animation: pulse-dot 1.5s ease infinite;
         }
-        .legal-section summary {
-            padding: 1rem;
-            font-weight: bold;
+
+        /* ─── BENCHMARK / PROOF ─── */
+        .proof-section { text-align: center; }
+        .proof-header { margin-bottom: 64px; }
+        .proof-header .section-desc { margin: 0 auto; }
+        .proof-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 16px; border: 1px solid rgba(51, 136, 255, 0.3);
+            background: rgba(51, 136, 255, 0.08); border-radius: 100px;
+            font-size: 13px; font-weight: 500; color: var(--blue); margin-bottom: 24px;
+        }
+        .benchmark-cards {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 2px; background: var(--border); border-radius: 16px;
+            overflow: hidden; margin-bottom: 48px;
+        }
+        .benchmark-card { background: var(--bg-card); padding: 48px 32px; text-align: center; transition: all 0.3s ease; }
+        .benchmark-card:hover { background: var(--bg-card-hover); }
+        .benchmark-value { font-size: 56px; font-weight: 800; letter-spacing: -3px; font-family: var(--mono); line-height: 1; margin-bottom: 4px; }
+        .benchmark-value.green { color: var(--green); }
+        .benchmark-value.accent { color: var(--accent); }
+        .benchmark-value.blue { color: var(--blue); }
+        .benchmark-unit { font-size: 24px; font-weight: 400; opacity: 0.7; }
+        .benchmark-label { font-size: 14px; color: var(--text-secondary); margin-top: 8px; }
+        .benchmark-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; font-family: var(--mono); }
+
+        /* ─── COMPARISON TABLE ─── */
+        .comparison-table { width: 100%; border-collapse: collapse; background: var(--bg-card); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); text-align: left; }
+        .comparison-table thead th { padding: 16px 24px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-tertiary); border-bottom: 1px solid var(--border); background: var(--bg-subtle); }
+        .comparison-table tbody td { padding: 20px 24px; font-size: 15px; border-bottom: 1px solid var(--border); }
+        .comparison-table tbody tr:last-child td { border-bottom: none; }
+        .comparison-table tbody tr:hover { background: var(--bg-card-hover); }
+        .comparison-table .metric-name { color: var(--text-secondary); font-weight: 500; }
+        .comparison-table .electica-val { color: var(--green); font-weight: 700; font-family: var(--mono); }
+        .comparison-table .standard-val { color: var(--text-tertiary); font-family: var(--mono); }
+        .comparison-table .improvement { font-family: var(--mono); font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
+        .improvement.positive { background: rgba(0, 204, 136, 0.1); color: var(--green); }
+
+        /* ─── LIFE BARS ─── */
+        .life-comparison { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 48px; }
+        .life-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; text-align: center; }
+        .life-card h4 { font-size: 16px; font-weight: 600; color: var(--text-secondary); margin-bottom: 24px; }
+        .life-bars { display: flex; flex-direction: column; gap: 16px; }
+        .life-bar-row { display: flex; align-items: center; gap: 16px; }
+        .life-bar-label { font-size: 12px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; width: 80px; text-align: right; flex-shrink: 0; }
+        .life-bar-track { flex: 1; height: 32px; background: rgba(255,255,255,0.03); border-radius: 8px; overflow: hidden; position: relative; }
+        .life-bar-fill { height: 100%; border-radius: 8px; display: flex; align-items: center; padding-left: 12px; font-family: var(--mono); font-size: 13px; font-weight: 600; color: #fff; transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .life-bar-fill.standard { background: var(--text-tertiary); }
+        .life-bar-fill.electica { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+
+        /* ─── VERTICALS ─── */
+        .verticals-section { background: var(--bg-subtle); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .verticals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 64px; }
+        .vertical-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+            padding: 40px 32px; transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .vertical-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .vertical-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+        .vertical-card:nth-child(1)::after { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+        .vertical-card:nth-child(2)::after { background: linear-gradient(90deg, var(--green), #00eebb); }
+        .vertical-card:nth-child(3)::after { background: linear-gradient(90deg, var(--blue), #66aaff); }
+        .vertical-icon { font-size: 32px; margin-bottom: 20px; }
+        .vertical-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .vertical-card p { color: var(--text-secondary); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+        .vertical-metric { display: flex; align-items: baseline; gap: 8px; padding-top: 20px; border-top: 1px solid var(--border); }
+        .vertical-metric .value { font-family: var(--mono); font-size: 28px; font-weight: 700; }
+        .vertical-card:nth-child(1) .value { color: var(--accent); }
+        .vertical-card:nth-child(2) .value { color: var(--green); }
+        .vertical-card:nth-child(3) .value { color: var(--blue); }
+        .vertical-metric .desc { font-size: 13px; color: var(--text-tertiary); }
+
+        /* ─── ROI ─── */
+        .roi-section { background: var(--bg-subtle); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .roi-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+        .roi-form { display: flex; flex-direction: column; gap: 24px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group select, .form-group input {
+            width: 100%; padding: 14px 16px;
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+            color: var(--text); font-size: 15px; font-family: var(--font); outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group select:focus, .form-group input:focus { border-color: var(--accent); }
+        .form-group select option { background: var(--bg-card); }
+        .roi-result { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; }
+        .roi-result h3 { font-size: 14px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 32px; }
+        .roi-metric { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .roi-metric:last-child { border-bottom: none; }
+        .roi-metric .roi-value { font-family: var(--mono); font-size: 36px; font-weight: 700; color: var(--green); letter-spacing: -2px; }
+        .roi-metric .roi-label { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
+
+        /* ─── VISION ─── */
+        .vision-section { text-align: center; position: relative; overflow: hidden; }
+        .vision-section::before {
+            content: ''; position: absolute;
+            bottom: -200px; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .vision-quote { font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; max-width: 800px; margin: 0 auto 24px; }
+        .vision-sub { font-size: 18px; color: var(--text-secondary); max-width: 560px; margin: 0 auto; line-height: 1.6; }
+        .vision-tagline {
+            margin-top: 48px;
+            display: inline-flex; align-items: center; gap: 12px;
+            padding: 12px 28px; border: 1px solid var(--border); border-radius: 100px;
+            font-size: 15px; font-weight: 600; color: var(--accent); background: var(--bg-card);
+        }
+
+        /* ─── FAQ ─── */
+        .faq-section { border-top: 1px solid var(--border); }
+        .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; margin-top: 64px; }
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 28px 0;
             cursor: pointer;
-            list-style: none; /* Remove default marker */
         }
-        .legal-section summary::-webkit-details-marker {
-            display: none; /* Chrome */
+        .faq-question {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 16px; font-weight: 600;
+            transition: color 0.2s;
         }
-        .legal-section div {
-            padding: 0 1rem 1rem 1rem;
-            color: #ccc;
-            font-size: 0.9rem;
-            line-height: 1.6;
+        .faq-question:hover { color: var(--accent); }
+        .faq-icon {
+            font-size: 20px; color: var(--text-tertiary);
+            transition: transform 0.3s ease;
+            flex-shrink: 0; margin-left: 16px;
+        }
+        .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--accent); }
+        .faq-answer {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+        .faq-item.open .faq-answer { max-height: 200px; padding-top: 16px; }
+        .faq-answer p { color: var(--text-secondary); font-size: 15px; line-height: 1.7; }
+
+        /* ─── CONTACT ─── */
+        .contact-section {
+            background: var(--bg-subtle);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+        .contact-info h2 { font-size: clamp(32px, 4vw, 48px); font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 20px; }
+        .contact-info p { color: var(--text-secondary); font-size: 17px; line-height: 1.6; margin-bottom: 40px; }
+        .contact-links { display: flex; flex-direction: column; gap: 20px; }
+        .contact-link-item {
+            display: flex; align-items: center; gap: 16px;
+            text-decoration: none; color: var(--text-secondary);
+            padding: 16px 20px; border: 1px solid var(--border); border-radius: 12px;
+            background: var(--bg-card); transition: all 0.2s;
+        }
+        .contact-link-item:hover { border-color: var(--accent); background: var(--bg-card-hover); color: var(--text); }
+        .contact-link-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: rgba(255, 85, 0, 0.1);
+            display: flex; align-items: center; justify-content: center; font-size: 18px;
+            flex-shrink: 0;
+        }
+        .contact-link-text { font-size: 15px; font-weight: 500; }
+        .contact-link-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+        .contact-form { display: flex; flex-direction: column; gap: 20px; }
+        .contact-form input, .contact-form textarea, .contact-form select {
+            width: 100%; padding: 16px 20px;
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+            color: var(--text); font-size: 15px; font-family: var(--font);
+            outline: none; transition: border-color 0.2s; resize: none;
+        }
+        .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { border-color: var(--accent); }
+        .contact-form select option { background: var(--bg-card); }
+        .contact-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        /* ─── GIANT BRAND ─── */
+        .brand-section {
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .brand-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 1000px; height: 400px;
+            background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .brand-giant {
+            font-size: clamp(80px, 15vw, 220px);
+            font-weight: 900;
+            letter-spacing: -8px;
+            line-height: 1;
+            background: linear-gradient(180deg, var(--text) 0%, var(--text-tertiary) 50%, var(--border) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            user-select: none;
+            position: relative;
+        }
+        .brand-sub {
+            font-size: 16px;
+            color: var(--text-tertiary);
+            margin-top: 16px;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* ─── FOOTER ─── */
+        footer { border-top: 1px solid var(--border); padding: 60px 0 40px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+        .footer-brand { }
+        .footer-brand .nav-logo { margin-bottom: 16px; }
+        .footer-brand p { color: var(--text-tertiary); font-size: 14px; line-height: 1.6; max-width: 280px; }
+        .footer-col h5 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-tertiary); margin-bottom: 20px; }
+        .footer-col a { display: block; color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-bottom: 12px; transition: color 0.2s; }
+        .footer-col a:hover { color: var(--text); }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 32px; border-top: 1px solid var(--border); }
+        .footer-bottom p { font-size: 13px; color: var(--text-tertiary); }
+        .footer-social { display: flex; gap: 16px; }
+        .footer-social a { color: var(--text-tertiary); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .footer-social a:hover { color: var(--accent); }
+
+        /* ─── SCROLL REVEAL ─── */
+        .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 968px) {
+            .problem-grid, .solution-grid, .benchmark-cards, .verticals-grid { grid-template-columns: 1fr; }
+            .roi-wrapper, .contact-wrapper { grid-template-columns: 1fr; }
+            .life-comparison { grid-template-columns: 1fr; }
+            .hero-stats { gap: 32px; flex-wrap: wrap; }
+            .try-hero { grid-template-columns: 1fr; }
+            .try-left { border-right: none; border-bottom: 1px solid var(--border); }
+            .try-right { min-height: 400px; }
+            .faq-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            section { padding: 80px 0; }
+            .nav-links { display: none; }
+            .nav-links.active {
+                display: flex; flex-direction: column;
+                position: absolute; top: 64px; left: 0; right: 0;
+                background: var(--bg); border-bottom: 1px solid var(--border);
+                padding: 24px; gap: 16px;
+            }
+            .mobile-menu-btn { display: block; }
+            .contact-wrapper { gap: 48px; }
+            .contact-form .form-row { grid-template-columns: 1fr; }
+            footer .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .hero-stats { gap: 24px; }
+            .hero-stat .number { font-size: 32px; }
+            .brand-giant { letter-spacing: -4px; }
         }
     </style>
 </head>
-<body class="bg-[#000000]">
-    <div id="vanta-bg"></div>
-    <div class="content-wrapper">
-    <!-- Header -->
-    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="#" aria-label="Back to Top">
-                <img src="Logo -02.png" alt="Electica Logo" class="h-16 w-auto">
-            </a>
-            <nav class="hidden md:flex space-x-8 text-white items-center">
-                <a href="#problem" class="hover:text-[#0AFF96] transition-colors">The Problem</a>
-                <a href="#solution" class="hover:text-[#0AFF96] transition-colors">Solution</a>
-                <a href="#technology" class="hover:text-[#0AFF96] transition-colors">Technology</a>
-                <a href="#roi-calculator" class="hover:text-[#0AFF96] transition-colors">ROI Calculator</a>
-                <a href="#vision" class="hover:text-[#0AFF96] transition-colors">Vision</a>
-                <a href="#team" class="hover:text-[#0AFF96] transition-colors">Team</a>
-                 <a href="#contact" class="bg-gradient-to-r from-[#0AFF96] to-[#00E0FF] text-black font-bold py-2 px-4 rounded-lg hover:opacity-90 transition-opacity">Contact Us</a>
-            </nav>
-            <button id="mobile-menu-button" class="md:hidden text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                </svg>
-            </button>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="container">
+        <a href="#" class="nav-logo">
+            <img src="Logo -02.png" alt="Electica">
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#problem">Problem</a></li>
+            <li><a href="#solution">Solution</a></li>
+            <li><a href="#try">Battery Control</a></li>
+            <li><a href="#proof">Validation</a></li>
+            <li><a href="#verticals">Applications</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="menuBtn" aria-label="Toggle menu">&#9776;</button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<!-- CURSOR GLOW -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<section class="hero" id="hero">
+    <div class="mesh-blob mesh-blob-1"></div>
+    <div class="mesh-blob mesh-blob-2"></div>
+    <div class="mesh-blob mesh-blob-3"></div>
+    <div class="container">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Peer-reviewed &amp; validated by IEEE
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-[#000010] bg-opacity-90 backdrop-blur-md">
-            <a href="#problem" class="block py-2 px-4 text-sm hover:bg-[#1A1A2E]">The Problem</a>
-            <a href="#solution" class="block py-2 px-4 text-sm hover:bg-[#1A1A2E]">Solution</a>
-            <a href="#technology" class="block py-2 px-4 text-sm hover:bg-[#1A1A2E]">Technology</a>
-            <a href="#insights" class="block py-2 px-4 text-sm hover:bg-[#1A1A2E]">Strategic AI</a>
-            <a href="#roi-calculator" class="block py-2 px-4 text-sm hover:bg-[#1A1A2E]">ROI Calculator</a>
-            <a href="#vision" class="block py-2 px-4 text-sm hover:bg-[#1A1A2E]">Vision</a>
-            <a href="#team" class="block py-2 px-4 text-sm hover:bg-[#1A1A2E]">Team</a>
-            <a href="#contact" class="block py-2 px-4 text-sm hover:bg-[#1A1A2E]">Contact Us</a>
+        <h1>
+            The <span class="gradient-text">Operating System</span> for Battery Intelligence
+        </h1>
+        <p class="hero-sub">
+            AI-powered battery intelligence that extends battery life by 40% and eliminates costly degradation across every vehicle class.
+        </p>
+        <div class="hero-actions">
+            <a href="#contact" class="btn-primary">Request a Demo &#8594;</a>
+            <a href="#try" class="btn-secondary">Try Battery Control</a>
         </div>
-    </header>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="number">40<span class="unit">%</span></div>
+                <div class="label">Battery Life Extension</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">67.2<span class="unit">%</span></div>
+                <div class="label">Capacity @ 3K Cycles</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">37.5<span class="unit">%</span></div>
+                <div class="label">Cycle Life Increase</div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Hero Section -->
-    <main class="pt-20">
-        <section class="min-h-screen flex items-center justify-center relative overflow-hidden">
-             <div class="absolute inset-0 z-0 opacity-20">
-                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-[#0AFF96] to-[#00E0FF] rounded-full filter blur-3xl animate-blob"></div>
-                <div class="absolute top-1/2 right-1/4 w-96 h-96 bg-gradient-to-r from-[#00E0FF] to-blue-500 rounded-full filter blur-3xl animate-blob animation-delay-2000"></div>
-             </div>
-            <div class="container mx-auto px-4 text-center z-10">
-                <h1 class="text-5xl md:text-7xl font-black mb-4 leading-tight">
-                    <span class="gradient-text">Powering the Future</span>
-                    <br/>of Energy.
-                </h1>
-                <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 mb-8">
-                    Electica's AI-powered battery intelligence platform extends battery life by up to 40%, enables Vehicle-to-Grid (V2G) energy trading, and combats costly battery degradation. We are building the OS for AI + Energy.
-                </p>
-                <div class="flex justify-center space-x-4">
-                    <a href="#technology" class="bg-gradient-to-r from-[#0AFF96] to-[#00E0FF] text-black font-bold py-3 px-8 rounded-lg text-lg hover:opacity-90 transition-opacity">Our Technology</a>
-                    <a href="#contact" class="bg-transparent border-2 border-[#0AFF96] text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-[#0AFF96] hover:text-black transition-all">Get in Touch</a>
+<!-- MARQUEE LOGOS -->
+<div class="marquee-section">
+    <div class="marquee-label">Backed by leading institutions</div>
+    <div style="overflow:hidden;">
+        <div class="marquee-track" id="marqueeTrack">
+            <div class="marquee-item">Accelerating Asia</div>
+            <div class="marquee-item">IIMA Ventures</div>
+            <div class="marquee-item">IIT Startups</div>
+            <div class="marquee-item">IIT Mandi Catalyst</div>
+            <div class="marquee-item">Schaeffler India</div>
+            <div class="marquee-item">BonV Aero</div>
+            <div class="marquee-item">Accelerating Asia</div>
+            <div class="marquee-item">IIMA Ventures</div>
+            <div class="marquee-item">IIT Startups</div>
+            <div class="marquee-item">IIT Mandi Catalyst</div>
+            <div class="marquee-item">Schaeffler India</div>
+            <div class="marquee-item">BonV Aero</div>
+        </div>
+    </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem">
+    <div class="container">
+        <div class="section-label reveal">The Problem</div>
+        <h2 class="section-title reveal">Batteries are failing the EV revolution</h2>
+        <p class="section-desc reveal">Three systemic failures are holding back electric mobility and costing the industry billions.</p>
+        <div class="problem-grid reveal">
+            <div class="problem-card">
+                <div class="problem-icon">&#9889;</div>
+                <h3>Premature Degradation</h3>
+                <p>Improper charging patterns destroy battery cells from the inside out, forcing costly replacements far before end-of-life.</p>
+                <div class="problem-stat">~40%<span>capacity lost prematurely</span></div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">&#128176;</div>
+                <h3>Crippling Replacement Costs</h3>
+                <p>Battery packs represent roughly half of an EV's total cost. Every premature replacement is a financial catastrophe for fleet operators.</p>
+                <div class="problem-stat">~50%<span>of total EV cost is the battery</span></div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">&#128268;</div>
+                <h3>Grid Instability</h3>
+                <p>Unmanaged EV charging creates severe load imbalances, stressing grid infrastructure and increasing carbon intensity during peak hours.</p>
+                <div class="problem-stat">Peak<span>load imbalances from unmanaged charging</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution-section" id="solution">
+    <div class="container">
+        <div class="solution-header">
+            <div class="os-name reveal">&#11042; ElecticaOS</div>
+            <h2 class="section-title reveal">Three capabilities.<br>One intelligent platform.</h2>
+            <p class="section-desc reveal">ElecticaOS is a full-stack battery intelligence platform that sits between the charger and the battery, optimizing every charge cycle.</p>
+        </div>
+        <div class="solution-grid reveal">
+            <div class="solution-card">
+                <div class="card-number">01</div>
+                <h3>Patented Adaptive Charging</h3>
+                <p>AI-driven charging algorithms that continuously adapt to cell chemistry, temperature, and degradation state, extending battery life by up to 40%.</p>
+                <span class="card-tag tag-ai">AI-Powered</span>
+            </div>
+            <div class="solution-card">
+                <div class="card-number">02</div>
+                <h3>Battery Intelligence SaaS</h3>
+                <p>Real-time diagnostics dashboard with State of Health (SoH), State of Charge (SoC), and Remaining Useful Life (RUL) predictions at cell level.</p>
+                <span class="card-tag tag-saas">Real-Time SaaS</span>
+            </div>
+            <div class="solution-card">
+                <div class="card-number">03</div>
+                <h3>Full Stack OEM Integration</h3>
+                <p>Licensed directly to OEMs and charge point operators. Embed ElecticaOS intelligence into any charging infrastructure or vehicle platform.</p>
+                <span class="card-tag tag-oem">OEM Licensed</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TRY BATTERY CONTROL -->
+<section class="try-section" id="try">
+    <div class="container">
+        <div class="section-label reveal">Try Battery Control</div>
+        <h2 class="section-title reveal">If it can be charged, it can be optimized</h2>
+        <p class="section-desc reveal">ElecticaOS speaks OCPP natively. Every charge session is monitored, profiled, and optimized in real-time through adaptive AI.</p>
+        <div class="try-hero glow-card reveal">
+            <div class="try-left">
+                <h2>Live OCPP Intelligence, built for fleets</h2>
+                <p>Watch ElecticaOS process real charger telemetry: BootNotification, MeterValues, adaptive SetChargingProfile - all flowing through our AI engine in real-time.</p>
+                <div class="try-btns">
+                    <a href="#contact" class="try-btn">
+                        <span>REQUEST A DEMO</span>
+                        <div class="shortcut"><span class="key">R</span> then <span class="key">D</span></div>
+                    </a>
+                    <a href="#proof" class="try-btn">
+                        <span>SEE VALIDATION</span>
+                        <div class="shortcut"><span class="key">S</span> then <span class="key">V</span></div>
+                    </a>
                 </div>
             </div>
-        </section>
-
-        <!-- The Problem Section -->
-        <section id="problem" class="py-20">
-            <div class="container mx-auto px-4">
-                <h2 class="text-4xl font-bold text-center mb-12 section-header">The Hidden Cost of Battery Degradation</h2>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="feature-card p-8 rounded-xl text-center flex flex-col">
-                        <h3 class="text-2xl font-bold mb-2">Battery Life Loss</h3>
-                        <p class="text-gray-400 mb-4 flex-grow">Premature degradation from improper charging forces costly and frequent battery replacements, eroding margins.</p>
-                        <div class="text-5xl mt-auto gradient-text">~40%</div>
-                    </div>
-                     <div class="feature-card p-8 rounded-xl text-center flex flex-col">
-                        <h3 class="text-2xl font-bold mb-2">Replacement Costs</h3>
-                        <p class="text-gray-400 mb-4 flex-grow">Batteries can account for up to half of an EV's total cost. Extending their life is the most effective way to improve unit economics.</p>
-                        <div class="text-5xl mt-auto gradient-text">~50%</div>
-                    </div>
-                    <div class="feature-card p-8 rounded-xl text-center flex flex-col">
-                        <h3 class="text-2xl font-bold mb-2">Grid Instability</h3>
-                        <p class="text-gray-400 mb-4 flex-grow">Unmanaged EV charging creates severe load imbalances, stressing grid infrastructure and increasing the risk of power outages.</p>
-                        <svg class="w-16 h-26 mx-auto mt-auto gradient-text" fill="cyan" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
+            <div class="try-right">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <div class="terminal-title">ElecticaOS OCPP Gateway - CP-V51</div>
+                    <div class="terminal-live"><span class="live-dot"></span> LIVE</div>
                 </div>
+                <div class="terminal-body" id="terminalBody"></div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
-        <!-- The Solution Section -->
-        <section id="solution" class="py-20 bg-[#000000] bg-opacity-50">
-            <div class="container mx-auto px-4">
-                <h2 class="text-4xl font-bold text-center mb-12 section-header">ElecticaOS: The Intelligence Layer</h2>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                     <div class="feature-card p-6 rounded-xl">
-                        <h3 class="text-xl font-bold mb-3 gradient-text">Patented Adaptive Charging</h3>
-                        <p class="text-gray-400">Our patented tech uses AI to dynamically adjust charging profiles, extending battery life by up to 40% and boosting revenue margins.</p>
-                    </div>
-                    <div class="feature-card p-6 rounded-xl">
-                        <h3 class="text-xl font-bold mb-3 gradient-text">V2G & B2G Enablement</h3>
-                        <p class="text-gray-400">Turn idle batteries into profit centers. Our bidirectional capability enables energy arbitrage, allowing batteries to stabilize the grid and generate new revenue.</p>
-                    </div>
-                    <div class="feature-card p-6 rounded-xl">
-                        <h3 class="text-xl font-bold mb-3 gradient-text">Battery Intelligence SaaS</h3>
-                        <p class="text-gray-400">Real-time diagnostics on State of Health (SoH), State of Charge (SoC), and Remaining Useful Life (RUL) to predict failures and optimize performance.</p>
-                    </div>
-                    <div class="feature-card p-6 rounded-xl">
-                        <h3 class="text-xl font-bold mb-3 gradient-text">Full Stack Integration</h3>
-                        <p class="text-gray-400">We license our integrated hardware and software stack to OEMs and operators, creating a capital-light, scalable model with strong customer lock-in.</p>
-                    </div>
-                </div>
+<!-- BENCHMARKS -->
+<section class="proof-section" id="proof">
+    <div class="mesh-blob" style="width:400px;height:400px;background:rgba(0,204,136,0.06);top:-100px;right:-50px;"></div>
+    <div class="mesh-blob" style="width:300px;height:300px;background:rgba(51,136,255,0.05);bottom:0;left:-80px;"></div>
+    <div class="container">
+        <div class="proof-header">
+            <div class="proof-badge reveal">&#9670; IEEE Validated</div>
+            <h2 class="section-title reveal">The numbers speak for themselves</h2>
+            <p class="section-desc reveal">Peer-reviewed results published in IEEE, comparing ElecticaOS adaptive charging against standard CC-CV protocols.</p>
+        </div>
+        <div class="benchmark-cards reveal">
+            <div class="benchmark-card">
+                <div class="benchmark-value green">67.2<span class="benchmark-unit">%</span></div>
+                <div class="benchmark-label">Capacity retained after 3,000 cycles</div>
+                <div class="benchmark-sub">vs. 45% with standard CC-CV</div>
             </div>
-        </section>
-
-        <!-- V2G Animation Section -->
-        <section id="v2g-animation" class="py-20">
-            <div class="container mx-auto px-4">
-                <h2 class="text-4xl font-bold text-center mb-16 section-header">The Electica Intelligence Layer in Action</h2>
-                <div class="w-full max-w-4xl mx-auto">
-                    <svg id="block-animation-svg" viewBox="0 0 800 300" class="w-full h-auto">
-                        <defs>
-                            <path id="path1" d="M 100 50 Q 250 80 400 150" fill="none" />
-                            <path id="path2" d="M 100 250 Q 250 220 400 150" fill="none" />
-                            <path id="path3" d="M 400 150 H 700" fill="none" />
-                             <linearGradient id="blockGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#0AFF96" />
-                                <stop offset="100%" stop-color="#00E0FF" />
-                            </linearGradient>
-                        </defs>
-                        <!-- Nodes -->
-                        <g>
-                            <rect x="50" y="25" width="100" height="50" rx="10" fill="rgba(26, 26, 46, 0.8)" stroke="#0AFF96"/>
-                            <text x="100" y="55" fill="white" font-size="12" text-anchor="middle">EVs & Drones</text>
-                            
-                            <rect x="50" y="225" width="100" height="50" rx="10" fill="rgba(26, 26, 46, 0.8)" stroke="#0AFF96"/>
-                            <text x="100" y="255" fill="white" font-size="12" text-anchor="middle">BESS</text>
-                            
-                            <rect x="350" y="125" width="100" height="50" rx="10" fill="rgba(26, 26, 46, 0.8)" stroke="#00E0FF"/>
-                            <text x="400" y="155" fill="white" font-size="14" text-anchor="middle">ElecticaOS</text>
-
-                            <rect x="650" y="125" width="100" height="50" rx="10" fill="rgba(26, 26, 46, 0.8)" stroke="#0AFF96"/>
-                            <text x="700" y="155" fill="white" font-size="12" text-anchor="middle">The Grid</text>
-                        </g>
-                    </svg>
-                </div>
+            <div class="benchmark-card">
+                <div class="benchmark-value accent">1,650</div>
+                <div class="benchmark-label">Total cycle life achieved</div>
+                <div class="benchmark-sub">vs. 1,200 standard cycles</div>
             </div>
-        </section>
+            <div class="benchmark-card">
+                <div class="benchmark-value blue">37.5<span class="benchmark-unit">%</span></div>
+                <div class="benchmark-label">Increase in total cycle life</div>
+                <div class="benchmark-sub">Peer-reviewed improvement</div>
+            </div>
+        </div>
+        <table class="comparison-table reveal">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>ElecticaOS</th>
+                    <th>Standard CC-CV</th>
+                    <th>Improvement</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="metric-name">Capacity @ 3,000 cycles</td>
+                    <td class="electica-val">67.2%</td>
+                    <td class="standard-val">45.0%</td>
+                    <td><span class="improvement positive">+49.3%</span></td>
+                </tr>
+                <tr>
+                    <td class="metric-name">Total cycle life</td>
+                    <td class="electica-val">1,650</td>
+                    <td class="standard-val">1,200</td>
+                    <td><span class="improvement positive">+37.5%</span></td>
+                </tr>
+                <tr>
+                    <td class="metric-name">E2W battery lifespan</td>
+                    <td class="electica-val">4.5 yrs</td>
+                    <td class="standard-val">3.3 yrs</td>
+                    <td><span class="improvement positive">+36.4%</span></td>
+                </tr>
+                <tr>
+                    <td class="metric-name">E4W battery lifespan</td>
+                    <td class="electica-val">18.1 yrs</td>
+                    <td class="standard-val">13.2 yrs</td>
+                    <td><span class="improvement positive">+37.1%</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
 
-        <!-- Life Extension Vectors -->
-        <section id="life-extension" class="py-20 bg-[#000000] bg-opacity-50">
-             <div class="container mx-auto px-4">
-                <h2 class="text-4xl font-bold text-center mb-16 section-header">Solutions for Every Scale</h2>
-                <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-                    <div class="feature-card p-8 rounded-xl">
-                        <h3 class="text-2xl font-bold mb-4">2-Wheelers (E2W)</h3>
-                        <p class="text-gray-400 mb-6">From 3.3 years to 4.5 years of battery life.</p>
-                        <div class="life-bar-bg">
-                            <div class="life-bar">
-                                <div class="life-bar-flow" style="--fill-width: 73%;"></div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs mt-2 text-gray-400"><span>Standard</span><span>3.3 years</span></div>
-                         <div class="life-bar-bg mt-4">
-                            <div class="life-bar">
-                                <div class="life-bar-flow" style="--fill-width: 100%;"></div>
-                            </div>
-                        </div>
-                         <div class="flex justify-between text-xs mt-2 font-bold gradient-text"><span>With Electica</span><span>4.5 years</span></div>
-                    </div>
-                     <div class="feature-card p-8 rounded-xl">
-                        <h3 class="text-2xl font-bold mb-4">4-Wheelers (E4W)</h3>
-                         <p class="text-gray-400 mb-6">From 13.2 years to a remarkable 18.1 years.</p>
-                        <div class="life-bar-bg">
-                            <div class="life-bar">
-                                <div class="life-bar-flow" style="--fill-width: 73%;"></div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs mt-2 text-gray-400"><span>Standard</span><span>13.2 years</span></div>
-                         <div class="life-bar-bg mt-4">
-                            <div class="life-bar">
-                                <div class="life-bar-flow" style="--fill-width: 100%;"></div>
-                            </div>
-                        </div>
-                         <div class="flex justify-between text-xs mt-2 font-bold gradient-text"><span>With Electica</span><span>18.1 years</span></div>
-                    </div>
-                </div>
-             </div>
-        </section>
-        
-        <!-- Technology Section -->
-        <section id="technology" class="py-20">
-            <div class="container mx-auto px-4">
-                 <h2 class="text-4xl font-bold text-center mb-12 section-header">Validated, Patented, and Proven</h2>
-                <div class="flex flex-col md:flex-row items-center gap-12">
-                    <div class="md:w-1/2">
-                        <h3 class="text-3xl font-bold mb-4">Unlocking <span class="gradient-text">37.5% More Life</span></h3>
-                        <p class="text-gray-400 mb-6">Peer-reviewed and validated by IEEE, our technology dramatically outperforms conventional charging methods. After 3000 cycles, batteries charged with Electica's system retain 67.2% of their capacity, compared to just 45% for standard CCCV charging. This translates to a 37.5% increase in total cycle life, from 1,200 to 1,650 cycles.</p>
-                         <div class="grid grid-cols-2 gap-4 text-center">
-                            <div class="stat-card p-4 rounded-lg">
-                                <p class="text-3xl font-bold gradient-text">52%</p>
-                                <p class="text-sm text-gray-400">Reduction in Annual Capacity Fade Rate</p>
-                            </div>
-                            <div class="stat-card p-4 rounded-lg">
-                                <p class="text-3xl font-bold gradient-text"><2%</p>
-                                <p class="text-sm text-gray-400">Error Rate in State of Health (SoH) Assessment</p>
-                            </div>
+<!-- BATTERY LIFE VISUAL -->
+<section style="padding-top: 0;">
+    <div class="container">
+        <div class="life-comparison reveal">
+            <div class="life-card glow-card">
+                <h4>2-Wheeler Battery Life</h4>
+                <div class="life-bars">
+                    <div class="life-bar-row">
+                        <div class="life-bar-label">Standard</div>
+                        <div class="life-bar-track">
+                            <div class="life-bar-fill standard" data-width="55%">3.3 yrs</div>
                         </div>
                     </div>
-                    <div class="md:w-1/2 w-full">
-                        <div id="chart-container" class="bg-gray-900 p-4 rounded-lg border border-gray-700 w-full max-w-sm mx-auto aspect-square relative">
-                           <!-- Interactive 2D SVG Chart will be inserted here -->
-                        </div>
-                         <div class="flex justify-center items-center space-x-6 mt-4">
-                            <div class="flex items-center space-x-2">
-                                <div class="w-4 h-4 rounded-sm bg-gradient-to-r from-[#0AFF96] to-[#00E0FF]"></div>
-                                <span class="text-sm text-white">Electica Intelligent</span>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <div class="w-4 h-4 rounded-sm bg-gray-500"></div>
-                                <span class="text-sm text-white">Conventional CCCV</span>
-                            </div>
+                    <div class="life-bar-row">
+                        <div class="life-bar-label">Electica</div>
+                        <div class="life-bar-track">
+                            <div class="life-bar-fill electica" data-width="75%">4.5 yrs</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Use Cases Section -->
-        <section id="use-cases" class="py-20 bg-[#000000] bg-opacity-50">
-            <div class="container mx-auto px-4">
-                <h2 class="text-4xl font-bold text-center mb-12 section-header">Transforming Industries</h2>
-                 <div class="grid md:grid-cols-3 gap-8">
-                    <div class="feature-card p-8 rounded-xl flex flex-col">
-                         <h3 class="text-2xl font-bold mb-3">Drones & Aerial Systems</h3>
-                         <p class="text-gray-400 mb-4 flex-grow">Secured a <span class="text-[#0AFF96] font-bold">$600K licensing deal</span> with BonV Aero. Our tech maximizes uptime for critical high-payload operations.</p>
-                         <div class="mt-auto">
-                            <div class="text-3xl font-bold gradient-text">$10K+</div>
-                            <p class="text-sm text-gray-500">Savings per battery pack</p>
-                         </div>
+            <div class="life-card glow-card">
+                <h4>4-Wheeler Battery Life</h4>
+                <div class="life-bars">
+                    <div class="life-bar-row">
+                        <div class="life-bar-label">Standard</div>
+                        <div class="life-bar-track">
+                            <div class="life-bar-fill standard" data-width="60%">13.2 yrs</div>
+                        </div>
                     </div>
-                     <div class="feature-card p-8 rounded-xl flex flex-col">
-                         <h3 class="text-2xl font-bold mb-3">Electric Mobility (EVs)</h3>
-                         <p class="text-gray-400 mb-4 flex-grow">For a typical electric car (E4W), our system extends battery life from 13.2 to <span class="text-[#0AFF96] font-bold">18.1 years</span>, creating massive value for both consumers and fleet operators.</p>
-                          <div class="mt-auto">
-                            <div class="text-3xl font-bold gradient-text">$3,375</div>
-                            <p class="text-sm text-gray-500">Lifetime savings per car</p>
-                          </div>
-                    </div>
-                    <div class="feature-card p-8 rounded-xl flex flex-col">
-                         <h3 class="text-2xl font-bold mb-3">Grid & Energy Storage</h3>
-                         <p class="text-gray-400 mb-4 flex-grow">Our V2G platform is India's first "Autobidder-equivalent." Capturing just 1% of India's 2030 BESS market unlocks a huge recurring revenue opportunity.</p>
-                         <div class="mt-auto">
-                            <div class="text-3xl font-bold gradient-text">$46.2M</div>
-                            <p class="text-sm text-gray-500">Annual SaaS revenue potential</p>
-                         </div>
+                    <div class="life-bar-row">
+                        <div class="life-bar-label">Electica</div>
+                        <div class="life-bar-track">
+                            <div class="life-bar-fill electica" data-width="82%">18.1 yrs</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-        
-        <!-- ROI Calculator Section -->
-        <section id="roi-calculator" class="py-20 bg-[#000000] bg-opacity-50">
-            <div class="container mx-auto px-4 text-center">
-                <h2 class="text-4xl font-bold section-header mb-4">Calculate Your ROI ✨</h2>
-                <p class="max-w-3xl mx-auto text-gray-400 mb-10">See how much you could save and earn with Electica's battery intelligence. Enter your fleet's details to generate a personalized ROI report powered by Gemini.</p>
-                <div class="max-w-4xl mx-auto p-8 feature-card rounded-xl">
-                    <div class="grid md:grid-cols-4 gap-6 items-end">
+        </div>
+    </div>
+</section>
+
+<!-- VERTICALS -->
+<section class="verticals-section" id="verticals">
+    <div class="container">
+        <div class="section-label reveal">Applications</div>
+        <h2 class="section-title reveal">Built for every energy vertical</h2>
+        <p class="section-desc reveal">From two-wheelers to grid-scale storage, ElecticaOS scales across the entire energy ecosystem.</p>
+        <div class="verticals-grid reveal">
+            <div class="vertical-card glow-card">
+                <div class="vertical-icon">&#128681;</div>
+                <h3>Drones &amp; UAVs</h3>
+                <p>Active licensing partnership for drone battery optimization. Extending mission-critical flight time and eliminating premature pack failures.</p>
+                <div class="vertical-metric">
+                    <div class="value">$10K+</div>
+                    <div class="desc">savings per battery pack</div>
+                </div>
+            </div>
+            <div class="vertical-card glow-card">
+                <div class="vertical-icon">&#128663;</div>
+                <h3>Electric Vehicles</h3>
+                <p>Adaptive charging intelligence for passenger EVs, fleets, and commercial vehicles. Lifetime battery cost reduction at scale.</p>
+                <div class="vertical-metric">
+                    <div class="value">$3,375</div>
+                    <div class="desc">lifetime savings per vehicle</div>
+                </div>
+            </div>
+            <div class="vertical-card glow-card">
+                <div class="vertical-icon">&#128267;</div>
+                <h3>Grid Storage</h3>
+                <p>Battery intelligence SaaS for utility-scale energy storage. Optimize charge-discharge cycles, predict failures, and maximize asset ROI.</p>
+                <div class="vertical-metric">
+                    <div class="value">$46.2M</div>
+                    <div class="desc">annual SaaS revenue potential</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ROI CALCULATOR -->
+<section class="roi-section" id="roi">
+    <div class="container">
+        <div class="section-label reveal">ROI Calculator</div>
+        <h2 class="section-title reveal">See your savings in real-time</h2>
+        <p class="section-desc reveal" style="margin-bottom: 64px;">Input your fleet parameters and get a personalized savings estimate.</p>
+        <div class="roi-wrapper reveal">
+            <div class="roi-form">
+                <div class="form-group">
+                    <label>Vehicle Type</label>
+                    <select id="vehicleType">
+                        <option value="ebus">E-Bus</option>
+                        <option value="e4w">Electric Car (E4W)</option>
+                        <option value="e3w">E-Rickshaw (E3W)</option>
+                        <option value="e2w">E-Scooter (E2W)</option>
+                        <option value="drone">High-Payload Drone</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Fleet Size</label>
+                    <input type="number" id="fleetSize" value="100" min="1" max="100000" placeholder="Number of vehicles">
+                </div>
+                <div class="form-group">
+                    <label>Avg. Daily Charge Cycles</label>
+                    <input type="number" id="dailyCycles" value="1" min="0.25" max="10" step="0.25" placeholder="Cycles per day">
+                </div>
+                <button class="btn-primary" onclick="calculateROI()" style="margin-top:8px;">Calculate Savings &#8594;</button>
+            </div>
+            <div class="roi-result glow-card" id="roiResult">
+                <h3>Your Estimated Savings</h3>
+                <div class="roi-metric">
+                    <div class="roi-value" id="roiLifeExtension">+37.5%</div>
+                    <div class="roi-label">Battery life extension (1,200 &#8594; 1,650 cycles)</div>
+                </div>
+                <div class="roi-metric">
+                    <div class="roi-value" id="roiBaseLife">-</div>
+                    <div class="roi-label" id="roiBaseLifeLabel">Base battery life &#8594; Extended life</div>
+                </div>
+                <div class="roi-metric">
+                    <div class="roi-value" id="roiReplacementSaving">-</div>
+                    <div class="roi-label">Total savings from avoided replacements</div>
+                </div>
+                <div class="roi-metric">
+                    <div class="roi-value" id="roiTotalValue" style="color: var(--accent);">-</div>
+                    <div class="roi-label">Total economic value over 10-year horizon</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VISION -->
+<section class="vision-section" id="vision">
+    <div class="mesh-blob" style="width:500px;height:500px;background:rgba(255,85,0,0.07);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    <div class="container">
+        <div class="section-label reveal">Vision</div>
+        <h2 class="vision-quote reveal">
+            We are building the indispensable <span class="gradient-text">Operating System</span> for AI + Energy
+        </h2>
+        <p class="vision-sub reveal">
+            Think "Nvidia Inside" but for energy. Embedded battery intelligence that becomes the standard layer between every charger and every battery on the planet.
+        </p>
+        <div class="vision-tagline reveal">&#11042; The Intelligence Layer for Every Battery</div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+    <div class="container">
+        <div class="section-label reveal">FAQ</div>
+        <h2 class="section-title reveal">Frequently asked questions</h2>
+        <div class="faq-grid reveal">
+            <div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is ElecticaOS?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ElecticaOS is an AI-powered battery intelligence platform that sits between the charger and the battery. It uses patented adaptive charging algorithms to extend battery life by up to 40%, while providing real-time diagnostics at cell level.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How does adaptive charging work?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Unlike standard CC-CV (constant current, constant voltage) charging, our AI continuously adjusts charging parameters based on real-time cell chemistry, temperature, and degradation state. This minimizes stress on the battery while maintaining optimal charge times.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is the technology validated?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. Our results are peer-reviewed and published in IEEE. We demonstrated 67.2% capacity retention after 3,000 cycles (vs. 45% for standard CC-CV) and a 37.5% increase in total cycle life.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What vehicle types are supported?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ElecticaOS supports E-Buses, Electric Cars (E4W), E-Rickshaws (E3W), E-Scooters (E2W), High-Payload Drones, and grid-scale energy storage systems. The platform is chemistry-agnostic and works with LFP, NMC, and other battery types.</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How is ElecticaOS deployed?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ElecticaOS can be deployed as a SaaS platform for fleet operators, or licensed directly to OEMs and charge point operators for embedding into their hardware and software stack.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What data do you need from our fleet?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We integrate via standard protocols (OCPP for chargers, CAN bus for vehicles). Minimum data includes voltage, current, temperature, and SoC readings. Historical data helps train better models, but we can start with real-time data alone.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is the typical ROI timeline?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Most fleet operators see ROI within 3-6 months through reduced degradation and optimized charging costs. Use our ROI calculator above for a personalized estimate based on your fleet parameters.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+    <div class="container">
+        <div class="contact-wrapper reveal">
+            <div class="contact-info">
+                <div class="section-label">Get in Touch</div>
+                <h2>Let's talk about your fleet</h2>
+                <p>Whether you're a fleet operator, OEM, charge point manufacturer, or grid operator, we'd love to show you what ElecticaOS can do.</p>
+                <div class="contact-links">
+                    <a href="mailto:arpit@electica.in" class="contact-link-item">
+                        <div class="contact-link-icon">&#9993;</div>
                         <div>
-                            <label for="vehicle-type" class="block text-left text-sm font-medium text-gray-300 mb-2">Vehicle Type</label>
-                            <select id="vehicle-type" class="w-full bg-[#101024] border border-gray-600 rounded-lg p-2.5 text-white focus:ring-[#0AFF96] focus:border-[#0AFF96]">
-                                <option value="E-Bus">E-Bus</option>
-                                <option value="Electric Car (E4W)">Electric Car (E4W)</option>
-                                <option value="E-Rickshaw (E3W)">E-Rickshaw (E3W)</option>
-                                <option value="E-Scooter (E2W)">E-Scooter (E2W)</option>
-                                <option value="High-Payload Drone">High-Payload Drone</option>
-                            </select>
+                            <div class="contact-link-text">arpit@electica.in</div>
+                            <div class="contact-link-sub">Technical inquiries &amp; partnerships</div>
                         </div>
+                    </a>
+                    <a href="mailto:avinash@electica.in" class="contact-link-item">
+                        <div class="contact-link-icon">&#9993;</div>
                         <div>
-                            <label for="fleet-size" class="block text-left text-sm font-medium text-gray-300 mb-2">Fleet Size</label>
-                            <input type="number" id="fleet-size" value="50" class="w-full bg-[#101024] border border-gray-600 rounded-lg p-2.5 text-white focus:ring-[#0AFF96] focus:border-[#0AFF96]">
+                            <div class="contact-link-text">avinash@electica.in</div>
+                            <div class="contact-link-sub">Business &amp; sales inquiries</div>
                         </div>
-                        <div>
-                            <label for="daily-usage" class="block text-left text-sm font-medium text-gray-300 mb-2">Daily Cycles</label>
-                            <input type="number" step="0.1" id="daily-usage" value="0.5" class="w-full bg-[#101024] border border-gray-600 rounded-lg p-2.5 text-white focus:ring-[#0AFF96] focus:border-[#0AFF96]">
-                        </div>
-                        <button id="generate-roi-btn" class="w-full bg-gradient-to-r from-[#0AFF96] to-[#00E0FF] text-black font-bold py-3 px-6 rounded-lg text-lg hover:opacity-90 transition-opacity flex items-center justify-center">
-                           <span id="btn-text">✨ Generate Report (1 min)</span>
-                           <div id="btn-loader" class="loader hidden"></div>
-                        </button>
-                    </div>
-                </div>
-                <div id="roi-result-container" class="max-w-4xl mx-auto mt-6 text-left p-8 bg-[#101024] border border-gray-700 rounded-xl hidden">
-                    <!-- Gemini response will be injected here -->
+                    </a>
+
                 </div>
             </div>
-        </section>
-
-         <!-- Vision Section -->
-        <section id="vision" class="py-20 text-center">
-            <div class="container mx-auto px-4">
-                <h2 class="text-4xl font-bold section-header mb-6">Our Vision: The 'Nvidia Inside' for Energy</h2>
-                <p class="max-w-4xl mx-auto text-lg text-gray-300">
-                    We are building the indispensable Operating System for AI + Energy. By embedding intelligence into every battery, Electica transforms them from passive storage units into active, revenue-generating, grid-stabilizing nodes. Our ambition is to create a unified software and licensing platform for the entire battery economy from EVs and drones to large-scale BESS powering a sustainable and intelligent energy grid for tomorrow.
-                </p>
-            </div>
-        </section>
-
-        <!-- Team Section -->
-        <section id="team" class="py-20 bg-[#000000] bg-opacity-50">
-            <div class="container mx-auto px-4">
-                <h2 class="text-4xl font-bold text-center mb-12 section-header">Meet Our Founders</h2>
-                 <p class="text-center max-w-2xl mx-auto text-gray-400 mb-12">Founded at IIT Mandi, Electica is led by a team with deep technical understanding and complementary expertise in the EV and battery domain.</p>
-                <div class="flex flex-col md:flex-row justify-center gap-10">
-                    <div class="feature-card p-6 rounded-lg text-center md:w-1/3">
-                        <img src="Avinash.jpg" alt="Avinash Yadav" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-[#0AFF96]">
-                        <h3 class="text-xl font-bold text-white">Avinash Yadav</h3>
-                        <p class="gradient-text">Co-founder & CEO</p>
-                        <p class="text-gray-400 mt-2 text-sm">IIT Mandi Alumnus with a Masters in Energy Engineering (Specialization in Batteries). Leads product, business strategy, and partnerships.</p>
-                        <a href="https://www.linkedin.com/in/avinashyadav641/" target="_blank" rel="noopener noreferrer" class="inline-block mt-3 text-gray-400 hover:text-white">
-                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
-                    </div>
-                    <div class="feature-card p-6 rounded-lg text-center md:w-1/3">
-                        <img src="arpit pic square.jpg" alt="Arpit Kshirsagar" class="w-32 h-32 rounded-full mx-auto mb-4 border-2 border-[#00E0FF]">
-                        <h3 class="text-xl font-bold text-white">Arpit Kshirsagar</h3>
-                        <p class="gradient-text">Co-founder & CTO</p>
-                        <p class="text-gray-400 mt-2 text-sm">IIT Mandi Alumnus with a Masters in Energy Engineering (Specialization in EV Charging). Leads patents, R&D, and technology.</p>
-                        <a href="https://www.linkedin.com/in/arpitkshirsagar/" target="_blank" rel="noopener noreferrer" class="inline-block mt-3 text-gray-400 hover:text-white">
-                           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
-                    </div>
+            <div class="contact-form">
+                <div class="form-row">
+                    <input type="text" placeholder="Your name" required>
+                    <input type="email" placeholder="Work email" required>
                 </div>
+                <input type="text" placeholder="Company name">
+                <select>
+                    <option value="" disabled selected>I'm interested in...</option>
+                    <option>Fleet battery optimization</option>
+                    <option>OEM licensing</option>
+                    <option>Grid storage intelligence</option>
+                    <option>Drone battery optimization</option>
+                    <option>Partnership / other</option>
+                </select>
+                <textarea rows="4" placeholder="Tell us about your fleet and use case..."></textarea>
+                <button class="btn-primary" style="width:100%; justify-content:center;">Send Message &#8594;</button>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
-         <!-- Supporters Section -->
-        <section id="supporters" class="py-16">
-            <div class="container mx-auto px-4">
-                <h3 class="text-center text-lg font-semibold text-gray-400 mb-8">SUPPORTED BY</h3>
-                <div class="flex flex-wrap justify-center items-center gap-x-12 gap-y-6">
-                    <span class="text-2xl font-bold text-gray-500">ACCELERATING ASIA</span>
-                    <span class="text-2xl font-bold text-gray-500">IIMA VENTURES</span>
-                    <span class="text-2xl font-bold text-gray-500">IIT STARTUPS</span>
-                    <span class="text-2xl font-bold text-gray-500">iHUB IIT MANDI</span>
-                    <span class="text-2xl font-bold text-gray-500">IIT MANDI CATALYST</span>
-                    <span class="text-2xl font-bold text-gray-500">SCHAEFFLER INDIA</span>
-                </div>
-            </div>
-        </section>
+<!-- GIANT BRAND -->
+<div class="brand-section">
+    <div class="brand-giant reveal">ELECTICA</div>
+    <div class="brand-sub reveal">Battery Intelligence, Redefined</div>
+</div>
 
-    </main>
-    
-    <!-- Footer -->
-    <footer id="contact" class="bg-[#000000] bg-opacity-70 border-t border-gray-800 py-12">
-        <div class="container mx-auto px-4 text-center">
-            
-            
-            <div class="mt-8 text-center text-gray-400">
-                <p class="mb-2 font-bold text-lg">Or, reach out directly:</p>
-                <div class="flex justify-center items-center space-x-6">
-                    <a href="mailto:avinash@electica.in" class="hover:text-[#0AFF96]">avinash@electica.in</a>
-                    <a href="mailto:arpit@electica.in" class="hover:text-[#0AFF96]">arpit@electica.in</a>
-                    <a href="tel:+918817771103" class="hover:text-[#0AFF96]">+91 8817771103</a>
-                </div>
-            </div>
-             
-             <!-- Legal Section -->
-            <div class="max-w-3xl mx-auto mt-10 text-left legal-section">
-                <details>
-                    <summary>Privacy Policy</summary>
-                    <div>
-                        <p>Electica Energy ("us", "we", or "our") operates the electica.in website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data. We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in this Privacy Policy have the same meanings as in our Terms and Conditions.</p>
-                        <p><strong>Information Collection and Use:</strong> We collect several different types of information for various purposes to provide and improve our Service to you. This may include, but is not limited to, email address, first name and last name, and usage data.</p>
-                        <p><strong>Use of Data:</strong> Electica Energy uses the collected data for various purposes: to provide and maintain the Service; to notify you about changes to our Service; to allow you to participate in interactive features of our Service when you choose to do so; to provide customer care and support; to provide analysis or valuable information so that we can improve the Service; to monitor the usage of the Service; to detect, prevent and address technical issues.</p>
-                    </div>
-                </details>
-                <details>
-                    <summary>Terms of Service</summary>
-                    <div>
-                        <p>Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the electica.in website (the "Service") operated by Electica Energy ("us", "we", or "our"). Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users, and others who access or use the Service. By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service.</p>
-                        <p><strong>Accounts:</strong> When you create an account with us, you must provide us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service.</p>
-                        <p><strong>Intellectual Property:</strong> The Service and its original content, features and functionality are and will remain the exclusive property of Electica Energy and its licensors. The Service is protected by copyright, trademark, and other laws of both India and foreign countries.</p>
-                    </div>
-                </details>
-                 <details>
-                    <summary>Cancellation & Return Policy</summary>
-                    <div>
-                         <p><strong>For SaaS (Software-as-a-Service) Products:</strong> Subscriptions to our SaaS offerings, including the Battery Intelligence and V2G platforms, can be canceled at any time through your account dashboard or by contacting our support team. Cancellations will take effect at the end of the current billing cycle, and you will not be charged for the subsequent period. We do not offer prorated refunds for partial subscription periods.</p>
-                        <p><strong>For Licensed Hardware:</strong> As our primary model is technology licensing, direct returns of hardware are generally handled by the OEM or distributor from whom you purchased the product. However, if you have licensed a direct hardware solution from Electica Energy, returns are accepted within 30 days of delivery, provided the product is in its original, unopened, and unused condition. A restocking fee may apply. To initiate a return, please contact our support team with your order details to receive a return merchandise authorization (RMA).</p>
-                    </div>
-                </details>
-            </div>
-
-
-            <div class="mt-10 border-t border-gray-800 pt-8 flex justify-between items-center flex-col md:flex-row gap-4">
-                <p class="text-sm text-gray-500">&copy; 2025 Electica Energy. All Rights Reserved.</p>
-                 <a href="#" aria-label="Back to Top">
-                    <img src="Logo -02.png" alt="Electica Logo" class="h-12 w-auto">
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="nav-logo" style="margin-bottom:16px;">
+                    <img src="Logo -02.png" alt="Electica">
                 </a>
+                <p>The AI-powered operating system for battery intelligence. Extending battery life and powering the future of electric mobility.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Product</h5>
+                <a href="#solution">ElecticaOS</a>
+                <a href="#try">Battery Control</a>
+                <a href="#proof">Validation</a>
+                <a href="#roi">ROI Calculator</a>
+            </div>
+            <div class="footer-col">
+                <h5>Solutions</h5>
+                <a href="#verticals">Electric Vehicles</a>
+                <a href="#verticals">Drones &amp; UAVs</a>
+                <a href="#verticals">Grid Storage</a>
+                <a href="#verticals">OEM Licensing</a>
+            </div>
+            <div class="footer-col">
+                <h5>Company</h5>
+                <a href="#vision">Vision</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact">Contact</a>
+                <a href="mailto:avinash@electica.in">Careers</a>
             </div>
         </div>
-    </footer>
-    </div>
-    
-    <!-- Chatbot Toggle -->
-    <button id="chatbot-toggle">
-         <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12 5.477 2 11 2s10 4.477 10 10z"></path></svg>
-    </button>
-
-    <!-- Chatbot Modal -->
-    <div id="chatbot-modal" class="hidden">
-        <div class="flex items-center justify-between p-4 border-b border-gray-700">
-            <h3 class="font-bold text-white">Electica AI Assistant</h3>
-            <button id="close-chatbot" class="text-gray-400 hover:text-white">&times;</button>
-        </div>
-        <div id="chat-messages">
-            <div class="chat-bubble ai-bubble">Hello! How can I help you learn about Electica Energy today?</div>
-        </div>
-        <div class="p-4 border-t border-gray-700 flex gap-2">
-            <input type="text" id="chat-input" placeholder="Ask a question..." class="flex-grow bg-[#1A1A2E] border border-gray-600 rounded-lg p-2 text-white focus:ring-[#0AFF96] focus:border-[#0AFF96]">
-            <button id="chat-send" class="bg-gradient-to-r from-[#0AFF96] to-[#00E0FF] text-black px-4 py-2 rounded-lg font-bold">Send</button>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Electica. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="#">LinkedIn</a>
+                <a href="#">Twitter</a>
+            </div>
         </div>
     </div>
+</footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-    <script>
-        //const apiKey = ""; // Global API key for all Gemini calls
-        
-        VANTA.NET({
-            el: "#vanta-bg",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0x2f3a8b,
-            backgroundColor: 0x0,
-            points: 10.00,
-            maxDistance: 20.00,
-            spacing: 15.00
+<script>
+    // ─── Mobile Menu ───
+    document.getElementById('menuBtn').addEventListener('click', () => {
+        document.getElementById('navLinks').classList.toggle('active');
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+        a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active'));
+    });
+
+    // ─── Scroll Reveal ───
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
         });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => observer.observe(el));
 
-        const header = document.getElementById('header');
-        window.onscroll = function() {
-            if (window.scrollY > 50) {
-                header.classList.add('bg-[#000000]', 'bg-opacity-80', 'backdrop-blur-sm', 'shadow-lg');
-            } else {
-                header.classList.remove('bg-[#000000]', 'bg-opacity-80', 'backdrop-blur-sm', 'shadow-lg');
-            }
-        };
-
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        document.querySelectorAll('#mobile-menu a, header nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (!mobileMenu.classList.contains('hidden')) {
-                     mobileMenu.classList.add('hidden');
-                }
-            });
-        });
-        
-        // Block animation using SVG paths
-        document.addEventListener('DOMContentLoaded', () => {
-            const svgContainer = document.getElementById('block-animation-svg');
-            if (!svgContainer) return;
-
-            const createBlock = (pathId, delay, size) => {
-                const block = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                block.setAttribute('width', size);
-                block.setAttribute('height', size);
-                block.setAttribute('rx', 2);
-                block.setAttribute('fill', 'url(#blockGradient)');
-                
-                const animateMotion = document.createElementNS('http://www.w3.org/2000/svg', 'animateMotion');
-                animateMotion.setAttribute('dur', (4 + Math.random() * 2) + 's');
-                animateMotion.setAttribute('repeatCount', 'indefinite');
-                animateMotion.setAttribute('begin', `${delay}s`);
-                
-                const mpath = document.createElementNS('http://www.w3.org/2000/svg', 'mpath');
-                mpath.setAttributeNS('http://www.w3.org/1999/xlink', 'href', `#${pathId}`);
-                
-                animateMotion.appendChild(mpath);
-                block.appendChild(animateMotion);
-                svgContainer.appendChild(block);
-            };
-
-            for(let i = 0; i < 5; i++) {
-                createBlock('path1', i * 0.8, 12);
-                createBlock('path2', i * 0.8 + 0.4, 12);
-                createBlock('path3', i * 0.6, 12);
-            }
-        });
-
-        const generateBtn = document.getElementById('generate-roi-btn');
-        const btnText = document.getElementById('btn-text');
-        const btnLoader = document.getElementById('btn-loader');
-        const resultContainer = document.getElementById('roi-result-container');
-
-        generateBtn.addEventListener('click', async () => {
-            const vehicleType = document.getElementById('vehicle-type').value;
-            const fleetSize = document.getElementById('fleet-size').value;
-            const dailyUsage = document.getElementById('daily-usage').value;
-            
-            if (!fleetSize || !dailyUsage || fleetSize <= 0 || dailyUsage <= 0) {
-                resultContainer.innerHTML = '<p class="text-red-400">Please enter valid values for fleet size and daily usage.</p>';
-                resultContainer.classList.remove('hidden');
-                return;
-            }
-
-            btnText.classList.add('hidden');
-            btnLoader.classList.remove('hidden');
-            generateBtn.disabled = true;
-            resultContainer.classList.add('hidden');
-
-            const systemPrompt = `You are an expert financial analyst for Electica Energy, a deep-tech company specializing in battery intelligence. Your task is to generate a concise, data-driven Return on Investment (ROI) report for potential customers. Use the following key performance indicators for Electica's technology:
-- **Battery Life Extension:** 37.5% increase in cycle life (from 1200 to 1650 cycles), which translates to 37.5% longer operational life.
-- **V2G Revenue (India benchmark):** Potential to earn approximately $791 per year for a standard EV (36kWh available capacity) based on a $0.058/kWh price differential. You should mention this as a potential upside.
-- **Base Costs & Lifespan (Standard, for calculation):**
-  - E-Bus: $45,000 battery, 6.6 years life @ 0.5 cycles/day.
-  - Electric Car (E4W): $9,000 battery, 13.2 years life @ 0.25 cycles/day.
-  - E-Rickshaw (E3W): $600 battery, 3.3 years life @ 1.0 cycles/day.
-  - E-Scooter (E2W): $500 battery, 3.3 years life @ 1.0 cycles/day.
-  - High-Payload Drone: $10,000 battery pack, with 35% reduction in replacement costs.
-Your response must be a single, well-structured paragraph. Start with a clear heading like "Personalized ROI Report for Your Fleet". Then, use bullet points (using '*') within the paragraph for clarity to outline the key financial benefits. Focus on a) Total lifetime savings for the fleet from avoided battery replacements and b) Potential new annual revenue from V2G as an additional opportunity. Be positive, professional, and persuasive. Do not repeat the input parameters.`;
-
-            const userQuery = `Generate an ROI report for a fleet of ${fleetSize} ${vehicleType}(s). The fleet's average daily usage is ${dailyUsage} cycles per vehicle.`;
-            
-            const apiUrl = '/api/gemini';
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
-            };
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+    // ─── Bar Fills ───
+    const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.querySelectorAll('.life-bar-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.width;
                 });
-
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.statusText}`);
-                }
-
-                const result = await response.json();
-                const candidate = result.candidates?.[0];
-
-                if (candidate && candidate.content?.parts?.[0]?.text) {
-                    let text = candidate.content.parts[0].text;
-                    text = text.replace(/\*\s/g, '<br>• ').replace(/\n/g, '<br>');
-                    text = text.replace(/<br>•/,'•');
-                    resultContainer.innerHTML = `<p>${text}</p>`;
-                } else {
-                     resultContainer.innerHTML = '<p class="text-yellow-400">Could not generate a report at this time. The model may have returned an empty response.</p>';
-                }
-            } catch (error) {
-                console.error("Gemini API call failed:", error);
-                resultContainer.innerHTML = `<p class="text-red-400">An error occurred while generating your report. Please try again later. Details: ${error.message}</p>`;
-            } finally {
-                btnText.classList.remove('hidden');
-                btnLoader.classList.add('hidden');
-                generateBtn.disabled = false;
-                resultContainer.classList.remove('hidden');
             }
         });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.life-comparison').forEach(el => barObserver.observe(el));
 
-        const getInsightBtn = document.getElementById('get-insight-btn');
-        // ... (rest of Gemini Strategic AI code is identical)
-        
-        const contactBtn = document.getElementById('contact-submit-btn');
-        // ... (rest of contact form code is identical)
-
-        // Interactive 2D Chart Logic
-        document.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('chart-container');
-            if (!container) return;
-
-            const svgNS = "http://www.w3.org/2000/svg";
-            const svg = document.createElementNS(svgNS, "svg");
-            svg.setAttribute('viewBox', '0 0 500 500');
-            svg.setAttribute('width', '100%');
-            svg.setAttribute('height', '100%');
-            svg.style.overflow = 'visible';
-            container.appendChild(svg);
-            
-            const conventionalData = [ { x: 0, y: 100 }, { x: 1000, y: 67.5 }, { x: 3000, y: 45 } ];
-            const electicaData = [ { x: 0, y: 100 }, { x: 1000, y: 81.5 }, { x: 3000, y: 67.2 } ];
-
-            function drawInteractiveChart() {
-                svg.innerHTML = ''; 
-
-                const defs = document.createElementNS(svgNS, 'defs');
-                const gradient = document.createElementNS(svgNS, 'linearGradient');
-                gradient.setAttribute('id', 'lineGradient');
-                gradient.innerHTML = `<stop offset="0%" style="stop-color:#0AFF96" /><stop offset="100%" style="stop-color:#00E0FF" />`;
-                defs.appendChild(gradient);
-                svg.appendChild(defs);
-
-                const padding = { top: 40, right: 40, bottom: 70, left: 80 };
-                const width = 500;
-                const height = 500;
-
-                const yDomain = [40, 105]; 
-
-                const xScale = (x) => padding.left + (x / 3000) * (width - padding.left - padding.right);
-                const yScale = (y) => height - padding.bottom - ((y - yDomain[0]) / (yDomain[1] - yDomain[0])) * (height - padding.top - padding.bottom);
-
-                const axesGroup = document.createElementNS(svgNS, 'g');
-                for(let i=40; i<=100; i+=20) {
-                    const y = yScale(i);
-                    const line = document.createElementNS(svgNS, 'line');
-                    line.setAttribute('x1', padding.left); line.setAttribute('y1', y);
-                    line.setAttribute('x2', width - padding.right); line.setAttribute('y2', y);
-                    line.setAttribute('stroke', 'rgba(255, 255, 255, 0.1)');
-                    axesGroup.appendChild(line);
-                    const text = document.createElementNS(svgNS, 'text');
-                    text.setAttribute('x', padding.left - 15); text.setAttribute('y', y + 5);
-                    text.setAttribute('fill', 'rgba(255, 255, 255, 0.5)');
-                    text.setAttribute('font-size', '16'); text.setAttribute('text-anchor', 'end');
-                    text.textContent = `${i}%`;
-                    axesGroup.appendChild(text);
+    // ─── Number Counter ───
+    const statObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.animated) {
+                entry.target.dataset.animated = 'true';
+                const numEl = entry.target.querySelector('.number');
+                if (!numEl) return;
+                const num = parseFloat(numEl.textContent);
+                const unit = numEl.querySelector('.unit');
+                const unitText = unit ? unit.textContent : '';
+                if (unit) {
+                    const isDecimal = String(num).includes('.');
+                    const startTime = performance.now();
+                    function update(currentTime) {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / 1500, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        const current = num * eased;
+                        const display = isDecimal ? current.toFixed(1) : Math.floor(current);
+                        numEl.innerHTML = display + '<span class="unit">' + unitText + '</span>';
+                        if (progress < 1) requestAnimationFrame(update);
+                    }
+                    requestAnimationFrame(update);
                 }
-                for(let i=0; i<=3000; i+=1000) {
-                    const x = xScale(i);
-                    const text = document.createElementNS(svgNS, 'text');
-                    text.setAttribute('x', x); text.setAttribute('y', height - padding.bottom + 25);
-                    text.setAttribute('fill', 'rgba(255, 255, 255, 0.5)');
-                    text.setAttribute('font-size', '16'); text.setAttribute('text-anchor', 'middle');
-                    text.textContent = i;
-                    axesGroup.appendChild(text);
-                }
-                
-                const yLabel = document.createElementNS(svgNS, 'text');
-                yLabel.textContent = 'Capacity Retention';
-                yLabel.setAttribute('fill', 'rgba(255, 255, 255, 0.7)');
-                yLabel.setAttribute('font-size', '18');
-                yLabel.setAttribute('transform', `rotate(-90) translate(-${height/2}, 12)`);
-                yLabel.setAttribute('text-anchor', 'middle');
-                axesGroup.appendChild(yLabel);
-
-                const xLabel = document.createElementNS(svgNS, 'text');
-                xLabel.textContent = 'Charge Cycles';
-                xLabel.setAttribute('fill', 'rgba(255, 255, 255, 0.7)');
-                xLabel.setAttribute('font-size', '18');
-                xLabel.setAttribute('x', width/2);
-                xLabel.setAttribute('y', height - 10);
-                xLabel.setAttribute('text-anchor', 'middle');
-                axesGroup.appendChild(xLabel);
-
-                svg.appendChild(axesGroup);
-                
-                const createLineGroup = (data, color, isGradient) => {
-                    const group = document.createElementNS(svgNS, 'g');
-                    const path = document.createElementNS(svgNS, 'path');
-                    const pathData = "M" + data.map(p => `${xScale(p.x)},${yScale(p.y)}`).join(" L");
-                    path.setAttribute('d', pathData);
-                    path.setAttribute('fill', 'none');
-                    path.setAttribute('stroke', isGradient ? 'url(#lineGradient)' : color);
-                    path.setAttribute('stroke-width', '4');
-                    path.classList.add('line-path');
-                    group.appendChild(path);
-
-                    const pointsGroup = document.createElementNS(svgNS, 'g');
-                    data.forEach(p => {
-                        const circle = document.createElementNS(svgNS, 'circle');
-                        circle.setAttribute('cx', xScale(p.x));
-                        circle.setAttribute('cy', yScale(p.y));
-                        circle.setAttribute('r', '7');
-                        circle.setAttribute('fill', isGradient ? '#0AFF96' : color);
-                        circle.classList.add('data-point');
-                        pointsGroup.appendChild(circle);
-
-                        const text = document.createElementNS(svgNS, 'text');
-                        text.setAttribute('x', xScale(p.x));
-                        text.setAttribute('y', yScale(p.y) - 15);
-                        text.setAttribute('fill', '#FFFFFF');
-                        text.setAttribute('font-size', '16');
-                        text.setAttribute('font-weight', 'bold');
-                        text.setAttribute('text-anchor', 'middle');
-                        text.textContent = `${p.y}%`;
-                        text.classList.add('data-label');
-                        pointsGroup.appendChild(text);
-                    });
-                    group.appendChild(pointsGroup);
-                    svg.appendChild(group);
-
-                    group.addEventListener('click', () => {
-                        document.querySelectorAll('.line-path.animated').forEach(p => p.classList.remove('animated'));
-                        document.querySelectorAll('.data-point.visible, .data-label.visible').forEach(el => el.classList.remove('visible'));
-                        
-                        path.classList.add('animated');
-                        
-                        const points = group.querySelectorAll('.data-point, .data-label');
-                        points.forEach((point, i) => {
-                            setTimeout(() => {
-                                point.classList.add('visible');
-                            }, 500 + i * 200);
-                        });
-                    });
-                };
-                
-                createLineGroup(conventionalData, '#999999', false);
-                createLineGroup(electicaData, '', true);
-            }
-            
-            drawInteractiveChart();
-            new ResizeObserver(drawInteractiveChart).observe(container);
-
-            // Chatbot functionality
-            const chatbotToggle = document.getElementById('chatbot-toggle');
-            const chatbotModal = document.getElementById('chatbot-modal');
-            const closeChatbot = document.getElementById('close-chatbot');
-            const chatMessages = document.getElementById('chat-messages');
-            const chatInput = document.getElementById('chat-input');
-            const chatSend = document.getElementById('chat-send');
-
-            chatbotToggle.addEventListener('click', () => chatbotModal.classList.toggle('hidden'));
-            closeChatbot.addEventListener('click', () => chatbotModal.classList.add('hidden'));
-            chatSend.addEventListener('click', handleChatSend);
-            chatInput.addEventListener('keypress', (e) => {
-                if(e.key === 'Enter') handleChatSend();
-            });
-
-            async function handleChatSend() {
-                const userMessage = chatInput.value.trim();
-                if(!userMessage) return;
-                
-                appendMessage(userMessage, 'user');
-                chatInput.value = '';
-                
-                const thinkingBubble = appendMessage('...', 'ai');
-
-                const chatSystemPrompt = `You are "Electica AI," a friendly and expert assistant for Electica Energy. Your goal is to answer user questions accurately and concisely based on the following comprehensive knowledge base.
-
-                **Core Business:** Electica is a deep-tech company creating "ElecticaOS," the operating system for AI + Energy. We solve battery degradation, which causes ~40% life loss and high replacement costs (~50% of vehicle cost), and grid instability from unmanaged EV charging. Our model is capital-light, focusing on licensing our patented technology and providing a SaaS platform.
-
-                **Technology (Patent No. 561134):**
-                - **Adaptive Charging:** AI-driven charging extends battery life by a proven 37.5% (1200 to 1650 cycles). We reduce annual capacity fade by 52%.
-                - **Battery Intelligence:** Our SaaS offers high-accuracy (<2% error) real-time monitoring of State of Health (SoH), State of Charge (SoC), and Remaining Useful Life (RUL).
-                - **V2G Hardware:** Our bidirectional hardware enables Vehicle-to-Grid and Battery-to-Grid, allowing batteries to sell power back to stabilize the grid.
-
-                **Business Model & Revenue:**
-                1.  **Technology Licensing:** We license our full hardware and software stack to B2B clients (EV OEMs, drone makers, etc.) for $600 - $6000 per unit. This is our "Nvidia Inside" strategy.
-                2.  **SaaS (Battery Life):** We charge $1-2 per battery per month for our battery life extension and monitoring service.
-                3.  **SaaS (V2G Arbitrage):** We enable partners to earn money from energy arbitrage (selling power to the grid). We take a 20% share of these profits.
-
-                **Traction & Market:**
-                - **Key Deal:** Secured a $600K ARR licensing deal with BonV Aero, a leading Indian drone OEM.
-                - **Growth:** 6x revenue growth in the last 6 months, with an MRR of $9000.
-                - **Market:** We operate at the intersection of the EV ($211B by 2030 in India), drone, and Battery Energy Storage Systems (BESS) markets. Our V2G platform is a first-mover in India, similar to Tesla's Autobidder. We are expanding into Southeast Asia.
-
-                **Founders & Backers:**
-                - **CEO:** Avinash Yadav (IIT Mandi, Masters in Energy - Batteries).
-                - **CTO:** Arpit Kshirsagar (IIT Mandi, Masters in Energy - EV Charging).
-                - **Supported By:** Accelerating Asia, IIMA Ventures, IIT Startups, IIT Mandi Catalyst, Schaeffler India.
-
-                **Instructions:**
-                - Keep answers concise and helpful (2-5 sentences).
-                - If asked about something you don't know, politely say, "I don't have information on that, but I can tell you about our technology or business model."
-                - If asked for contact info, provide: avinash@electica.in, arpit@electica.in, and +91 8817771103.`;
-                
-                 const apiUrl = '/api/gemini'; // Change this line
-                 const chatPayload = {
-                    contents: [{ parts: [{ text: userMessage }] }],
-                    systemInstruction: { parts: [{ text: chatSystemPrompt }] },
-                };
-
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(chatPayload)
-                    });
-                    if (!response.ok) throw new Error('API Error');
-                    const result = await response.json();
-                    const aiMessage = result.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that. Please try another question.";
-                    thinkingBubble.textContent = aiMessage;
-
-                } catch (error) {
-                    thinkingBubble.textContent = "Apologies, I'm having trouble connecting right now. Please try again in a moment.";
-                }
-
-            }
-
-            function appendMessage(text, type) {
-                const bubble = document.createElement('div');
-                bubble.classList.add('chat-bubble', type === 'user' ? 'user-bubble' : 'ai-bubble');
-                bubble.textContent = text;
-                chatMessages.appendChild(bubble);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                return bubble;
             }
         });
-        
-    </script>
-    </div>
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.hero-stat').forEach(el => statObserver.observe(el));
+
+    // ─── Nav Scroll ───
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        nav.style.borderBottomColor = window.scrollY > 100 ? 'rgba(255,255,255,0.06)' : 'var(--border)';
+    });
+
+    // ─── OCPP TERMINAL SIMULATION ───
+    const termBody = document.getElementById('terminalBody');
+    let lineCount = 0;
+    const MAX_LINES = 18;
+
+    // Real OCPP message sequence (NueGo E-Bus S5P2, 510V DC)
+    const ocppSequence = [
+        { dir: 'in', type: 'BootNotification', detail: 'vendor:<span class="val">NueGo</span> model:<span class="val">S5P2-510V</span> fw:<span class="val">v3.2.1</span>' },
+        { dir: 'out', type: 'BootNotification.conf', detail: 'status:<span class="status-ok">Accepted</span> interval:<span class="val">30s</span>' },
+        { dir: 'in', type: 'StatusNotification', detail: 'connector:<span class="val">1</span> status:<span class="status-ok">Available</span> error:<span class="val">NoError</span>' },
+        { dir: 'in', type: 'Heartbeat', detail: '<span class="dim">keepalive</span>' },
+        { dir: 'out', type: 'Heartbeat.conf', detail: 'time:<span class="val">2025-03-22T14:30:00Z</span>' },
+        { dir: 'in', type: 'Authorize', detail: 'idTag:<span class="val">RFID-V51-0x4A</span>' },
+        { dir: 'out', type: 'Authorize.conf', detail: 'status:<span class="status-ok">Accepted</span>' },
+        { dir: 'in', type: 'StartTransaction', detail: 'connector:<span class="val">1</span> meterStart:<span class="val">12500Wh</span> SoC:<span class="val-accent">20%</span>' },
+        { dir: 'out', type: 'StartTransaction.conf', detail: 'txId:<span class="val-green">9101</span> status:<span class="status-ok">Accepted</span>' },
+        { dir: 'out', type: 'AI: ProfileEngine', detail: 'SoH:<span class="val-green">92%</span> RUL:<span class="val">1,240 cycles</span> profile:<span class="val-accent">balanced</span>' },
+        { dir: 'out', type: 'SetChargingProfile', detail: 'band:<span class="val">0-20%</span> limit:<span class="val-accent">132kW</span> mode:<span class="val">constant_power</span>' },
+        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-accent">25%</span> V:<span class="val">508.2V</span> I:<span class="val">96A</span> T:<span class="val-green">26\u00b0C</span> P:<span class="val">48.8kW</span>' },
+        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-accent">34%</span> V:<span class="val">510.1V</span> I:<span class="val">98A</span> T:<span class="val-green">28\u00b0C</span> P:<span class="val">50.0kW</span>' },
+        { dir: 'out', type: 'SetChargingProfile', detail: 'band:<span class="val">20-40%</span> limit:<span class="val-accent">150kW</span> mode:<span class="val">MSCC_max</span>' },
+        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-accent">48%</span> V:<span class="val">512.4V</span> I:<span class="val">94A</span> T:<span class="val-green">31\u00b0C</span> P:<span class="val">48.2kW</span>' },
+        { dir: 'out', type: 'SetChargingProfile', detail: 'band:<span class="val">40-60%</span> limit:<span class="val-accent">142kW</span> mode:<span class="val">MSCC_step2</span>' },
+        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-accent">63%</span> V:<span class="val">514.8V</span> I:<span class="val">88A</span> T:<span class="status-warn">36\u00b0C</span> P:<span class="val">45.3kW</span>' },
+        { dir: 'out', type: 'SetChargingProfile', detail: 'band:<span class="val">60-80%</span> limit:<span class="val-accent">127kW</span> mode:<span class="val">MSCC_step3</span>' },
+        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-accent">78%</span> V:<span class="val">516.2V</span> I:<span class="val">72A</span> T:<span class="status-warn">39\u00b0C</span> P:<span class="val">37.2kW</span>' },
+        { dir: 'out', type: 'AI: ThermalGuard', detail: 'temp_rising T:<span class="status-warn">39\u00b0C</span> action:<span class="val-accent">throttle_50%</span>' },
+        { dir: 'out', type: 'SetChargingProfile', detail: 'band:<span class="val">80-95%</span> limit:<span class="val-accent">82kW</span> mode:<span class="val">pulse_taper</span>' },
+        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-accent">88%</span> V:<span class="val">518.0V</span> I:<span class="val">44A</span> T:<span class="val-green">35\u00b0C</span> P:<span class="val">22.8kW</span>' },
+        { dir: 'out', type: 'AI: DegradationModel', detail: 'capacity_fade:<span class="val-green">0.012%/cycle</span> vs standard:<span class="val-accent">0.031%</span>' },
+        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-green">95%</span> V:<span class="val">519.4V</span> I:<span class="val">18A</span> T:<span class="val-green">32\u00b0C</span> P:<span class="val">9.3kW</span>' },
+        { dir: 'out', type: 'SetChargingProfile', detail: 'band:<span class="val">95-100%</span> limit:<span class="val-accent">30kW</span> mode:<span class="val">CV_trickle</span>' },
+        { dir: 'in', type: 'StopTransaction', detail: 'txId:<span class="val">9101</span> meterStop:<span class="val">22,500Wh</span> energy:<span class="val-green">10.0kWh</span>' },
+        { dir: 'out', type: 'StopTransaction.conf', detail: 'status:<span class="status-ok">Accepted</span> CDR:<span class="val">$4.20</span> peak:<span class="val">50kW</span>' },
+        { dir: 'out', type: 'ClearChargingProfile', detail: 'connector:<span class="val">1</span> <span class="status-ok">profiles_cleared</span>' },
+        { dir: 'in', type: 'StatusNotification', detail: 'connector:<span class="val">1</span> status:<span class="status-ok">Available</span>' },
+        { dir: 'out', type: 'AI: SessionSummary', detail: 'life_saved:<span class="val-green">+37.5%</span> degradation:<span class="val-green">-61%</span> vs CCCV' },
+    ];
+
+    let seqIdx = 0;
+    let simTime = { h: 14, m: 30, s: 0 };
+
+    function getTimestamp() {
+        const ts = String(simTime.h).padStart(2,'0') + ':' + String(simTime.m).padStart(2,'0') + ':' + String(simTime.s).padStart(2,'0');
+        simTime.s += Math.floor(Math.random() * 8) + 2;
+        if (simTime.s >= 60) { simTime.s -= 60; simTime.m++; }
+        if (simTime.m >= 60) { simTime.m -= 60; simTime.h++; }
+        return ts;
+    }
+
+    function addTerminalLine() {
+        const msg = ocppSequence[seqIdx % ocppSequence.length];
+        if (seqIdx % ocppSequence.length === 0 && seqIdx > 0) {
+            simTime = { h: 14, m: 30, s: 0 };
+        }
+        seqIdx++;
+
+        const line = document.createElement('div');
+        line.className = 'terminal-line';
+        const arrow = msg.dir === 'in'
+            ? '<span class="arrow-in">&#9654;</span>'
+            : '<span class="arrow-out">&#9664;</span>';
+        line.innerHTML = '<span class="ts">' + getTimestamp() + '</span> ' + arrow + ' <span class="msg-type">' + msg.type + '</span> ' + msg.detail;
+        line.style.animationDelay = '0s';
+
+        termBody.appendChild(line);
+        lineCount++;
+
+        if (lineCount > MAX_LINES) {
+            const first = termBody.firstChild;
+            if (first) termBody.removeChild(first);
+        }
+
+        termBody.scrollTop = termBody.scrollHeight;
+    }
+
+    // Start the simulation
+    const termObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !termBody.dataset.started) {
+                termBody.dataset.started = 'true';
+                // Initial burst
+                for (let i = 0; i < 6; i++) {
+                    setTimeout(() => addTerminalLine(), i * 200);
+                }
+                // Then continuous feed
+                setInterval(addTerminalLine, 1800);
+            }
+        });
+    }, { threshold: 0.3 });
+    termObserver.observe(termBody);
+
+    // ─── FAQ Accordion ───
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.querySelector('.faq-question').addEventListener('click', () => {
+            const wasOpen = item.classList.contains('open');
+            // close all in same column
+            item.parentElement.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            if (!wasOpen) item.classList.add('open');
+        });
+    });
+
+    // ─── ROI Calculator ───
+    const LIFE_EXTENSION_FACTOR = 1.375;
+    const vehicleData = {
+        ebus:  { name: 'E-Bus',              batteryCost: 45000, baseLifeYrs: 6.6,  defaultCyclesPerDay: 0.5 },
+        e4w:   { name: 'Electric Car',        batteryCost: 9000,  baseLifeYrs: 13.2, defaultCyclesPerDay: 0.25 },
+        e3w:   { name: 'E-Rickshaw',          batteryCost: 600,   baseLifeYrs: 3.3,  defaultCyclesPerDay: 1.0 },
+        e2w:   { name: 'E-Scooter',           batteryCost: 500,   baseLifeYrs: 3.3,  defaultCyclesPerDay: 1.0 },
+        drone: { name: 'High-Payload Drone',  batteryCost: 10000, baseLifeYrs: null, defaultCyclesPerDay: null, replacementReduction: 0.35 },
+    };
+
+    function calculateROI() {
+        const type = document.getElementById('vehicleType').value;
+        const fleet = parseInt(document.getElementById('fleetSize').value) || 100;
+        const dailyCycles = parseFloat(document.getElementById('dailyCycles').value) || 1;
+        const v = vehicleData[type];
+
+        const HORIZON = 10; // fixed 10-year analysis window
+        let baseLifeYrs, extendedLifeYrs, savingsPerUnit;
+
+        if (type === 'drone') {
+            // Drones: flat 35% replacement cost reduction, scaled by cycles
+            savingsPerUnit = v.batteryCost * v.replacementReduction * dailyCycles;
+            baseLifeYrs = null;
+            extendedLifeYrs = null;
+        } else {
+            // Total cycles over the horizon
+            const totalCycles = dailyCycles * 365 * HORIZON;
+
+            // Base cycle life = 1200 cycles, Electica = 1650 cycles
+            const BASE_CYCLES = 1200;
+            const ELECTICA_CYCLES = 1650;
+
+            // How many battery replacements needed over the horizon?
+            const replacementsStandard = Math.max(Math.ceil(totalCycles / BASE_CYCLES) - 1, 0);
+            const replacementsElectica = Math.max(Math.ceil(totalCycles / ELECTICA_CYCLES) - 1, 0);
+
+            // Savings = avoided replacements * battery cost
+            const avoidedReplacements = replacementsStandard - replacementsElectica;
+            savingsPerUnit = avoidedReplacements * v.batteryCost;
+
+            // Also compute effective battery life in years for display
+            baseLifeYrs = BASE_CYCLES / (dailyCycles * 365);
+            extendedLifeYrs = ELECTICA_CYCLES / (dailyCycles * 365);
+        }
+
+        const totalReplacementSavings = savingsPerUnit * fleet;
+        const totalValue = totalReplacementSavings;
+
+        // Update UI
+        document.getElementById('roiLifeExtension').textContent = type === 'drone' ? '-35% replacement cost' : '+37.5%';
+        if (baseLifeYrs !== null) {
+            document.getElementById('roiBaseLife').textContent = baseLifeYrs.toFixed(1) + ' yrs \u2192 ' + extendedLifeYrs.toFixed(1) + ' yrs';
+            document.getElementById('roiBaseLifeLabel').textContent = 'Battery lifespan at ' + dailyCycles + ' cycle' + (dailyCycles !== 1 ? 's' : '') + '/day (over 10yr horizon)';
+        } else {
+            document.getElementById('roiBaseLife').textContent = '35% fewer replacements';
+            document.getElementById('roiBaseLifeLabel').textContent = 'Battery replacement cost reduction';
+        }
+        document.getElementById('roiReplacementSaving').textContent = formatCurrency(totalReplacementSavings);
+        document.getElementById('roiTotalValue').textContent = formatCurrency(totalValue);
+    }
+
+    function formatCurrency(val) {
+        if (val >= 1000000) return '$' + (val / 1000000).toFixed(1) + 'M';
+        if (val >= 1000) return '$' + Math.round(val).toLocaleString();
+        return '$' + val.toFixed(0);
+    }
+
+    calculateROI();
+    document.querySelectorAll('#vehicleType, #fleetSize, #dailyCycles').forEach(el => {
+        el.addEventListener('input', calculateROI);
+        el.addEventListener('change', calculateROI);
+    });
+
+    // ─── Cursor Glow (Polygon-inspired) ───
+    const glow = document.getElementById('cursorGlow');
+    let glowActive = false;
+    document.addEventListener('mousemove', (e) => {
+        if (!glowActive) { glow.classList.add('active'); glowActive = true; }
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+    });
+    document.addEventListener('mouseleave', () => {
+        glow.classList.remove('active');
+        glowActive = false;
+    });
+
+    // ─── Smooth Scroll ───
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
