@@ -554,17 +554,13 @@
             gap: 2px; margin-top: 64px;
             background: var(--border); border-radius: 16px; overflow: hidden;
         }
-        .problem-card { background: var(--bg-card); padding: 48px 36px; transition: all 0.3s ease; position: relative; }
+        .problem-card { background: var(--bg-card); padding: 48px 40px; position: relative; transition: all 0.3s ease; }
         .problem-card:hover { background: var(--bg-card-hover); }
-        .problem-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--red); opacity: 0; transition: opacity 0.3s; }
-        .problem-card:hover::before { opacity: 1; }
-        .problem-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(255, 85, 0, 0.08); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
-        .problem-icon svg { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-        .problem-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
-        .problem-card p { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
-        .problem-stat { margin-top: 20px; font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--text); line-height: 1; }
-        .problem-stat .unit { color: var(--accent); font-size: 20px; display: inline; vertical-align: baseline; }
-        .problem-stat .desc { font-size: 13px; color: var(--text-tertiary); font-family: var(--font); font-weight: 400; display: block; margin-top: 8px; }
+        .problem-card .card-number { font-family: var(--mono); font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px; }
+        .problem-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .problem-card p { color: var(--text-secondary); font-size: 15px; line-height: 1.7; }
+        .problem-card .card-tag { display: inline-flex; margin-top: 20px; padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: var(--mono); }
+        .problem-card .card-tag .unit { color: var(--accent); font-size: 12px; }
 
         /* ─── SOLUTION ─── */
         .solution-section { background: var(--bg-subtle); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -1072,22 +1068,22 @@
         <p class="section-desc reveal">Three systemic failures are holding back electric mobility and costing the industry billions.</p>
         <div class="problem-grid reveal">
             <div class="problem-card">
-                <div class="problem-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                <div class="card-number">01</div>
                 <h3>Premature Degradation</h3>
                 <p>Improper charging patterns destroy battery cells from the inside out, forcing costly replacements far before end-of-life.</p>
-                <div class="problem-stat">~40<span class="unit">%</span><span class="desc">capacity lost prematurely</span></div>
+                <span class="card-tag tag-ai">~40<span class="unit">%</span> capacity lost</span>
             </div>
             <div class="problem-card">
-                <div class="problem-icon"><svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+                <div class="card-number">02</div>
                 <h3>Crippling Replacement Costs</h3>
                 <p>Battery packs represent roughly half of an EV's total cost. Every premature replacement is a financial catastrophe for fleet operators.</p>
-                <div class="problem-stat">~50<span class="unit">%</span><span class="desc">of total EV cost is the battery</span></div>
+                <span class="card-tag tag-ai">~50<span class="unit">%</span> of EV cost</span>
             </div>
             <div class="problem-card">
-                <div class="problem-icon"><svg viewBox="0 0 24 24"><path d="M5 18H3a2 2 0 01-2-2V8a2 2 0 012-2h3.19M15 6h2a2 2 0 012 2v8a2 2 0 01-2 2h-3.19"/><line x1="23" y1="13" x2="23" y2="11"/><polyline points="11 6 7 12 13 12 9 18"/></svg></div>
+                <div class="card-number">03</div>
                 <h3>Grid Instability</h3>
                 <p>Unmanaged EV charging creates severe load imbalances, stressing grid infrastructure and increasing carbon intensity during peak hours.</p>
-                <div class="problem-stat">Peak<span class="desc">load imbalances from unmanaged charging</span></div>
+                <span class="card-tag tag-oem">Peak load imbalance</span>
             </div>
         </div>
     </div>
