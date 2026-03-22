@@ -2060,12 +2060,17 @@
     });
 
     // ─── Keyboard Shortcuts ───
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', function(e) {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
-        if (e.key === 'c' || e.key === 'C') {
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+        var key = e.key.toLowerCase();
+        if (key === 'c') {
+            e.preventDefault();
+            var el = document.getElementById('contact');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
         }
-        if (e.key === 'l' || e.key === 'L') {
+        if (key === 'l') {
+            e.preventDefault();
             window.open('https://control.electica.in', '_blank');
         }
     });
