@@ -341,7 +341,8 @@
         .problem-card:hover { background: var(--bg-card-hover); }
         .problem-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--red); opacity: 0; transition: opacity 0.3s; }
         .problem-card:hover::before { opacity: 1; }
-        .problem-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(255, 68, 85, 0.1); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 24px; }
+        .problem-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(255, 85, 0, 0.08); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+        .problem-icon svg { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
         .problem-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
         .problem-card p { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
         .problem-stat { margin-top: 20px; font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--text); line-height: 1; }
@@ -541,7 +542,8 @@
         .vertical-card:nth-child(1)::after { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
         .vertical-card:nth-child(2)::after { background: linear-gradient(90deg, var(--accent-2), #ffaa55); }
         .vertical-card:nth-child(3)::after { background: linear-gradient(90deg, #888, #bbb); }
-        .vertical-icon { font-size: 32px; margin-bottom: 20px; }
+        .vertical-icon { width: 52px; height: 52px; border-radius: 14px; background: rgba(255, 85, 0, 0.08); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        .vertical-icon svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
         .vertical-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
         .vertical-card p { color: var(--text-secondary); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
         .vertical-metric { display: flex; align-items: baseline; gap: 8px; padding-top: 20px; border-top: 1px solid var(--border); }
@@ -824,19 +826,19 @@
         <p class="section-desc reveal">Three systemic failures are holding back electric mobility and costing the industry billions.</p>
         <div class="problem-grid reveal">
             <div class="problem-card">
-                <div class="problem-icon">&#9889;</div>
+                <div class="problem-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
                 <h3>Premature Degradation</h3>
                 <p>Improper charging patterns destroy battery cells from the inside out, forcing costly replacements far before end-of-life.</p>
                 <div class="problem-stat">~40<span class="unit">%</span><span class="desc">capacity lost prematurely</span></div>
             </div>
             <div class="problem-card">
-                <div class="problem-icon">&#128176;</div>
+                <div class="problem-icon"><svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
                 <h3>Crippling Replacement Costs</h3>
                 <p>Battery packs represent roughly half of an EV's total cost. Every premature replacement is a financial catastrophe for fleet operators.</p>
                 <div class="problem-stat">~50<span class="unit">%</span><span class="desc">of total EV cost is the battery</span></div>
             </div>
             <div class="problem-card">
-                <div class="problem-icon">&#128268;</div>
+                <div class="problem-icon"><svg viewBox="0 0 24 24"><path d="M5 18H3a2 2 0 01-2-2V8a2 2 0 012-2h3.19M15 6h2a2 2 0 012 2v8a2 2 0 01-2 2h-3.19"/><line x1="23" y1="13" x2="23" y2="11"/><polyline points="11 6 7 12 13 12 9 18"/></svg></div>
                 <h3>Grid Instability</h3>
                 <p>Unmanaged EV charging creates severe load imbalances, stressing grid infrastructure and increasing carbon intensity during peak hours.</p>
                 <div class="problem-stat">Peak<span class="desc">load imbalances from unmanaged charging</span></div>
@@ -1024,30 +1026,30 @@
     <div class="container">
         <div class="section-label reveal">Applications</div>
         <h2 class="section-title reveal">Built for every energy vertical</h2>
-        <p class="section-desc reveal">From two-wheelers to grid-scale storage, ElecticaOS scales across the entire energy ecosystem.</p>
+        <p class="section-desc reveal">From drones to grid-scale BESS, ElecticaOS provides battery control for every energy application.</p>
         <div class="verticals-grid reveal">
             <div class="vertical-card glow-card">
-                <div class="vertical-icon">&#128681;</div>
-                <h3>Drones &amp; UAVs</h3>
-                <p>Active licensing partnership for drone battery optimization. Extending mission-critical flight time and eliminating premature pack failures.</p>
+                <div class="vertical-icon"><svg viewBox="0 0 24 24"><path d="M12 12m-2 0a2 2 0 104 0 2 2 0 10-4 0"/><path d="M4.5 9.5L2 7M19.5 9.5L22 7M4.5 14.5L2 17M19.5 14.5L22 17"/><circle cx="2" cy="7" r="1.5"/><circle cx="22" cy="7" r="1.5"/><circle cx="2" cy="17" r="1.5"/><circle cx="22" cy="17" r="1.5"/></svg></div>
+                <h3>Drones &amp; eVTOLs</h3>
+                <p>Battery optimization for drones and electric vertical take-off aircraft. Extending mission-critical flight time and eliminating premature pack failures.</p>
                 <div class="vertical-metric">
                     <div class="value"><span class="unit">$</span>10K<span class="unit">+</span></div>
                     <div class="desc">savings per battery pack</div>
                 </div>
             </div>
             <div class="vertical-card glow-card">
-                <div class="vertical-icon">&#128663;</div>
-                <h3>Electric Vehicles</h3>
-                <p>Adaptive charging intelligence for passenger EVs, fleets, and commercial vehicles. Lifetime battery cost reduction at scale.</p>
+                <div class="vertical-icon"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="2"/><path d="M7 8V6a1 1 0 011-1h8a1 1 0 011 1v2"/><path d="M5 16v2M19 16v2"/><circle cx="8" cy="18" r="1.5"/><circle cx="16" cy="18" r="1.5"/></svg></div>
+                <h3>E-Buses</h3>
+                <p>Adaptive charging intelligence for electric bus fleets. Optimize depot charging, extend pack life, and reduce total cost of ownership at scale.</p>
                 <div class="vertical-metric">
-                    <div class="value"><span class="unit">$</span>3,375</div>
-                    <div class="desc">lifetime savings per vehicle</div>
+                    <div class="value"><span class="unit">$</span>45K</div>
+                    <div class="desc">battery cost per bus protected</div>
                 </div>
             </div>
             <div class="vertical-card glow-card">
-                <div class="vertical-icon">&#128267;</div>
-                <h3>Grid Storage</h3>
-                <p>Battery intelligence SaaS for utility-scale energy storage. Optimize charge-discharge cycles, predict failures, and maximize asset ROI.</p>
+                <div class="vertical-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="2"/><line x1="6" y1="7" x2="6" y2="17"/><line x1="10" y1="7" x2="10" y2="17"/><line x1="14" y1="7" x2="14" y2="17"/><line x1="18" y1="7" x2="18" y2="17"/><path d="M7 4h10M7 20h10"/></svg></div>
+                <h3>Grid Storage (BESS)</h3>
+                <p>Battery intelligence for utility-scale energy storage systems. Optimize charge-discharge cycles, predict cell-level failures, and maximize asset ROI.</p>
                 <div class="vertical-metric">
                     <div class="value"><span class="unit">$</span>46.2<span class="unit">M</span></div>
                     <div class="desc">annual SaaS revenue potential</div>
