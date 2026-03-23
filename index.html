@@ -212,7 +212,7 @@
             min-height: 100vh;
             display: flex; align-items: center; justify-content: center;
             text-align: center;
-            padding-top: 120px;
+            padding-top: 140px;
             position: relative; overflow: hidden;
         }
 
@@ -317,6 +317,7 @@
             overflow: hidden;
             font-size: 0.75em;
             height: 1.5em;
+            margin-top: 24px;
             padding-bottom: 0;
             width: 100%;
         }
@@ -562,8 +563,9 @@
         .problem-card .card-number { font-family: var(--mono); font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px; }
         .problem-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
         .problem-card p { color: var(--text-secondary); font-size: 15px; line-height: 1.7; }
-        .problem-card .card-tag { display: inline-flex; margin-top: 20px; padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: var(--mono); }
-        .problem-card .card-tag .unit { color: var(--accent); font-size: 12px; }
+        .problem-card .card-tag { display: inline-flex; align-items: baseline; margin-top: 20px; font-size: 14px; font-weight: 500; font-family: var(--mono); color: var(--text-secondary); }
+        .problem-card .card-tag .num { font-size: 36px; font-weight: 800; color: var(--text); letter-spacing: -2px; }
+        .problem-card .card-tag .unit { font-size: 22px; font-weight: 700; color: var(--accent); }
 
         /* ─── SOLUTION ─── */
         .solution-section { background: var(--bg-subtle); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -586,6 +588,7 @@
 
         .tag-saas { background: rgba(150, 150, 150, 0.1); color: var(--blue); border: 1px solid rgba(150, 150, 150, 0.2); }
         .tag-oem { background: rgba(150, 150, 150, 0.1); color: #aaa; border: 1px solid rgba(150, 150, 150, 0.2); }
+        .problem-card .tag-oem { background: none; border: none; }
 
         /* ─── TRY BATTERY CONTROL ─── */
         .try-section { border-bottom: 1px solid var(--border); }
@@ -729,10 +732,12 @@
         .comparison-table tbody tr:last-child td { border-bottom: none; }
         .comparison-table tbody tr:hover { background: var(--bg-card-hover); }
         .comparison-table .metric-name { color: var(--text-secondary); font-weight: 500; }
-        .comparison-table .electica-val { color: var(--accent); font-weight: 700; font-family: var(--mono); }
+        .comparison-table .electica-val { color: var(--text); font-weight: 700; font-family: var(--mono); }
+        .comparison-table .electica-val .unit { color: var(--accent); }
         .comparison-table .standard-val { color: var(--text-tertiary); font-family: var(--mono); }
         .comparison-table .improvement { font-family: var(--mono); font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
-        .improvement.positive { background: rgba(255, 85, 0, 0.1); color: var(--accent); }
+        .improvement.positive { background: rgba(255, 85, 0, 0.1); color: var(--text); }
+        .improvement.positive .unit { color: var(--accent); }
 
         /* ─── LIFE BARS ─── */
         .life-comparison { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 48px; }
@@ -785,6 +790,7 @@
         .roi-metric { padding: 20px 0; border-bottom: 1px solid var(--border); }
         .roi-metric:last-child { border-bottom: none; }
         .roi-metric .roi-value { font-family: var(--mono); font-size: 36px; font-weight: 700; color: var(--text); letter-spacing: -2px; }
+        .roi-metric .roi-value .unit { color: var(--accent); }
         .roi-metric .roi-label { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
 
         /* ─── VISION ─── */
@@ -1151,19 +1157,18 @@
                 <div class="card-number">01</div>
                 <h3>Premature Degradation</h3>
                 <p>Improper charging patterns destroy battery cells from the inside out, forcing costly replacements far before end-of-life.</p>
-                <span class="card-tag tag-oem">~40<span style="color:var(--accent)">%</span>&nbsp; capacity lost</span>
+                <span class="card-tag tag-oem"><span class="num">~40</span><span class="unit">%</span>&nbsp; capacity lost</span>
             </div>
             <div class="problem-card">
                 <div class="card-number">02</div>
                 <h3>Crippling Replacement Costs</h3>
                 <p>Battery packs represent roughly half of an EV's total cost. Every premature replacement is a financial catastrophe for fleet operators.</p>
-                <span class="card-tag tag-oem">~50<span style="color:var(--accent)">%</span>&nbsp; of EV cost</span>
+                <span class="card-tag tag-oem"><span class="num">~50</span><span class="unit">%</span>&nbsp; of EV cost</span>
             </div>
             <div class="problem-card">
                 <div class="card-number">03</div>
                 <h3>Grid Instability</h3>
-                <p>Unmanaged EV charging creates severe load imbalances, stressing grid infrastructure and increasing carbon intensity during peak hours.</p>
-                <span class="card-tag tag-oem">Peak load imbalance</span>
+                <p>Unmanaged EV charging creates severe <span style="color:var(--coral);font-weight:700">peak load imbalances</span>, stressing grid infrastructure and increasing carbon intensity during peak hours.</p>
             </div>
         </div>
     </div>
@@ -1439,27 +1444,27 @@
             <tbody>
                 <tr>
                     <td class="metric-name">Capacity @ 3,000 cycles</td>
-                    <td class="electica-val">67.2%</td>
+                    <td class="electica-val">67.2<span class="unit">%</span></td>
                     <td class="standard-val">45.0%</td>
-                    <td><span class="improvement positive">+49.3%</span></td>
+                    <td><span class="improvement positive"><span class="unit">+</span>49.3<span class="unit">%</span></span></td>
                 </tr>
                 <tr>
                     <td class="metric-name">Total cycle life</td>
                     <td class="electica-val">1,650</td>
                     <td class="standard-val">1,200</td>
-                    <td><span class="improvement positive">+37.5%</span></td>
+                    <td><span class="improvement positive"><span class="unit">+</span>37.5<span class="unit">%</span></span></td>
                 </tr>
                 <tr>
                     <td class="metric-name">E2W battery lifespan</td>
-                    <td class="electica-val">4.5 yrs</td>
+                    <td class="electica-val">4.5 <span class="unit">yrs</span></td>
                     <td class="standard-val">3.3 yrs</td>
-                    <td><span class="improvement positive">+36.4%</span></td>
+                    <td><span class="improvement positive"><span class="unit">+</span>36.4<span class="unit">%</span></span></td>
                 </tr>
                 <tr>
                     <td class="metric-name">E4W battery lifespan</td>
-                    <td class="electica-val">18.1 yrs</td>
+                    <td class="electica-val">18.1 <span class="unit">yrs</span></td>
                     <td class="standard-val">13.2 yrs</td>
-                    <td><span class="improvement positive">+37.1%</span></td>
+                    <td><span class="improvement positive"><span class="unit">+</span>37.1<span class="unit">%</span></span></td>
                 </tr>
             </tbody>
         </table>
@@ -1577,7 +1582,7 @@
             <div class="roi-result glow-card" id="roiResult">
                 <h3>Your Estimated Savings</h3>
                 <div class="roi-metric">
-                    <div class="roi-value" id="roiLifeExtension">+37.5%</div>
+                    <div class="roi-value" id="roiLifeExtension"><span class="unit">+</span>37.5<span class="unit">%</span></div>
                     <div class="roi-label">Battery life extension (1,200 &#8594; 1,650 cycles)</div>
                 </div>
                 <div class="roi-metric">
@@ -2047,28 +2052,28 @@
         // Update UI — null-safe for all elements
         var el;
         el = document.getElementById('roiLifeExtension');
-        if (el) el.textContent = type === 'drone' ? '-35% replacement cost' : '+37.5%';
+        if (el) el.innerHTML = type === 'drone' ? '<span class="unit">-</span>35<span class="unit">%</span> replacement cost' : '<span class="unit">+</span>37.5<span class="unit">%</span>';
         if (baseLifeYrs !== null) {
             el = document.getElementById('roiBaseLife');
-            if (el) el.textContent = baseLifeYrs.toFixed(1) + ' yrs \u2192 ' + extendedLifeYrs.toFixed(1) + ' yrs';
+            if (el) el.innerHTML = baseLifeYrs.toFixed(1) + ' <span class="unit">yrs</span> \u2192 ' + extendedLifeYrs.toFixed(1) + ' <span class="unit">yrs</span>';
             el = document.getElementById('roiBaseLifeLabel');
             if (el) el.textContent = 'Battery lifespan at ' + dailyCycles + ' cycle' + (dailyCycles !== 1 ? 's' : '') + '/day (over 10yr horizon)';
         } else {
             el = document.getElementById('roiBaseLife');
-            if (el) el.textContent = '35% fewer replacements';
+            if (el) el.innerHTML = '35<span class="unit">%</span> fewer replacements';
             el = document.getElementById('roiBaseLifeLabel');
             if (el) el.textContent = 'Battery replacement cost reduction';
         }
         el = document.getElementById('roiReplacementSaving');
-        if (el) el.textContent = formatCurrency(totalReplacementSavings);
+        if (el) el.innerHTML = formatCurrency(totalReplacementSavings);
         el = document.getElementById('roiTotalValue');
-        if (el) el.textContent = formatCurrency(totalReplacementSavings);
+        if (el) el.innerHTML = formatCurrency(totalReplacementSavings);
     }
 
     function formatCurrency(val) {
-        if (val >= 1000000) return '$' + (val / 1000000).toFixed(1) + 'M';
-        if (val >= 1000) return '$' + Math.round(val).toLocaleString();
-        return '$' + val.toFixed(0);
+        if (val >= 1000000) return '<span class="unit">$</span>' + (val / 1000000).toFixed(1) + '<span class="unit">M</span>';
+        if (val >= 1000) return '<span class="unit">$</span>' + Math.round(val).toLocaleString();
+        return '<span class="unit">$</span>' + val.toFixed(0);
     }
 
     calculateROI();
