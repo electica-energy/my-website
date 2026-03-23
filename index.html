@@ -315,8 +315,9 @@
             display: block;
             position: relative;
             overflow: hidden;
-            height: 1.3em;
-            padding-bottom: 0.15em;
+            font-size: 0.75em;
+            height: 1.5em;
+            padding-bottom: 0;
             width: 100%;
         }
         .rotating-word {
@@ -1391,7 +1392,7 @@
                     </a>
                     <a href="#proof" class="try-btn">
                         <span>LEARN MORE</span>
-                        <div class="shortcut"><span class="key">L</span></div>
+                        <div class="shortcut"><span class="key">V</span></div>
                     </a>
                 </div>
             </div>
@@ -2011,54 +2012,57 @@
     };
 
     function calculateROI() {
-        const type = document.getElementById('vehicleType').value;
-        const fleet = parseInt(document.getElementById('fleetSize').value) || 100;
-        const dailyCycles = parseFloat(document.getElementById('dailyCycles').value) || 1;
-        const v = vehicleData[type];
+        var vehicleTypeEl = document.getElementById('vehicleType');
+        var fleetSizeEl = document.getElementById('fleetSize');
+        var dailyCyclesEl = document.getElementById('dailyCycles');
+        if (!vehicleTypeEl || !fleetSizeEl || !dailyCyclesEl) return;
 
-        const HORIZON = 10; // fixed 10-year analysis window
+        const type = vehicleTypeEl.value;
+        const fleet = parseInt(fleetSizeEl.value) || 100;
+        const dailyCycles = parseFloat(dailyCyclesEl.value) || 1;
+        const v = vehicleData[type];
+        if (!v) return;
+
+        const HORIZON = 10;
         let baseLifeYrs, extendedLifeYrs, savingsPerUnit;
 
         if (type === 'drone') {
-            // Drones: flat 35% replacement cost reduction, scaled by cycles
             savingsPerUnit = v.batteryCost * v.replacementReduction * dailyCycles;
             baseLifeYrs = null;
             extendedLifeYrs = null;
         } else {
-            // Total cycles over the horizon
             const totalCycles = dailyCycles * 365 * HORIZON;
-
-            // Base cycle life = 1200 cycles, Electica = 1650 cycles
             const BASE_CYCLES = 1200;
             const ELECTICA_CYCLES = 1650;
-
-            // How many battery replacements needed over the horizon?
             const replacementsStandard = Math.max(Math.ceil(totalCycles / BASE_CYCLES) - 1, 0);
             const replacementsElectica = Math.max(Math.ceil(totalCycles / ELECTICA_CYCLES) - 1, 0);
-
-            // Savings = avoided replacements * battery cost
             const avoidedReplacements = replacementsStandard - replacementsElectica;
             savingsPerUnit = avoidedReplacements * v.batteryCost;
-
-            // Also compute effective battery life in years for display
             baseLifeYrs = BASE_CYCLES / (dailyCycles * 365);
             extendedLifeYrs = ELECTICA_CYCLES / (dailyCycles * 365);
         }
 
         const totalReplacementSavings = savingsPerUnit * fleet;
-        const totalValue = totalReplacementSavings;
 
-        // Update UI
-        document.getElementById('roiLifeExtension').textContent = type === 'drone' ? '-35% replacement cost' : '+37.5%';
+        // Update UI — null-safe for all elements
+        var el;
+        el = document.getElementById('roiLifeExtension');
+        if (el) el.textContent = type === 'drone' ? '-35% replacement cost' : '+37.5%';
         if (baseLifeYrs !== null) {
-            document.getElementById('roiBaseLife').textContent = baseLifeYrs.toFixed(1) + ' yrs \u2192 ' + extendedLifeYrs.toFixed(1) + ' yrs';
-            document.getElementById('roiBaseLifeLabel').textContent = 'Battery lifespan at ' + dailyCycles + ' cycle' + (dailyCycles !== 1 ? 's' : '') + '/day (over 10yr horizon)';
+            el = document.getElementById('roiBaseLife');
+            if (el) el.textContent = baseLifeYrs.toFixed(1) + ' yrs \u2192 ' + extendedLifeYrs.toFixed(1) + ' yrs';
+            el = document.getElementById('roiBaseLifeLabel');
+            if (el) el.textContent = 'Battery lifespan at ' + dailyCycles + ' cycle' + (dailyCycles !== 1 ? 's' : '') + '/day (over 10yr horizon)';
         } else {
-            document.getElementById('roiBaseLife').textContent = '35% fewer replacements';
-            document.getElementById('roiBaseLifeLabel').textContent = 'Battery replacement cost reduction';
+            el = document.getElementById('roiBaseLife');
+            if (el) el.textContent = '35% fewer replacements';
+            el = document.getElementById('roiBaseLifeLabel');
+            if (el) el.textContent = 'Battery replacement cost reduction';
         }
-        document.getElementById('roiReplacementSaving').textContent = formatCurrency(totalReplacementSavings);
-        document.getElementById('roiTotalValue').textContent = formatCurrency(totalValue);
+        el = document.getElementById('roiReplacementSaving');
+        if (el) el.textContent = formatCurrency(totalReplacementSavings);
+        el = document.getElementById('roiTotalValue');
+        if (el) el.textContent = formatCurrency(totalReplacementSavings);
     }
 
     function formatCurrency(val) {
@@ -2123,20 +2127,49 @@
     })();
 
     // ─── Keyboard Shortcuts ───
-    document.addEventListener('keydown', function(e) {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
-        if (e.ctrlKey || e.metaKey || e.altKey) return;
-        var key = e.key.toLowerCase();
-        if (key === 'c') {
-            e.preventDefault();
-            var el = document.getElementById('contact');
+    (function() {
+        var pendingKey = null;
+        var pendingTimer = null;
+
+        function scrollTo(id) {
+            var el = document.getElementById(id);
             if (el) el.scrollIntoView({ behavior: 'smooth' });
         }
-        if (key === 'l') {
-            e.preventDefault();
-            window.open('https://control.electica.in', '_blank');
+
+        function clearPending() {
+            pendingKey = null;
+            if (pendingTimer) { clearTimeout(pendingTimer); pendingTimer = null; }
         }
-    });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+            if (e.ctrlKey || e.metaKey || e.altKey) return;
+            var key = e.key.toLowerCase();
+
+            // Two-key combos: R then D, S then V
+            if (pendingKey) {
+                var combo = pendingKey + key;
+                clearPending();
+                if (combo === 'rd') { e.preventDefault(); scrollTo('contact'); return; }
+                if (combo === 'sv') { e.preventDefault(); scrollTo('proof'); return; }
+                // If second key doesn't match, fall through to single-key handling
+            }
+
+            // Start a two-key combo
+            if (key === 'r' || key === 's') {
+                e.preventDefault();
+                pendingKey = key;
+                pendingTimer = setTimeout(clearPending, 800);
+                return;
+            }
+
+            // Single-key shortcuts
+            if (key === 'c') { e.preventDefault(); scrollTo('contact'); }
+            if (key === 'l') { e.preventDefault(); window.open('https://control.electica.in', '_blank'); }
+            if (key === 't') { e.preventDefault(); scrollTo('try'); }
+            if (key === 'v') { e.preventDefault(); scrollTo('proof'); }
+        });
+    })();
 
     // ─── Smooth Scroll ───
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
