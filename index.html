@@ -11,7 +11,10 @@
     <link rel="shortcut icon" href="favicon_inverted.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <script>
+        (function(){var t=localStorage.getItem('electica-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();
+    </script>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -37,6 +40,128 @@
             --mono: 'JetBrains Mono', monospace;
         }
 
+        /* ─── LIGHT MODE ─── */
+        [data-theme="light"] {
+            --bg: #fafafa;
+            --bg-subtle: #f3f2ef;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f7f6f3;
+            --border: #e5e2dc;
+            --border-hover: #d0cdc6;
+            --text: #1a1a1a;
+            --text-secondary: #555;
+            --text-tertiary: #999;
+            --accent: #e84d00;
+            --accent-glow: rgba(232, 77, 0, 0.1);
+            --accent-2: #ff6622;
+            --coral: #e5532e;
+            --green: #b85c2e;
+            --green-glow: rgba(232, 77, 0, 0.06);
+            --blue: #777;
+            --red: #cc4444;
+        }
+
+        /* Light mode — nav */
+        [data-theme="light"] nav { background: rgba(250, 250, 250, 0.85); }
+        [data-theme="light"] .nav-key { background: rgba(0,0,0,0.08); color: #555; }
+        [data-theme="light"] .nav-login .nav-key { background: rgba(255,255,255,0.25); color: #fff; }
+
+        /* Light mode — hero glow toned down */
+        [data-theme="light"] .hero::before { opacity: 0.5; }
+        [data-theme="light"] .cursor-glow { background: radial-gradient(circle, rgba(232,77,0,0.04) 0%, transparent 70%); }
+        [data-theme="light"] .mesh-blob-1 { background: rgba(232, 77, 0, 0.05); }
+        [data-theme="light"] .mesh-blob-2 { background: rgba(232, 77, 0, 0.03); }
+        [data-theme="light"] .mesh-blob-3 { background: rgba(255, 119, 51, 0.03); }
+
+        /* Light mode — noise texture lighter */
+        [data-theme="light"] body::before { opacity: 0.015; }
+
+        /* Light mode — scrollbar */
+        [data-theme="light"] ::-webkit-scrollbar-thumb { background: #ccc; }
+
+        /* Light mode — cards premium shadow */
+        [data-theme="light"] .problem-card,
+        [data-theme="light"] .solution-card,
+        [data-theme="light"] .benchmark-card,
+        [data-theme="light"] .vertical-card,
+        [data-theme="light"] .life-card,
+        [data-theme="light"] .roi-result,
+        [data-theme="light"] .contact-link-item,
+        [data-theme="light"] .showcase-visual,
+        [data-theme="light"] .api-step {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03);
+        }
+        [data-theme="light"] .vertical-card:hover {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        /* Light mode — terminal stays dark */
+        [data-theme="light"] .try-right { background: #0c0c0c; }
+        [data-theme="light"] .try-right::after { background: linear-gradient(transparent, #0c0c0c); }
+        [data-theme="light"] .terminal-line .dim { color: #444; }
+
+        /* Light mode — comparison grid (already cream) */
+        [data-theme="light"] .compare-grid-side { background: #f8f6f2; border-right-color: #e5e2dc; }
+
+        /* Light mode — life bars */
+        [data-theme="light"] .life-bar-track { background: rgba(0,0,0,0.04); }
+        [data-theme="light"] .life-bar-fill.standard { background: #bbb; }
+
+        /* Light mode — skeleton shimmer */
+        [data-theme="light"] .skeleton-bar {
+            background: linear-gradient(90deg, #e5e2dc 25%, #f0ede8 50%, #e5e2dc 75%);
+            background-size: 200% 100%;
+        }
+
+        /* Light mode — scroll to top */
+        [data-theme="light"] .scroll-top-btn .ring-bg { stroke: rgba(0,0,0,0.06); }
+
+        /* Light mode — brand giant */
+        [data-theme="light"] .brand-giant {
+            background: linear-gradient(180deg, #1a1a1a 0%, #999 50%, #ddd 100%);
+            -webkit-background-clip: text; background-clip: text;
+        }
+
+        /* Light mode — form inputs */
+        [data-theme="light"] .form-group select,
+        [data-theme="light"] .form-group input,
+        [data-theme="light"] .contact-form input,
+        [data-theme="light"] .contact-form textarea,
+        [data-theme="light"] .contact-form select {
+            background: #fff;
+            border-color: #e0ddd7;
+        }
+        [data-theme="light"] .form-group select option,
+        [data-theme="light"] .contact-form select option { background: #fff; }
+
+        /* Light mode — buttons */
+        [data-theme="light"] .btn-primary { box-shadow: 0 2px 8px rgba(232,77,0,0.2); }
+        [data-theme="light"] .btn-secondary { border-color: #d0cdc6; color: #1a1a1a; }
+        [data-theme="light"] .btn-secondary:hover { border-color: var(--accent); }
+
+        /* Light mode — improvement badge */
+        [data-theme="light"] .improvement.positive { background: rgba(232, 77, 0, 0.08); }
+
+        /* Light mode — logo swap */
+        [data-theme="light"] .nav-logo .logo-dark { display: block; }
+        [data-theme="light"] .nav-logo .logo-light { display: none; }
+        .nav-logo .logo-dark { display: none; }
+        .nav-logo .logo-light { display: block; }
+
+        /* Light mode — theme toggle */
+        .theme-toggle {
+            background: none; border: 1px solid var(--border); border-radius: 8px;
+            width: 36px; height: 36px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); font-size: 18px;
+            transition: all 0.2s; flex-shrink: 0;
+        }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--text); }
+        .theme-toggle .icon-sun { display: none; }
+        .theme-toggle .icon-moon { display: block; }
+        [data-theme="light"] .theme-toggle .icon-sun { display: block; }
+        [data-theme="light"] .theme-toggle .icon-moon { display: none; }
+
         html { scroll-behavior: smooth; }
 
         body {
@@ -46,6 +171,7 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         body::before {
@@ -890,8 +1016,9 @@
             pointer-events: none;
         }
         .brand-giant {
+            font-family: 'Montserrat', sans-serif;
             font-size: clamp(80px, 15vw, 220px);
-            font-weight: 900;
+            font-weight: 700;
             letter-spacing: -8px;
             line-height: 1;
             background: linear-gradient(180deg, var(--text) 0%, var(--text-tertiary) 50%, var(--border) 100%);
@@ -1065,7 +1192,8 @@
 <nav>
     <div class="container">
         <a href="#" class="nav-logo">
-            <img src="Logo -02.png" alt="Electica">
+            <img src="Logo -02.png" alt="Electica" class="logo-light">
+            <img src="Logo -01.png" alt="Electica" class="logo-dark">
         </a>
         <ul class="nav-links" id="navLinks">
             <li><a href="#problem">Problem</a></li>
@@ -1077,6 +1205,10 @@
             <li><a href="#contact" class="nav-cta">CONTACT <span class="nav-key">C</span></a></li>
             <li><a href="https://control.electica.in" class="nav-login">LOG IN <span class="nav-key">L</span></a></li>
         </ul>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span class="icon-moon">&#9790;</span>
+            <span class="icon-sun">&#9788;</span>
+        </button>
         <button class="mobile-menu-btn" id="menuBtn" aria-label="Toggle menu">&#9776;</button>
     </div>
 </nav>
@@ -1719,13 +1851,13 @@
                     </a>
                 </div>
             </div>
-            <div class="contact-form">
+            <form class="contact-form" id="contactForm">
                 <div class="form-row">
-                    <input type="text" placeholder="Your name" required>
-                    <input type="email" placeholder="Work email" required>
+                    <input type="text" id="cfName" placeholder="Your name" required>
+                    <input type="email" id="cfEmail" placeholder="Work email" required>
                 </div>
-                <input type="text" placeholder="Company name">
-                <select>
+                <input type="text" id="cfCompany" placeholder="Company name">
+                <select id="cfInterest">
                     <option value="" disabled selected>I'm interested in...</option>
                     <option>Fleet battery optimization</option>
                     <option>OEM licensing</option>
@@ -1733,9 +1865,9 @@
                     <option>Drone battery optimization</option>
                     <option>Partnership / other</option>
                 </select>
-                <textarea rows="4" placeholder="Tell us about your fleet and use case..."></textarea>
-                <button class="btn-primary" style="width:100%; justify-content:center;">Send Message &#8594;</button>
-            </div>
+                <textarea rows="4" id="cfMessage" placeholder="Tell us about your fleet and use case..."></textarea>
+                <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">Send Message &#8594;</button>
+            </form>
         </div>
     </div>
 </section>
@@ -1766,7 +1898,8 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <a href="#" class="nav-logo" style="margin-bottom:16px;">
-                    <img src="Logo -02.png" alt="Electica">
+                    <img src="Logo -02.png" alt="Electica" class="logo-light">
+                    <img src="Logo -01.png" alt="Electica" class="logo-dark">
                 </a>
                 <p>The AI-powered operating system for battery intelligence. Extending battery life and powering the future of electric mobility.</p>
             </div>
@@ -1802,6 +1935,21 @@
 </footer>
 
 <script>
+    // ─── Theme Toggle ───
+    (function() {
+        var saved = localStorage.getItem('electica-theme');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme');
+                var next = current === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('electica-theme', next);
+            });
+        }
+    })();
+
     // ─── Mobile Menu ───
     document.getElementById('menuBtn').addEventListener('click', () => {
         document.getElementById('navLinks').classList.toggle('active');
@@ -2175,6 +2323,49 @@
             if (key === 'v') { e.preventDefault(); scrollTo('proof'); }
         });
     })();
+
+    // ─── Contact Form → API (SES email) ───
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = this.querySelector('button[type="submit"]');
+        var origText = btn.innerHTML;
+        btn.innerHTML = 'Sending...';
+        btn.disabled = true;
+
+        var payload = {
+            name: document.getElementById('cfName').value.trim(),
+            email: document.getElementById('cfEmail').value.trim(),
+            company: document.getElementById('cfCompany').value.trim(),
+            interest: document.getElementById('cfInterest').value || '',
+            message: document.getElementById('cfMessage').value.trim()
+        };
+
+        fetch('https://control.electica.in/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            btn.innerHTML = '&#10003; Message Sent!';
+            btn.style.background = '#22c55e';
+            document.getElementById('contactForm').reset();
+            setTimeout(function() {
+                btn.innerHTML = origText;
+                btn.style.background = '';
+                btn.disabled = false;
+            }, 3000);
+        })
+        .catch(function() {
+            btn.innerHTML = 'Failed — try again';
+            btn.style.background = '#cc4444';
+            setTimeout(function() {
+                btn.innerHTML = origText;
+                btn.style.background = '';
+                btn.disabled = false;
+            }, 3000);
+        });
+    });
 
     // ─── Smooth Scroll ───
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
