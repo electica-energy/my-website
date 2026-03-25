@@ -2104,12 +2104,12 @@
         entries.forEach(entry => {
             if (entry.isIntersecting && !termBody.dataset.started) {
                 termBody.dataset.started = 'true';
-                // Initial burst
-                for (let i = 0; i < 6; i++) {
-                    setTimeout(() => addTerminalLine(), i * 200);
+                // Initial burst — fill the terminal
+                for (let i = 0; i < MAX_LINES; i++) {
+                    setTimeout(() => addTerminalLine(), i * 150);
                 }
                 // Then continuous feed
-                setInterval(addTerminalLine, 1800);
+                setInterval(addTerminalLine, 1000);
             }
         });
     }, { threshold: 0.3 });
