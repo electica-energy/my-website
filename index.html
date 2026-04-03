@@ -445,10 +445,9 @@
             display: block;
             position: relative;
             font-size: 0.75em;
-            height: 1.5em;
+            height: 1.6em;
             margin-top: 24px;
             width: 100%;
-            clip-path: inset(-0.1em 0 -0.8em 0);
         }
         .rotating-word {
             display: block;
@@ -467,11 +466,11 @@
         .rotating-word:nth-child(5) { animation-delay: 12s; }
         .rotating-word:nth-child(6) { animation-delay: 15s; }
         @keyframes rotateWord {
-            0% { opacity: 0; transform: translateY(100%); }
+            0% { opacity: 0; transform: translateY(10px); }
             2% { opacity: 1; transform: translateY(0); }
             14% { opacity: 1; transform: translateY(0); }
-            16% { opacity: 0; transform: translateY(-100%); }
-            100% { opacity: 0; transform: translateY(-100%); }
+            16% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 0; transform: translateY(-10px); }
         }
 
         /* ─── CAPABILITY MATRIX (parallel.ai style) ─── */
