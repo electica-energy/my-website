@@ -786,11 +786,15 @@
             flex: 1; padding: 20px 24px;
             font-family: var(--mono); font-size: 12px; line-height: 2;
             overflow: hidden; position: relative;
+            user-select: none; -webkit-user-select: none;
         }
         .terminal-line {
             opacity: 0;
             animation: termFadeIn 0.3s ease forwards;
             white-space: nowrap;
+            /* Obfuscate OCPP payload — visual streaming preserved, data unreadable.
+               Crisp header/dots/LIVE badge are outside .terminal-body so they stay sharp. */
+            filter: blur(3.5px);
         }
         .terminal-line .ts { color: var(--text-tertiary); }
         .terminal-line .arrow-in { color: #00cc88; }
@@ -2051,38 +2055,50 @@
     let lineCount = 0;
     const MAX_LINES = 18;
 
-    // Real OCPP message sequence (NueGo E-Bus S5P2, 510V DC)
-    const ocppSequence = [
-        { dir: 'in', type: 'BootNotification', detail: 'vendor:<span class="val">NueGo</span> model:<span class="val">S5P2-510V</span> fw:<span class="val">v3.2.1</span>' },
-        { dir: 'out', type: 'BootNotification.conf', detail: 'status:<span class="status-ok">Accepted</span> interval:<span class="val">30s</span>' },
-        { dir: 'in', type: 'StatusNotification', detail: 'connector:<span class="val">1</span> status:<span class="status-ok">Available</span> error:<span class="val">NoError</span>' },
-        { dir: 'in', type: 'Heartbeat', detail: '<span class="dim">keepalive</span>' },
-        { dir: 'out', type: 'Heartbeat.conf', detail: 'time:<span class="val">2025-03-22T14:30:00Z</span>' },
-        { dir: 'in', type: 'Authorize', detail: 'idTag:<span class="val">RFID-V51-0x4A</span>' },
-        { dir: 'out', type: 'Authorize.conf', detail: 'status:<span class="status-ok">Accepted</span>' },
-        { dir: 'in', type: 'StartTransaction', detail: 'connector:<span class="val">1</span> meterStart:<span class="val">12500Wh</span> SoC:<span class="val-accent">20%</span>' },
-        { dir: 'out', type: 'StartTransaction.conf', detail: 'txId:<span class="val-green">9101</span> status:<span class="status-ok">Accepted</span>' },
-        { dir: 'out', type: 'AI: ProfileEngine', detail: 'SoH:<span class="val-green">92%</span> RUL:<span class="val">1,240 cycles</span> profile:<span class="val-accent">balanced</span>' },
-        { dir: 'out', type: 'SetChargingProfile', detail: 'band:<span class="val">0-20%</span> limit:<span class="val-accent">132kW</span> mode:<span class="val">constant_power</span>' },
-        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-accent">25%</span> V:<span class="val">508.2V</span> I:<span class="val">96A</span> T:<span class="val-green">26\u00b0C</span> P:<span class="val">48.8kW</span>' },
-        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-accent">34%</span> V:<span class="val">510.1V</span> I:<span class="val">98A</span> T:<span class="val-green">28\u00b0C</span> P:<span class="val">50.0kW</span>' },
-        { dir: 'out', type: 'SetChargingProfile', detail: 'band:<span class="val">20-40%</span> limit:<span class="val-accent">150kW</span> mode:<span class="val">MSCC_max</span>' },
-        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-accent">48%</span> V:<span class="val">512.4V</span> I:<span class="val">94A</span> T:<span class="val-green">31\u00b0C</span> P:<span class="val">48.2kW</span>' },
-        { dir: 'out', type: 'SetChargingProfile', detail: 'band:<span class="val">40-60%</span> limit:<span class="val-accent">142kW</span> mode:<span class="val">MSCC_step2</span>' },
-        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-accent">63%</span> V:<span class="val">514.8V</span> I:<span class="val">88A</span> T:<span class="status-warn">36\u00b0C</span> P:<span class="val">45.3kW</span>' },
-        { dir: 'out', type: 'SetChargingProfile', detail: 'band:<span class="val">60-80%</span> limit:<span class="val-accent">127kW</span> mode:<span class="val">MSCC_step3</span>' },
-        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-accent">78%</span> V:<span class="val">516.2V</span> I:<span class="val">72A</span> T:<span class="status-warn">39\u00b0C</span> P:<span class="val">37.2kW</span>' },
-        { dir: 'out', type: 'AI: ThermalGuard', detail: 'temp_rising T:<span class="status-warn">39\u00b0C</span> action:<span class="val-accent">throttle_50%</span>' },
-        { dir: 'out', type: 'SetChargingProfile', detail: 'band:<span class="val">80-95%</span> limit:<span class="val-accent">82kW</span> mode:<span class="val">pulse_taper</span>' },
-        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-accent">88%</span> V:<span class="val">518.0V</span> I:<span class="val">44A</span> T:<span class="val-green">35\u00b0C</span> P:<span class="val">22.8kW</span>' },
-        { dir: 'out', type: 'AI: DegradationModel', detail: 'capacity_fade:<span class="val-green">0.012%/cycle</span> vs standard:<span class="val-accent">0.031%</span>' },
-        { dir: 'in', type: 'MeterValues', detail: 'SoC:<span class="val-green">95%</span> V:<span class="val">519.4V</span> I:<span class="val">18A</span> T:<span class="val-green">32\u00b0C</span> P:<span class="val">9.3kW</span>' },
-        { dir: 'out', type: 'SetChargingProfile', detail: 'band:<span class="val">95-100%</span> limit:<span class="val-accent">30kW</span> mode:<span class="val">CV_trickle</span>' },
-        { dir: 'in', type: 'StopTransaction', detail: 'txId:<span class="val">9101</span> meterStop:<span class="val">22,500Wh</span> energy:<span class="val-green">10.0kWh</span>' },
-        { dir: 'out', type: 'StopTransaction.conf', detail: 'status:<span class="status-ok">Accepted</span> CDR:<span class="val">$4.20</span> peak:<span class="val">50kW</span>' },
-        { dir: 'out', type: 'ClearChargingProfile', detail: 'connector:<span class="val">1</span> <span class="status-ok">profiles_cleared</span>' },
-        { dir: 'in', type: 'StatusNotification', detail: 'connector:<span class="val">1</span> status:<span class="status-ok">Available</span>' },
-        { dir: 'out', type: 'AI: SessionSummary', detail: 'life_saved:<span class="val-green">+37.5%</span> degradation:<span class="val-green">-61%</span> vs CCCV' },
+    // OCPP-style synthetic stream (visual demo only \u2014 no proprietary payloads).
+    // Real adaptive-charging logic, AI module names, per-band limits, and
+    // degradation curves intentionally omitted. Numeric values are randomized
+    // per-line at runtime so source-view inspection reveals nothing useful.
+    const r = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+    const rf = (a, b, d = 1) => (Math.random() * (b - a) + a).toFixed(d);
+    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const hex = (n) => Array.from({length: n}, () => Math.floor(Math.random() * 16).toString(16)).join('').toUpperCase();
+
+    const detailGen = {
+        BootNotification: () => 'vendor:<span class="val">[redacted]</span> fw:<span class="val">v' + r(2,5) + '.' + r(0,9) + '.' + r(0,9) + '</span>',
+        'BootNotification.conf': () => 'status:<span class="status-ok">Accepted</span> interval:<span class="val">' + pick([15,30,60]) + 's</span>',
+        StatusNotification: () => 'connector:<span class="val">' + r(1,2) + '</span> status:<span class="status-ok">' + pick(['Available','Preparing','Charging','SuspendedEV']) + '</span>',
+        Heartbeat: () => '<span class="dim">' + pick(['keepalive','tick','sync','ping']) + '</span>',
+        'Heartbeat.conf': () => '<span class="dim">ack 0x' + hex(4) + '</span>',
+        Authorize: () => 'idTag:<span class="val">' + hex(8) + '</span>',
+        'Authorize.conf': () => 'status:<span class="status-ok">Accepted</span>',
+        StartTransaction: () => 'connector:<span class="val">' + r(1,2) + '</span> meterStart:<span class="val">' + r(8000,18000) + 'Wh</span>',
+        'StartTransaction.conf': () => 'txId:<span class="val-green">' + r(8000,9999) + '</span> status:<span class="status-ok">Accepted</span>',
+        MeterValues: () => 'SoC:<span class="val-accent">' + r(20,95) + '%</span> V:<span class="val">' + rf(498,524,1) + 'V</span> I:<span class="val">' + r(20,110) + 'A</span> T:<span class="val-green">' + r(24,38) + '\u00b0C</span>',
+        SetChargingProfile: () => '<span class="val">profile_id:0x' + hex(4) + '</span> <span class="dim">[***]</span>',
+        StopTransaction: () => 'txId:<span class="val">' + r(8000,9999) + '</span> meterStop:<span class="val">' + r(18000,30000) + 'Wh</span>',
+        'StopTransaction.conf': () => 'status:<span class="status-ok">Accepted</span>',
+        ClearChargingProfile: () => 'connector:<span class="val">' + r(1,2) + '</span> <span class="status-ok">cleared</span>',
+        DataTransfer: () => 'msgId:<span class="val">0x' + hex(6) + '</span> <span class="dim">[***]</span>',
+    };
+
+    // Order is loose \u2014 picked randomly per tick from a weighted bag.
+    const msgBag = [
+        { dir: 'in', type: 'Heartbeat' }, { dir: 'in', type: 'Heartbeat' },
+        { dir: 'out', type: 'Heartbeat.conf' },
+        { dir: 'in', type: 'MeterValues' }, { dir: 'in', type: 'MeterValues' }, { dir: 'in', type: 'MeterValues' },
+        { dir: 'in', type: 'StatusNotification' },
+        { dir: 'out', type: 'SetChargingProfile' },
+        { dir: 'in', type: 'BootNotification' },
+        { dir: 'out', type: 'BootNotification.conf' },
+        { dir: 'in', type: 'Authorize' },
+        { dir: 'out', type: 'Authorize.conf' },
+        { dir: 'in', type: 'StartTransaction' },
+        { dir: 'out', type: 'StartTransaction.conf' },
+        { dir: 'in', type: 'StopTransaction' },
+        { dir: 'out', type: 'StopTransaction.conf' },
+        { dir: 'out', type: 'ClearChargingProfile' },
+        { dir: 'out', type: 'DataTransfer' },
     ];
 
     let seqIdx = 0;
@@ -2097,10 +2113,7 @@
     }
 
     function addTerminalLine() {
-        const msg = ocppSequence[seqIdx % ocppSequence.length];
-        if (seqIdx % ocppSequence.length === 0 && seqIdx > 0) {
-            simTime = { h: 14, m: 30, s: 0 };
-        }
+        const msg = pick(msgBag);
         seqIdx++;
 
         const line = document.createElement('div');
@@ -2108,7 +2121,8 @@
         const arrow = msg.dir === 'in'
             ? '<span class="arrow-in">&#9654;</span>'
             : '<span class="arrow-out">&#9664;</span>';
-        line.innerHTML = '<span class="ts">' + getTimestamp() + '</span> ' + arrow + ' <span class="msg-type">' + msg.type + '</span> ' + msg.detail;
+        const detail = (detailGen[msg.type] || (() => '<span class="dim">[***]</span>'))();
+        line.innerHTML = '<span class="ts">' + getTimestamp() + '</span> ' + arrow + ' <span class="msg-type">' + msg.type + '</span> ' + detail;
         line.style.animationDelay = '0s';
 
         termBody.appendChild(line);
