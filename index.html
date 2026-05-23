@@ -760,7 +760,7 @@
             background: var(--bg-subtle);
         }
 
-        /* OCPP Terminal Visual */
+        /* Charging Terminal Visual */
         .try-right {
             background: #080808;
             position: relative; overflow: hidden;
@@ -792,7 +792,7 @@
             opacity: 0;
             animation: termFadeIn 0.3s ease forwards;
             white-space: nowrap;
-            /* Obfuscate OCPP payload — visual streaming preserved, data unreadable.
+            /* Obfuscate charging payload, visual streaming preserved, data unreadable.
                Crisp header/dots/LIVE badge are outside .terminal-body so they stay sharp. */
             filter: blur(3.5px);
         }
@@ -1310,25 +1310,26 @@
 <section id="problem">
     <div class="container">
         <div class="section-label reveal">The Problem</div>
-        <h2 class="section-title reveal">Batteries are failing the EV revolution</h2>
-        <p class="section-desc reveal">Three systemic failures are holding back electric mobility and costing the industry billions.</p>
+        <h2 class="section-title reveal">Batteries die 3x faster than promised</h2>
+        <p class="section-desc reveal">OEMs warranty 5 to 6 years. Real fleet data across buses, cabs, and drones shows batteries hit end-of-life in under 2 years. Every grounded asset is lost revenue, every premature replacement is unplanned capex.</p>
         <div class="problem-grid reveal">
             <div class="problem-card">
                 <div class="card-number">01</div>
-                <h3>Premature Degradation</h3>
-                <p>Improper charging patterns destroy battery cells from the inside out, forcing costly replacements far before end-of-life.</p>
-                <span class="card-tag tag-oem"><span class="num">~40</span><span class="unit">%</span>&nbsp; capacity lost</span>
+                <h3>3x faster than warranty</h3>
+                <p>OEMs promise 5-6 years. Commercial fleet data across buses, cabs, and drones shows batteries dying in under 2. Operators paid for half a decade of revenue and got under a third.</p>
+                <span class="card-tag tag-oem"><span class="num">3</span><span class="unit">x</span>&nbsp; faster</span>
             </div>
             <div class="problem-card">
                 <div class="card-number">02</div>
-                <h3>Crippling Replacement Costs</h3>
-                <p>Battery packs represent roughly half of an EV's total cost. Every premature replacement is a financial catastrophe for fleet operators.</p>
-                <span class="card-tag tag-oem"><span class="num">~50</span><span class="unit">%</span>&nbsp; of EV cost</span>
+                <h3>Capex shock from early replacement</h3>
+                <p>The battery is <span style="color:var(--coral);font-weight:700">30-50% of asset capex</span> across every segment. Every premature replacement is unplanned capex. The bigger the asset, the bigger the hole.</p>
+                <span class="card-tag tag-oem"><span class="num">30-50</span><span class="unit">%</span>&nbsp; of capex</span>
             </div>
             <div class="problem-card">
                 <div class="card-number">03</div>
-                <h3>Grid Instability</h3>
-                <p>Unmanaged EV charging creates severe <span style="color:var(--coral);font-weight:700">peak load imbalances</span>, stressing grid infrastructure and increasing carbon intensity during peak hours.</p>
+                <h3>Opex spike from sub-optimal charging</h3>
+                <p>Charging strategy alone adds <span style="color:var(--coral);font-weight:700">21.79% to operational cost</span>. No fleet operator has visibility at the cell level.</p>
+                <span class="card-tag tag-oem"><span class="num">21.79</span><span class="unit">%</span></span>
             </div>
         </div>
     </div>
@@ -1370,11 +1371,11 @@
     <div class="container">
         <div class="section-label reveal">Try Battery Control</div>
         <h2 class="section-title reveal">If it can be charged, it can be optimized</h2>
-        <p class="section-desc reveal">ElecticaOS speaks OCPP natively. Every charge session is monitored, profiled, and optimized in real-time through adaptive AI.</p>
+        <p class="section-desc reveal">ElecticaOS plugs into your charging stack natively. Every charge session is monitored, profiled, and optimized in real-time through adaptive AI.</p>
         <div class="try-hero glow-card reveal">
             <div class="try-left">
-                <h2>Live OCPP Intelligence, built for fleets</h2>
-                <p>Watch ElecticaOS process real charger telemetry: BootNotification, MeterValues, adaptive SetChargingProfile - all flowing through our AI engine in real-time.</p>
+                <h2>Live Charging Intelligence, built for fleets</h2>
+                <p>Watch ElecticaOS process real charger telemetry: session boot, meter values, adaptive charge profiles, all flowing through our AI engine in real-time.</p>
                 <div class="try-btns">
                     <a href="#contact" class="try-btn">
                         <span>REQUEST A DEMO</span>
@@ -1391,7 +1392,7 @@
                     <div class="terminal-dot red"></div>
                     <div class="terminal-dot yellow"></div>
                     <div class="terminal-dot green"></div>
-                    <div class="terminal-title">ElecticaOS OCPP Gateway - CP-V51</div>
+                    <div class="terminal-title">ElecticaOS Charging Gateway - CP-V51</div>
                     <div class="terminal-live"><span class="live-dot"></span> LIVE</div>
                 </div>
                 <div class="terminal-body" id="terminalBody"></div>
@@ -1410,7 +1411,7 @@
         <div class="showcase-block reveal">
             <div class="showcase-text">
                 <h3>Collect battery telemetry via API</h3>
-                <p>ElecticaOS connects to any charger via OCPP. MeterValues stream in real-time: voltage, current, temperature, SoC - every 30 seconds per connector.</p>
+                <p>ElecticaOS connects to any charger in your network. Meter values stream in real-time: voltage, current, temperature, SoC, continuously per connector.</p>
                 <div class="try-btns">
                     <a href="#try" class="try-btn">
                         <span>SEE LIVE TERMINAL</span>
@@ -1423,7 +1424,7 @@
                     <div class="api-step">
                         <div class="api-step-title">
                             <div class="api-step-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-                            <span>Calling OCPP: MeterValues</span>
+                            <span>Streaming charger telemetry</span>
                             <span class="api-step-badge">&#10003;</span>
                         </div>
                         <div class="api-bars" id="apiBars1"></div>
@@ -1448,7 +1449,7 @@
         <div class="showcase-block reversed reveal">
             <div class="showcase-text">
                 <h3>AI engine in the cloud</h3>
-                <p>Cell-level PINN models compute SoH, predict RUL, decompose degradation via Warburg impedance, and select the optimal charging profile from 6 ML-driven variants.</p>
+                <p>Our proprietary cell-level AI engine computes SoH, predicts RUL, decomposes degradation drivers, and selects an adaptive charging profile tuned to the session.</p>
                 <div class="try-btns">
                     <a href="#proof" class="try-btn">
                         <span>IEEE VALIDATION</span>
@@ -1498,7 +1499,6 @@
                             <th><span class="th-icon orange"></span>Platform</th>
                             <th><span class="th-icon grey"></span>SoH Accuracy</th>
                             <th><span class="th-icon grey"></span>Charging Control</th>
-                            <th><span class="th-icon grey"></span>OCPP Native</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1507,49 +1507,43 @@
                             <td><div class="cg-entity"><div class="cg-entity-icon" style="background:var(--accent);">E</div>Electica</div></td>
                             <td><span class="cg-bar full" style="width:92%"></span></td>
                             <td><span class="cg-bar full" style="width:88%"></span></td>
-                            <td><span class="cg-bar full" style="width:95%"></span></td>
                         </tr>
                         <tr>
                             <td>2</td>
                             <td><div class="cg-entity"><div class="cg-entity-icon" style="background:#5566aa;">T</div>TWAICE</div></td>
                             <td><span class="cg-bar medium" style="width:70%"></span></td>
                             <td><span class="cg-bar none" style="width:12%"></span></td>
-                            <td><span class="cg-bar none" style="width:8%"></span></td>
                         </tr>
                         <tr>
                             <td>3</td>
                             <td><div class="cg-entity"><div class="cg-entity-icon" style="background:#44887a;">A</div>ACCURE</div></td>
                             <td><span class="cg-bar medium" style="width:65%"></span></td>
                             <td><span class="cg-bar none" style="width:10%"></span></td>
-                            <td><span class="cg-bar none" style="width:6%"></span></td>
                         </tr>
                         <tr>
                             <td>4</td>
                             <td><div class="cg-entity"><div class="cg-entity-icon" style="background:#8855aa;">Q</div>Qnovo</div></td>
                             <td><span class="cg-bar small" style="width:45%"></span></td>
                             <td><span class="cg-bar medium" style="width:55%"></span></td>
-                            <td><span class="cg-bar none" style="width:5%"></span></td>
                         </tr>
                         <tr>
                             <td>5</td>
                             <td><div class="cg-entity"><div class="cg-entity-icon" style="background:#667788;">V</div>Voltaiq</div></td>
                             <td><span class="cg-bar medium" style="width:60%"></span></td>
                             <td><span class="cg-bar none" style="width:8%"></span></td>
-                            <td><span class="cg-bar none" style="width:5%"></span></td>
                         </tr>
                         <tr>
                             <td>6</td>
                             <td><div class="cg-entity"><div class="cg-entity-icon" style="background:#557755;">E</div>Elysia</div></td>
                             <td><span class="cg-bar small" style="width:50%"></span></td>
                             <td><span class="cg-bar small" style="width:30%"></span></td>
-                            <td><span class="cg-bar none" style="width:5%"></span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="compare-info-side">
                 <h2>The only platform that reads and writes</h2>
-                <p>Others provide battery visibility. ElecticaOS closes the loop - reading cell-level telemetry and writing adaptive charging profiles back to the charger via OCPP in real-time.</p>
+                <p>Others provide battery visibility. ElecticaOS closes the loop, reading cell-level telemetry and writing adaptive charging profiles back to the charger in real-time.</p>
                 <div class="try-btns">
                     <a href="#contact" class="try-btn">
                         <span>REQUEST A DEMO</span>
@@ -1573,23 +1567,23 @@
         <div class="proof-header">
             <div class="proof-badge reveal">&#9670; IEEE Validated</div>
             <h2 class="section-title reveal">The numbers speak for themselves</h2>
-            <p class="section-desc reveal">Peer-reviewed results published in IEEE, comparing ElecticaOS adaptive charging against standard CC-CV protocols.</p>
+            <p class="section-desc reveal">Peer-reviewed lab results published in IEEE, comparing ElecticaOS adaptive charging against standard CC-CV protocols under controlled cycling conditions.</p>
         </div>
         <div class="benchmark-cards reveal">
             <div class="benchmark-card">
                 <div class="benchmark-value">67.2<span class="benchmark-unit">%</span></div>
-                <div class="benchmark-label">Capacity retained after 3,000 cycles</div>
+                <div class="benchmark-label">Lab capacity retention at 3,000 cycles</div>
                 <div class="benchmark-sub">vs. 45% with standard CC-CV</div>
             </div>
             <div class="benchmark-card">
                 <div class="benchmark-value">1,650</div>
-                <div class="benchmark-label">Total cycle life achieved</div>
-                <div class="benchmark-sub">vs. 1,200 standard cycles</div>
+                <div class="benchmark-label">Lab cycle life achieved</div>
+                <div class="benchmark-sub">vs. 1,200 standard CC-CV cycles</div>
             </div>
             <div class="benchmark-card">
                 <div class="benchmark-value">37.5<span class="benchmark-unit">%</span></div>
-                <div class="benchmark-label">Increase in total cycle life</div>
-                <div class="benchmark-sub">Peer-reviewed improvement</div>
+                <div class="benchmark-label">Lab cycle-life improvement</div>
+                <div class="benchmark-sub">Peer-reviewed result</div>
             </div>
         </div>
         <table class="comparison-table reveal">
@@ -1742,8 +1736,8 @@
             <div class="roi-result glow-card" id="roiResult">
                 <h3>Your Estimated Savings</h3>
                 <div class="roi-metric">
-                    <div class="roi-value" id="roiLifeExtension"><span class="unit">+</span>37.5<span class="unit">%</span></div>
-                    <div class="roi-label">Battery life extension (1,200 &#8594; 1,650 cycles)</div>
+                    <div class="roi-value" id="roiLifeExtension"><span class="unit">+</span>25<span class="unit">%</span></div>
+                    <div class="roi-label">Battery life extension (1,400 &#8594; 1,750 cycles)</div>
                 </div>
                 <div class="roi-metric">
                     <div class="roi-value" id="roiBaseLife">-</div>
@@ -1833,7 +1827,7 @@
                         <span class="faq-icon">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>We integrate via standard protocols (OCPP for chargers, CAN bus for vehicles). Minimum data includes voltage, current, temperature, and SoC readings. Historical data helps train better models, but we can start with real-time data alone.</p>
+                        <p>We integrate with standard charger and vehicle interfaces. Minimum data includes voltage, current, temperature, and SoC readings. Historical data helps train better models, but we can start with real-time data alone.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -2050,12 +2044,12 @@
         nav.style.borderBottomColor = window.scrollY > 100 ? 'rgba(255,255,255,0.06)' : 'var(--border)';
     });
 
-    // ─── OCPP TERMINAL SIMULATION ───
+    // ─── CHARGING TERMINAL SIMULATION ───
     const termBody = document.getElementById('terminalBody');
     let lineCount = 0;
     const MAX_LINES = 18;
 
-    // OCPP-style synthetic stream (visual demo only \u2014 no proprietary payloads).
+    // Charging-protocol-style synthetic stream (visual demo only, no proprietary payloads).
     // Real adaptive-charging logic, AI module names, per-band limits, and
     // degradation curves intentionally omitted. Numeric values are randomized
     // per-line at runtime so source-view inspection reveals nothing useful.
@@ -2201,7 +2195,7 @@
     });
 
     // ─── ROI Calculator ───
-    const LIFE_EXTENSION_FACTOR = 1.375;
+    const LIFE_EXTENSION_FACTOR = 1.25;
     const vehicleData = {
         ebus:  { name: 'E-Bus',              batteryCost: 45000, baseLifeYrs: 6.6,  defaultCyclesPerDay: 0.5 },
         e4w:   { name: 'Electric Car',        batteryCost: 9000,  baseLifeYrs: 13.2, defaultCyclesPerDay: 0.25 },
@@ -2231,12 +2225,10 @@
             extendedLifeYrs = null;
         } else {
             const totalCycles = dailyCycles * 365 * HORIZON;
-            const BASE_CYCLES = 1200;
-            const ELECTICA_CYCLES = 1650;
-            const replacementsStandard = Math.max(Math.ceil(totalCycles / BASE_CYCLES) - 1, 0);
-            const replacementsElectica = Math.max(Math.ceil(totalCycles / ELECTICA_CYCLES) - 1, 0);
-            const avoidedReplacements = replacementsStandard - replacementsElectica;
-            savingsPerUnit = avoidedReplacements * v.batteryCost;
+            const BASE_CYCLES = 1400;
+            const ELECTICA_CYCLES = 1750;
+            const savingsPerCycle = v.batteryCost * (1 / BASE_CYCLES - 1 / ELECTICA_CYCLES);
+            savingsPerUnit = savingsPerCycle * totalCycles;
             baseLifeYrs = BASE_CYCLES / (dailyCycles * 365);
             extendedLifeYrs = ELECTICA_CYCLES / (dailyCycles * 365);
         }
@@ -2246,7 +2238,7 @@
         // Update UI — null-safe for all elements
         var el;
         el = document.getElementById('roiLifeExtension');
-        if (el) el.innerHTML = type === 'drone' ? '<span class="unit">-</span>35<span class="unit">%</span> replacement cost' : '<span class="unit">+</span>37.5<span class="unit">%</span>';
+        if (el) el.innerHTML = type === 'drone' ? '<span class="unit">-</span>35<span class="unit">%</span> replacement cost' : '<span class="unit">+</span>25<span class="unit">%</span>';
         if (baseLifeYrs !== null) {
             el = document.getElementById('roiBaseLife');
             if (el) el.innerHTML = baseLifeYrs.toFixed(1) + ' <span class="unit">yrs</span> \u2192 ' + extendedLifeYrs.toFixed(1) + ' <span class="unit">yrs</span>';
