@@ -143,11 +143,7 @@
         /* Light mode — improvement badge */
         [data-theme="light"] .improvement.positive { background: rgba(232, 77, 0, 0.08); }
 
-        /* Light mode — logo swap */
-        [data-theme="light"] .nav-logo .logo-dark { display: block; }
-        [data-theme="light"] .nav-logo .logo-light { display: none; }
-        .nav-logo .logo-dark { display: none; }
-        .nav-logo .logo-light { display: block; }
+        /* Brand mark — round orange icon works on both themes */
 
         /* Light mode — theme toggle */
         .theme-toggle {
@@ -287,11 +283,20 @@
             text-decoration: none;
             display: flex;
             align-items: center;
+            gap: 10px;
         }
 
-        .nav-logo img {
-            height: 48px;
-            width: auto;
+        .nav-logo .logo-mark {
+            height: 40px;
+            width: 40px;
+        }
+
+        .nav-logo .logo-word {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 26px;
+            letter-spacing: -0.02em;
+            color: var(--text);
         }
 
         .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
@@ -1220,8 +1225,8 @@
 <nav>
     <div class="container">
         <a href="#" class="nav-logo">
-            <img src="Logo -02.png" alt="Electica" class="logo-light">
-            <img src="Logo -01.png" alt="Electica" class="logo-dark">
+            <img src="electica-icon.png" alt="Electica" class="logo-mark">
+            <span class="logo-word">electica</span>
         </a>
         <ul class="nav-links" id="navLinks">
             <li><a href="#problem">Problem</a></li>
@@ -1920,8 +1925,8 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <a href="#" class="nav-logo" style="margin-bottom:16px;">
-                    <img src="Logo -02.png" alt="Electica" class="logo-light">
-                    <img src="Logo -01.png" alt="Electica" class="logo-dark">
+                    <img src="electica-icon.png" alt="Electica" class="logo-mark">
+                    <span class="logo-word">electica</span>
                 </a>
                 <p>The AI-powered operating system for battery intelligence. Extending battery life and powering the future of electric mobility.</p>
             </div>
